@@ -1,0 +1,80 @@
+{
+  "applications": ["myaccount21"],
+  "changelogDate": "20220817102251",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "operation",
+  "fields": [
+    {
+      "fieldName": "label",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "400"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "400"
+    },
+    {
+      "fieldName": "checkNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "isUpToDate",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "deletingHardLock",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Operation",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "subCategoryName",
+      "otherEntityName": "subCategory",
+      "relationshipName": "subCategory",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nickName",
+      "otherEntityName": "applicationUser",
+      "relationshipName": "account",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "bankAccount",
+      "relationshipName": "bankAccount",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "budgetItemPeriod",
+      "otherEntityRelationshipName": "operation",
+      "ownerSide": false,
+      "relationshipName": "budgetItemPeriod",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceClass"
+}

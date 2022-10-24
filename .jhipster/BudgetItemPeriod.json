@@ -1,0 +1,53 @@
+{
+  "applications": ["myaccount21"],
+  "changelogDate": "20220817102051",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "budget_item_period",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "month",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isSmoothed",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isRecurrent",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "BudgetItemPeriod",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "operation",
+      "otherEntityRelationshipName": "budgetItemPeriod",
+      "ownerSide": true,
+      "relationshipName": "operation",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "budgetItem",
+      "otherEntityRelationshipName": "budgetItemPeriods",
+      "relationshipName": "budgetItem",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceClass"
+}

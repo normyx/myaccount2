@@ -1,0 +1,48 @@
+{
+  "applications": ["myaccount21"],
+  "changelogDate": "20220817101951",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "budget_item",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "100",
+      "fieldValidateRulesMinlength": "5"
+    },
+    {
+      "fieldName": "order",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "BudgetItem",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "budgetItemPeriod",
+      "otherEntityRelationshipName": "budgetItem",
+      "relationshipName": "budgetItemPeriods",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "categoryName",
+      "otherEntityName": "category",
+      "relationshipName": "category",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nickName",
+      "otherEntityName": "applicationUser",
+      "relationshipName": "account",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceClass"
+}

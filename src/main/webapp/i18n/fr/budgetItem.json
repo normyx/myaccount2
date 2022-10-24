@@ -1,0 +1,29 @@
+{
+  "myaccount21App": {
+    "budgetItem": {
+      "home": {
+        "title": "BudgetItems",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Budget Item",
+        "createOrEditLabel": "Créer ou éditer un Budget Item",
+        "search": "Recherche pour Budget Item",
+        "notFound": "Aucun Budget Item trouvé"
+      },
+      "created": "Un nouveau Budget Item a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Budget Item avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Budget Item avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Budget Item {{ id }} ?"
+      },
+      "detail": {
+        "title": "Budget Item"
+      },
+      "id": "ID",
+      "name": "Name",
+      "order": "Order",
+      "budgetItemPeriods": "Budget Item Periods",
+      "category": "Category",
+      "account": "Account"
+    }
+  }
+}

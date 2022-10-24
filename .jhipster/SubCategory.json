@@ -1,0 +1,30 @@
+{
+  "applications": ["myaccount21"],
+  "changelogDate": "20220817102351",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "sub_category",
+  "fields": [
+    {
+      "fieldName": "subCategoryName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "SubCategory",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "categoryName",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "subCategory",
+      "relationshipName": "category",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceClass"
+}

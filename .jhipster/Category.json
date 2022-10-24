@@ -1,0 +1,35 @@
+{
+  "applications": ["myaccount21"],
+  "changelogDate": "20220817102151",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "category",
+  "fields": [
+    {
+      "fieldName": "categoryName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "categoryType",
+      "fieldType": "CategoryType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "REVENUE,SPENDING,OTHER"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Category",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "subCategory",
+      "otherEntityRelationshipName": "category",
+      "relationshipName": "subCategory",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "elasticsearch",
+  "service": "serviceClass"
+}

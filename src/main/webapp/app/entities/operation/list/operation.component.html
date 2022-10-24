@@ -1,0 +1,209 @@
+<div>
+  <h2 id="page-heading" data-cy="OperationHeading">
+    <span jhiTranslate="myaccount21App.operation.home.title">Operations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="myaccount21App.operation.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-operation"
+        [routerLink]="['/operation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="myaccount21App.operation.home.createLabel"> Créer un nouveau Operation </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" jhiTranslate="myaccount21App.operation.home.search"
+          >Recherche pour Operation</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'myaccount21App.operation.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        <button class="btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+          <fa-icon icon="trash-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="operations?.length === 0">
+    <span jhiTranslate="myaccount21App.operation.home.notFound">Aucun Operation trouvé</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="operations && operations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="label">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.label">Label</span>
+              <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="date">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.date">Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="amount">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.amount">Amount</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="note">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.note">Note</span>
+              <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="checkNumber">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.checkNumber">Check Number</span>
+              <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isUpToDate">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.isUpToDate">Is Up To Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="deletingHardLock">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.deletingHardLock">Deleting Hard Lock</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="subCategory.subCategoryName">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.subCategory">Sub Category</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="account.nickName">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.account">Account</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bankAccount.id">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.operation.bankAccount">Bank Account</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operation of operations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/operation', operation.id, 'view']">{{ operation.id }}</a>
+          </td>
+          <td>{{ operation.label }}</td>
+          <td>{{ operation.date | formatMediumDate }}</td>
+          <td>{{ operation.amount }}</td>
+          <td>{{ operation.note }}</td>
+          <td>{{ operation.checkNumber }}</td>
+          <td>{{ operation.isUpToDate }}</td>
+          <td>{{ operation.deletingHardLock }}</td>
+          <td>
+            <div *ngIf="operation.subCategory">
+              <a [routerLink]="['/sub-category', operation.subCategory.id, 'view']">{{ operation.subCategory.subCategoryName }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="operation.account">
+              <a [routerLink]="['/application-user', operation.account.id, 'view']">{{ operation.account.nickName }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="operation.bankAccount">
+              <a [routerLink]="['/bank-account', operation.bankAccount.id, 'view']">{{ operation.bankAccount.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/operation', operation.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/operation', operation.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+              </button>
+
+              <button type="submit" (click)="delete(operation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="operations && operations.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="bankAccount">
+      <h2 data-cy="bankAccountDetailsHeading"><span jhiTranslate="myaccount21App.bankAccount.detail.title">Bank Account</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ bankAccount.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.accountName">Account Name</span></dt>
+        <dd>
+          <span>{{ bankAccount.accountName }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.accountBank">Account Bank</span></dt>
+        <dd>
+          <span>{{ bankAccount.accountBank }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.initialAmount">Initial Amount</span></dt>
+        <dd>
+          <span>{{ bankAccount.initialAmount }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.archived">Archived</span></dt>
+        <dd>
+          <span>{{ bankAccount.archived }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.shortName">Short Name</span></dt>
+        <dd>
+          <span>{{ bankAccount.shortName }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.account">Account</span></dt>
+        <dd>
+          <div *ngIf="bankAccount.account">
+            <a [routerLink]="['/application-user', bankAccount.account.id, 'view']">{{ bankAccount.account.nickName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/bank-account', bankAccount.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

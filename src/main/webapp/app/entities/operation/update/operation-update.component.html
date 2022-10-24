@@ -1,0 +1,221 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-operation-heading" data-cy="OperationCreateUpdateHeading" jhiTranslate="myaccount21App.operation.home.createOrEditLabel">
+        Créer ou éditer un Operation
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.label" for="field_label">Label</label>
+          <input type="text" class="form-control" name="label" id="field_label" data-cy="label" formControlName="label" />
+          <div *ngIf="editForm.get('label')!.invalid && (editForm.get('label')!.dirty || editForm.get('label')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('label')?.errors?.required" jhiTranslate="entity.validation.required">
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('label')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 400 }"
+            >
+              Ce champ doit faire moins de 400 caractères.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.date" for="field_date">Date</label>
+          <div class="input-group">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="text"
+              class="form-control"
+              name="date"
+              ngbDatepicker
+              #dateDp="ngbDatepicker"
+              formControlName="date"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('date')?.errors?.required" jhiTranslate="entity.validation.required">
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.amount" for="field_amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+          <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('amount')?.errors?.required" jhiTranslate="entity.validation.required">
+              Ce champ est obligatoire.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.note" for="field_note">Note</label>
+          <input type="text" class="form-control" name="note" id="field_note" data-cy="note" formControlName="note" />
+          <div *ngIf="editForm.get('note')!.invalid && (editForm.get('note')!.dirty || editForm.get('note')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('note')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 400 }"
+            >
+              Ce champ doit faire moins de 400 caractères.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.checkNumber" for="field_checkNumber">Check Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="checkNumber"
+            id="field_checkNumber"
+            data-cy="checkNumber"
+            formControlName="checkNumber"
+          />
+          <div *ngIf="editForm.get('checkNumber')!.invalid && (editForm.get('checkNumber')!.dirty || editForm.get('checkNumber')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('checkNumber')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 20 }"
+            >
+              Ce champ doit faire moins de 20 caractères.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.isUpToDate" for="field_isUpToDate">Is Up To Date</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isUpToDate"
+            id="field_isUpToDate"
+            data-cy="isUpToDate"
+            formControlName="isUpToDate"
+          />
+          <div *ngIf="editForm.get('isUpToDate')!.invalid && (editForm.get('isUpToDate')!.dirty || editForm.get('isUpToDate')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isUpToDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.deletingHardLock" for="field_deletingHardLock"
+            >Deleting Hard Lock</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="deletingHardLock"
+            id="field_deletingHardLock"
+            data-cy="deletingHardLock"
+            formControlName="deletingHardLock"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.subCategory" for="field_subCategory">Sub Category</label>
+          <select
+            class="form-control"
+            id="field_subCategory"
+            data-cy="subCategory"
+            name="subCategory"
+            formControlName="subCategory"
+            [compareWith]="compareSubCategory"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="subCategoryOption" *ngFor="let subCategoryOption of subCategoriesSharedCollection">
+              {{ subCategoryOption.subCategoryName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.account" for="field_account">Account</label>
+          <select
+            class="form-control"
+            id="field_account"
+            data-cy="account"
+            name="account"
+            formControlName="account"
+            [compareWith]="compareApplicationUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="applicationUserOption" *ngFor="let applicationUserOption of applicationUsersSharedCollection">
+              {{ applicationUserOption.nickName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.operation.bankAccount" for="field_bankAccount">Bank Account</label>
+          <select
+            class="form-control"
+            id="field_bankAccount"
+            data-cy="bankAccount"
+            name="bankAccount"
+            formControlName="bankAccount"
+            [compareWith]="compareBankAccount"
+          >
+            <option *ngIf="!editForm.get('bankAccount')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="bankAccountOption" *ngFor="let bankAccountOption of bankAccountsSharedCollection">
+              {{ bankAccountOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['bankAccount'])!.invalid && (editForm.get(['bankAccount'])!.dirty || editForm.get(['bankAccount'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['bankAccount'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            Ce champ est obligatoire.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

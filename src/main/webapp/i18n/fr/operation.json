@@ -1,0 +1,35 @@
+{
+  "myaccount21App": {
+    "operation": {
+      "home": {
+        "title": "Operations",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Operation",
+        "createOrEditLabel": "Créer ou éditer un Operation",
+        "search": "Recherche pour Operation",
+        "notFound": "Aucun Operation trouvé"
+      },
+      "created": "Un nouveau Operation a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Operation avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Operation avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Operation {{ id }} ?"
+      },
+      "detail": {
+        "title": "Operation"
+      },
+      "id": "ID",
+      "label": "Label",
+      "date": "Date",
+      "amount": "Amount",
+      "note": "Note",
+      "checkNumber": "Check Number",
+      "isUpToDate": "Is Up To Date",
+      "deletingHardLock": "Deleting Hard Lock",
+      "subCategory": "Sub Category",
+      "account": "Account",
+      "bankAccount": "Bank Account",
+      "budgetItemPeriod": "Budget Item Period"
+    }
+  }
+}

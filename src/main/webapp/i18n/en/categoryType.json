@@ -1,0 +1,10 @@
+{
+  "myaccount21App": {
+    "CategoryType": {
+      "null": "",
+      "REVENUE": "REVENUE",
+      "SPENDING": "SPENDING",
+      "OTHER": "OTHER"
+    }
+  }
+}

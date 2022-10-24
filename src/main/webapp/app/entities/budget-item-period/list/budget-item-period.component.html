@@ -1,0 +1,166 @@
+<div>
+  <h2 id="page-heading" data-cy="BudgetItemPeriodHeading">
+    <span jhiTranslate="myaccount21App.budgetItemPeriod.home.title">BudgetItemPeriods</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="myaccount21App.budgetItemPeriod.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-budget-item-period"
+        [routerLink]="['/budget-item-period/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="myaccount21App.budgetItemPeriod.home.createLabel">
+          Créer un nouveau Budget Item Period
+        </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" jhiTranslate="myaccount21App.budgetItemPeriod.home.search"
+          >Recherche pour Budget Item Period</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'myaccount21App.budgetItemPeriod.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        <button class="btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+          <fa-icon icon="trash-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="budgetItemPeriods?.length === 0">
+    <span jhiTranslate="myaccount21App.budgetItemPeriod.home.notFound">Aucun Budget Item Period trouvé</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="budgetItemPeriods && budgetItemPeriods.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="date">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.date">Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="month">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.month">Month</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="amount">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.amount">Amount</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isSmoothed">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.isSmoothed">Is Smoothed</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isRecurrent">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.isRecurrent">Is Recurrent</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="operation.id">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.operation">Operation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="budgetItem.id">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.budgetItemPeriod.budgetItem">Budget Item</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let budgetItemPeriod of budgetItemPeriods; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/budget-item-period', budgetItemPeriod.id, 'view']">{{ budgetItemPeriod.id }}</a>
+          </td>
+          <td>{{ budgetItemPeriod.date | formatMediumDate }}</td>
+          <td>{{ budgetItemPeriod.month | formatMediumDate }}</td>
+          <td>{{ budgetItemPeriod.amount }}</td>
+          <td>{{ budgetItemPeriod.isSmoothed }}</td>
+          <td>{{ budgetItemPeriod.isRecurrent }}</td>
+          <td>
+            <div *ngIf="budgetItemPeriod.operation">
+              <a [routerLink]="['/operation', budgetItemPeriod.operation.id, 'view']">{{ budgetItemPeriod.operation.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="budgetItemPeriod.budgetItem">
+              <a [routerLink]="['/budget-item', budgetItemPeriod.budgetItem.id, 'view']">{{ budgetItemPeriod.budgetItem.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/budget-item-period', budgetItemPeriod.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/budget-item-period', budgetItemPeriod.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+              </button>
+
+              <button type="submit" (click)="delete(budgetItemPeriod)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

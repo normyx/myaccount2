@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="operation">
+      <h2 data-cy="operationDetailsHeading"><span jhiTranslate="myaccount21App.operation.detail.title">Operation</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ operation.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.label">Label</span></dt>
+        <dd>
+          <span>{{ operation.label }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.date">Date</span></dt>
+        <dd>
+          <span>{{ operation.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.amount">Amount</span></dt>
+        <dd>
+          <span>{{ operation.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.note">Note</span></dt>
+        <dd>
+          <span>{{ operation.note }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.checkNumber">Check Number</span></dt>
+        <dd>
+          <span>{{ operation.checkNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.isUpToDate">Is Up To Date</span></dt>
+        <dd>
+          <span>{{ operation.isUpToDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.deletingHardLock">Deleting Hard Lock</span></dt>
+        <dd>
+          <span>{{ operation.deletingHardLock }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.subCategory">Sub Category</span></dt>
+        <dd>
+          <div *ngIf="operation.subCategory">
+            <a [routerLink]="['/sub-category', operation.subCategory.id, 'view']">{{ operation.subCategory.subCategoryName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.account">Account</span></dt>
+        <dd>
+          <div *ngIf="operation.account">
+            <a [routerLink]="['/application-user', operation.account.id, 'view']">{{ operation.account.nickName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.operation.bankAccount">Bank Account</span></dt>
+        <dd>
+          <div *ngIf="operation.bankAccount">
+            <a [routerLink]="['/bank-account', operation.bankAccount.id, 'view']">{{ operation.bankAccount.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/operation', operation.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

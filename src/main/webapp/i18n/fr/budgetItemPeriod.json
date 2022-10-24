@@ -1,0 +1,31 @@
+{
+  "myaccount21App": {
+    "budgetItemPeriod": {
+      "home": {
+        "title": "BudgetItemPeriods",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Budget Item Period",
+        "createOrEditLabel": "Créer ou éditer un Budget Item Period",
+        "search": "Recherche pour Budget Item Period",
+        "notFound": "Aucun Budget Item Period trouvé"
+      },
+      "created": "Un nouveau Budget Item Period a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Budget Item Period avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Budget Item Period avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Budget Item Period {{ id }} ?"
+      },
+      "detail": {
+        "title": "Budget Item Period"
+      },
+      "id": "ID",
+      "date": "Date",
+      "month": "Month",
+      "amount": "Amount",
+      "isSmoothed": "Is Smoothed",
+      "isRecurrent": "Is Recurrent",
+      "operation": "Operation",
+      "budgetItem": "Budget Item"
+    }
+  }
+}

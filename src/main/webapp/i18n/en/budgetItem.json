@@ -1,0 +1,29 @@
+{
+  "myaccount21App": {
+    "budgetItem": {
+      "home": {
+        "title": "Budget Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Budget Item",
+        "createOrEditLabel": "Create or edit a Budget Item",
+        "search": "Search for Budget Item",
+        "notFound": "No Budget Items found"
+      },
+      "created": "A new Budget Item is created with identifier {{ param }}",
+      "updated": "A Budget Item is updated with identifier {{ param }}",
+      "deleted": "A Budget Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Budget Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Budget Item"
+      },
+      "id": "ID",
+      "name": "Name",
+      "order": "Order",
+      "budgetItemPeriods": "Budget Item Periods",
+      "category": "Category",
+      "account": "Account"
+    }
+  }
+}

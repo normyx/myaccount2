@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="budgetItemPeriod">
+      <h2 data-cy="budgetItemPeriodDetailsHeading">
+        <span jhiTranslate="myaccount21App.budgetItemPeriod.detail.title">Budget Item Period</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ budgetItemPeriod.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.date">Date</span></dt>
+        <dd>
+          <span>{{ budgetItemPeriod.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.month">Month</span></dt>
+        <dd>
+          <span>{{ budgetItemPeriod.month | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.amount">Amount</span></dt>
+        <dd>
+          <span>{{ budgetItemPeriod.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.isSmoothed">Is Smoothed</span></dt>
+        <dd>
+          <span>{{ budgetItemPeriod.isSmoothed }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.isRecurrent">Is Recurrent</span></dt>
+        <dd>
+          <span>{{ budgetItemPeriod.isRecurrent }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.operation">Operation</span></dt>
+        <dd>
+          <div *ngIf="budgetItemPeriod.operation">
+            <a [routerLink]="['/operation', budgetItemPeriod.operation.id, 'view']">{{ budgetItemPeriod.operation.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.budgetItemPeriod.budgetItem">Budget Item</span></dt>
+        <dd>
+          <div *ngIf="budgetItemPeriod.budgetItem">
+            <a [routerLink]="['/budget-item', budgetItemPeriod.budgetItem.id, 'view']">{{ budgetItemPeriod.budgetItem.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/budget-item-period', budgetItemPeriod.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>
