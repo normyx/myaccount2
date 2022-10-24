@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tech.jhipster.config.JHipsterConstants;
 
 @Configuration
-@EnableJpaRepositories({ "org.mgoulene.repository" })
+@EnableJpaRepositories({ "org.mgoulene.repository", "org.mgoulene.mya.repository" })
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 @EnableElasticsearchRepositories("org.mgoulene.repository.search")

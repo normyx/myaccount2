@@ -352,6 +352,15 @@
             <scope>test</scope>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+			<groupId>com.github.mpkorstanje</groupId>
+			<artifactId>simmetrics-core</artifactId>
+			<version>4.1.1</version>
+		</dependency>
     </dependencies>
 
     <build>

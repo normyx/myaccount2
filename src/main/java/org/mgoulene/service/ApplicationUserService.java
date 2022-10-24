@@ -26,7 +26,7 @@ public class ApplicationUserService {
 
     private final ApplicationUserRepository applicationUserRepository;
 
-    private final ApplicationUserMapper applicationUserMapper;
+    protected final ApplicationUserMapper applicationUserMapper;
 
     private final ApplicationUserSearchRepository applicationUserSearchRepository;
 

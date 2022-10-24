@@ -30,7 +30,7 @@ public class OperationService {
 
     private final OperationRepository operationRepository;
 
-    private final OperationMapper operationMapper;
+    protected final OperationMapper operationMapper;
 
     private final OperationSearchRepository operationSearchRepository;
 

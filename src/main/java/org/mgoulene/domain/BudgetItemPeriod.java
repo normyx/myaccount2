@@ -25,7 +25,7 @@ public class BudgetItemPeriod implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "date")
+    @Column(name = "jhi_date")
     private LocalDate date;
 
     @NotNull

@@ -40,6 +40,16 @@ public class OperationDTO implements Serializable {
 
     private BankAccountDTO bankAccount;
 
+    private BudgetItemPeriodDTO budgetItemPeriod;
+
+    public BudgetItemPeriodDTO getBudgetItemPeriod() {
+        return budgetItemPeriod;
+    }
+
+    public void setBudgetItemPeriod(BudgetItemPeriodDTO budgetItemPeriodDTO) {
+        this.budgetItemPeriod = budgetItemPeriodDTO;
+    }
+
     public Long getId() {
         return id;
     }

@@ -14,10 +14,10 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="label" type="varchar(400)">
+            <column name="jhi_label" type="varchar(400)">
                 <constraints nullable="false" />
             </column>
-            <column name="date" type="date">
+            <column name="jhi_date" type="date">
                 <constraints nullable="false" />
             </column>
             <column name="amount" type="${floatType}">

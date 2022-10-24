@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet  id="20220817102106-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="application_user">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20220817102106-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/application_user.csv"
+                  separator=";"
+                  tableName="application_user"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="nick_name" type="string"/>
+            <column name="user_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet  id="20220623155215-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="category">  
+        </delete>  
+    </changeSet>
+     <changeSet id="20220623155215-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/category.csv"
+                  separator=";"
+                  tableName="category"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="category_name" type="string"/>
+            <column name="category_type" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet  id="20220623155217-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="sub_category">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20220623155217-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/sub_category.csv"
+                  separator=";"
+                  tableName="sub_category"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="sub_category_name" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    
+    <changeSet  id="20220623155212-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="bank_account">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20220623155212-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/bank_account.csv"
+                  separator=";"
+                  tableName="bank_account"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="account_name" type="string"/>
+            <column name="account_bank" type="string"/>
+            <column name="initial_amount" type="numeric"/>
+            <column name="archived" type="boolean"/>
+            <column name="short_name" type="string"/>
+            <column name="account_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet  id="20220623155216-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="operation">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20220623155216-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/operation.csv"
+                  separator=";"
+                  tableName="operation"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="jhi_label" type="string"/>
+            <column name="jhi_date" type="date"/>
+            <column name="amount" type="numeric"/>
+            <column name="note" type="string"/>
+            <column name="check_number" type="string"/>
+            <column name="is_up_to_date" type="boolean"/>
+            <column name="deleting_hard_lock" type="boolean"/>
+            <column name="bank_account_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet  id="20220623155213-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="budget_item">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20220623155213-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/budget_item.csv"
+                  separator=";"
+                  tableName="budget_item"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="name" type="string"/>
+            <column name="jhi_order" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet  id="20220623155214-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="budget_item_period">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20220623155214-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/budget_item_period.csv"
+                  separator=";"
+                  tableName="budget_item_period"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="jhi_date" type="date"/>
+            <column name="month" type="date"/>
+            <column name="amount" type="numeric"/>
+            <column name="is_smoothed" type="boolean"/>
+            <column name="is_recurrent" type="boolean"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+     <changeSet  id="11111111111111-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="param_days">  
+        </delete>  
+    </changeSet>
+    <changeSet id="11111111111111-2-data" author="mathieu.goulene" context="test">
+        <loadData
+                  file="config/liquibase/test-data/param_days.csv"
+                  separator=";"
+                  tableName="param_days"
+                  usePreparedStatements="true">
+            
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

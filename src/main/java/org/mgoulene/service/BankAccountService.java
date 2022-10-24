@@ -30,7 +30,7 @@ public class BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
 
-    private final BankAccountMapper bankAccountMapper;
+    protected final BankAccountMapper bankAccountMapper;
 
     private final BankAccountSearchRepository bankAccountSearchRepository;
 

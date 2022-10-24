@@ -28,9 +28,9 @@ public class BudgetItemService {
 
     private final Logger log = LoggerFactory.getLogger(BudgetItemService.class);
 
-    private final BudgetItemRepository budgetItemRepository;
+    protected final BudgetItemRepository budgetItemRepository;
 
-    private final BudgetItemMapper budgetItemMapper;
+    protected final BudgetItemMapper budgetItemMapper;
 
     private final BudgetItemSearchRepository budgetItemSearchRepository;
 

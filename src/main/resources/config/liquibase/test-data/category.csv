@@ -1,0 +1,14 @@
+"id";"category_name";"category_type"
+1;Logement, immobilier;SPENDING
+2;Dépenses vie courante;SPENDING
+3;Impôts;SPENDING
+4;Enfants;SPENDING
+5;Sports, loisirs;SPENDING
+6;Education, formation;SPENDING
+7;Sorties, voyages;SPENDING
+8;Transports, véhicules;SPENDING
+9;Services;SPENDING
+10;Santé, prévoyance;SPENDING
+11;Revenus;REVENUE
+12;Hors budget;OTHER
+13;Non-Catégorisées;OTHER

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    
+    <changeSet author="mathieu.goulene" id="201808051150700-1">
+        <createTable tableName="param_days">
+            <column name="jhi_date" type="DATE">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="month" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="day_in_month" type="TINYINT(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="n_days_in_month" type="TINYINT(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ratio_in_month" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+          </createTable>
+    </changeSet>
+   
+</databaseChangeLog>

@@ -38,7 +38,7 @@ public class OperationResource {
 
     private final Logger log = LoggerFactory.getLogger(OperationResource.class);
 
-    private static final String ENTITY_NAME = "operation";
+    public static final String ENTITY_NAME = "operation";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;

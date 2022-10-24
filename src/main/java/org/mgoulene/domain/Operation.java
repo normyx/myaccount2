@@ -27,11 +27,11 @@ public class Operation implements Serializable {
 
     @NotNull
     @Size(max = 400)
-    @Column(name = "label", length = 400, nullable = false)
+    @Column(name = "jhi_label", length = 400, nullable = false)
     private String label;
 
     @NotNull
-    @Column(name = "date", nullable = false)
+    @Column(name = "jhi_date", nullable = false)
     private LocalDate date;
 
     @NotNull
