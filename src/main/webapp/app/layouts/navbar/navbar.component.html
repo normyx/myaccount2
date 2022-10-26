@@ -27,6 +27,38 @@
             </span>
           </a>
         </li>
+        <li class="nav-item" *jhiHasAnyAuthority="'ROLE_USER'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="mya/mya-dashboard/account" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="chart-pie"></fa-icon>
+              <span jhiTranslate="mya.global.menu.dashboard">Tableau de board</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" *jhiHasAnyAuthority="'ROLE_USER'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="mya/mya-budget-item" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="arrow-trend-up"></fa-icon>
+              <span jhiTranslate="global.menu.mya-budgetItem">Gestion du Budget</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" *jhiHasAnyAuthority="'ROLE_USER'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="mya/mya-operation" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="money-check-dollar"></fa-icon>
+              <span jhiTranslate="global.menu.mya-operation">Mes Opérations</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item" *jhiHasAnyAuthority="'ROLE_USER'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="mya/mya-bank-account" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="money-check-dollar"></fa-icon>
+              <span jhiTranslate="global.menu.mya-bank-account">Mes Comptes</span>
+            </span>
+          </a>
+        </li>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <li
           *ngSwitchCase="true"

@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm!">
+      <div class="modal-header">
+        <h2
+          id="jhi-budget-item-heading"
+          class="modal-title"
+          data-cy="BudgetItemCreateUpdateHeading"
+          jhiTranslate="myaccount2App.budgetItem.home.createOrEditLabel"
+        >
+          Créer ou éditer un Budget Item
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="dismiss()">&times;</button>
+      </div>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <br />
+        <div class="row mb-3">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+            <label class="form-label" jhiTranslate="myaccount2App.budgetItem.name" for="field_name">Name</label>
+          </div>
+          <div *ngIf="editForm!.get('name')!.invalid && (editForm!.get('name')!.dirty || editForm!.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm!.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm!.get('name')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 5 }"
+            >
+              Ce champ doit faire au minimum 5 caractères.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm!.get('name')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              Ce champ doit faire moins de 100 caractères.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="dismiss()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm!.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

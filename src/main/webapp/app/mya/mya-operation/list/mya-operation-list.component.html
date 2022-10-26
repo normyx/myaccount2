@@ -1,0 +1,101 @@
+<div class="alert alert-warning" id="no-result" *ngIf="operations?.length === 0">
+  <span jhiTranslate="myaccount2App.operation.home.notFound">Aucun Operation trouvé</span>
+</div>
+
+<div class="table-responsive" id="entities" *ngIf="operations && operations.length > 0">
+  <table class="table table-striped" aria-describedby="page-heading">
+    <thead>
+      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col" jhiSortBy="label">
+          <span jhiTranslate="myaccount2App.operation.label">Label</span>
+          <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="date">
+          <span jhiTranslate="myaccount2App.operation.date">Date</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="amount">
+          <span jhiTranslate="myaccount2App.operation.amount">Amount</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="note">
+          <span jhiTranslate="myaccount2App.operation.note">Note</span>
+          <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+        </th>
+        <th scope="col">
+          <span jhiTranslate="myaccount2App.operation.checkNumber">Check Number</span>
+        </th>
+
+        <th scope="col">
+          <span jhiTranslate="myaccount2App.operation.category">Category</span>
+        </th>
+        <th scope="col">
+          <span jhiTranslate="myaccount2App.operation.subCategory">Sub Category</span>
+        </th>
+
+        <th scope="col" jhiSortBy="bankAccount.id">
+          <span jhiTranslate="myaccount2App.operation.bankAccount">Bank Account</span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let operation of operations; trackBy: trackId" data-cy="entityTable">
+        <td>
+          <jhi-mya-category-icon categoryId="{{ operation.subCategory?.category?.id }}" iconSize="36"> </jhi-mya-category-icon>
+        </td>
+        <td>
+          <ng-template [ngIf]="operation!.budgetItemPeriod">
+            <button type="submit" (click)="editBudgetItemPeriod(operation.budgetItemPeriod)" class="btn btn-light btn-sm">
+              <fa-icon icon="wallet" class="text-success"></fa-icon>
+            </button>
+          </ng-template>
+        </td>
+        <td>
+          {{ operation.label }}
+        </td>
+        <td>{{ operation.date | formatMediumDate }}</td>
+        <td style="text-align: right">{{ operation.amount | currency: 'EUR' }}</td>
+        <td>{{ operation.note }}</td>
+        <td>{{ operation.checkNumber }}</td>
+
+        <td>
+          {{ operation.subCategory?.category?.categoryName }}
+        </td>
+        <td>
+          {{ operation.subCategory?.subCategoryName }}
+        </td>
+
+        <td>
+          {{ operation.bankAccount?.accountName }}
+        </td>
+        <td>
+          <div class="btn-group">
+            <button type="submit" (click)="delete(operation)" class="btn btn-danger btn-sm">
+              <fa-icon icon="trash-can" [fixedWidth]="true"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="operations && operations.length > 0">
+  <div class="d-flex justify-content-center">
+    <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <ngb-pagination
+      [collectionSize]="totalItems"
+      [page]="page"
+      [pageSize]="itemsPerPage"
+      [maxSize]="5"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      (pageChange)="navigateToPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>

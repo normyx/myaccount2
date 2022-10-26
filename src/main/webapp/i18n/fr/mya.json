@@ -1,0 +1,135 @@
+{
+  "mya": {
+    "global": {
+      "menu": {
+        "dashboard": "Tableau de board",
+        "admin": {
+          "adminElasticsearchReindex": "Réindexer Elasticsearch"
+        }
+      }
+    },
+    "entity": {
+      "budgetItemPeriod": {
+        "dialog": {
+          "delete": {
+            "title": "Confirmation de suppression",
+            "question": "Êtes vous certain de vouloir supprimer cet élément et les suivants ?"
+          },
+          "create": {
+            "title": "Création d'un nouvel élément"
+          },
+          "update": {
+            "title": "Modification de {{ name }} pour la période {{ month }}"
+          }
+        },
+        "form": {
+          "structure": "Structure",
+          "parameters": "Paramètres",
+          "isSmoothed": "Dépense lissée",
+          "modifyNexts": "Modification des suivants",
+          "amount": "Montant",
+          "dayInMonth": "Jour du mois",
+          "operation": "Opération à pointer",
+          "operationNull": "Ne plus pointer"
+        }
+      },
+      "budgetItem": {
+        "list": {
+          "chooseMonth": "Sélectionner le mois :",
+          "createLabel": "Créer un nouveau poste budgétaire"
+        },
+        "dialog": {
+          "delete": {
+            "title": "Confirmation de suppression",
+            "question": "Êtes vous certain de vouloir supprimer le poste budgétaire {{ name }} ?"
+          },
+          "create": {
+            "title": "Création d'un nouveau poste budgétaire",
+            "form": {
+              "name": "Titre",
+              "month": "Mois de démarrage",
+              "dayInMonth": "Jour dans le mois",
+              "amount": "Montant",
+              "dates": "Définition des dates",
+              "budget": "Définition du budget",
+              "category": "Choix de la catégorie"
+            }
+          }
+        }
+      },
+      "operation": {
+        "list": {
+          "title": "Liste des opérations",
+          "import": "Importer un fichier",
+          "filter": {
+            "title": "Filtres",
+            "dateFrom": "A partir de",
+            "dateTo": "Jusqu'à",
+            "category": "Choix de la catégorie",
+            "contains": "Le Libellé contient",
+            "bankAccount": "Choix du Compte en Banque"
+          },
+          "search": {
+            "title": "Recherche",
+            "label": "Requête de recherche"
+          }
+        },
+        "dialog": {
+          "delete": {
+            "title": "Confirmation de suppression de l'opération",
+            "question": "Êtes vous certain de vouloir supprimer l'opération : {{name}} ?",
+            "budgetItemPeriodPresent": "Attention, cette opération est pointée par le poste budgétaire {{name}}"
+          },
+          "update": {
+            "title": "Modification de l'opération {{name}} en date du {{date}}",
+            "label": "Libellé"
+          }
+        },
+        "import": {
+          "fileLegend": "Choisir le fichier à importer",
+          "validate": "Valider l'importation",
+          "operationToCreate": "Liste des opérations à créer",
+          "operationToUpdate": "Liste des opérations à modifier et proches",
+          "operationNotClosed": "Liste des opérations à modifier et Libellés non proches",
+          "operationToDelete": "Liste des opérations à supprimer sans verrou",
+          "operationToDeleteWithHardLock": "Liste des opérations à supprimer avec un verrou"
+        }
+      }
+    },
+    "dashboard": {
+      "category": {
+        "detail": {
+          "displayDetails": "Afficher le détail des budgets & opération",
+          "budgetItems": "Budgets de {{categoryName}} ",
+          "operations": "Opérations de {{categoryName}} pour le mois de {{date}}"
+        },
+        "summary": {
+          "title": "Résumé pour la catégorie {{name}}",
+          "weather": {
+            "title": "Météo"
+          },
+          "evolutionAndAverage": {
+            "title": "Evolution et moyennes"
+          },
+          "evolutionAndMarked": {
+            "title": "Evoluion et pointages"
+          },
+          "split": {
+            "title": "Répartition",
+            "onemonth": "sur 1 mois",
+            "twelvemonths": "sur 12 mois"
+          },
+          "evolutionInMonth": {
+            "title": "Evolution sur le mois"
+          },
+          "filter": {
+            "category": "Sélectionner une catégorie"
+          },
+          "evolutionBetweenDates": {
+            "summary": "Au {{ date }}, le solde du compte est à {{ amount}}"
+          }
+        }
+      }
+    }
+  }
+}

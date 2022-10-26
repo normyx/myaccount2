@@ -1,0 +1,124 @@
+<div>
+  <h2 id="page-heading" data-cy="OperationHeading">
+    <span jhiTranslate="mya.entity.operation.list.title">Liste des opérations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2">
+        <fa-icon icon="sync"></fa-icon>
+        <span jhiTranslate="myaccount2App.operation.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button class="btn btn-primary" routerLink="/mya/mya-operation/import">
+        <fa-icon icon="arrow-up-from-bracket"></fa-icon>
+        <span jhiTranslate="mya.entity.operation.list.import">Importer un fichier</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <!--<form name="filterForm" class="row row-cols-sm-auto align-items-center">-->
+  <div class="row mb-3">
+    <legend class="mt-4" jhiTranslate="mya.entity.operation.list.filter.title">Filtres</legend>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <span class="form-label" jhiTranslate="mya.entity.operation.list.filter.contains" for="field_contains">Le Libellé contient</span>
+      <input id="field_contains" type="text" class="form-control" [(ngModel)]="contains" (change)="setContains($event)" name="contains" />
+    </div>
+
+    <div class="col">
+      <form class="row row-cols-sm-auto align-items-center">
+        <label class="form-label" for="field_dateFrom">
+          <span class="form-label" jhiTranslate="mya.entity.operation.list.filter.dateFrom" for="field_dateFrom">A partir de</span>
+          <div class="input-group">
+            <input
+              id="field_dateFrom"
+              class="form-control"
+              [(ngModel)]="dateFrom"
+              name="dateFrom"
+              ngbDatepicker
+              #dateDpFrom="ngbDatepicker"
+              (dateSelect)="setDateFrom($event)"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDpFrom.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </label>
+
+        <label class="form-label" for="field_dateTo">
+          <span class="form-label" jhiTranslate="mya.entity.operation.list.filter.dateTo" for="field_dateTo">Jusqu'à</span>
+          <div class="input-group">
+            <input
+              id="field_dateTo"
+              data-cy="date"
+              type="text"
+              class="form-control"
+              ngbDatepicker
+              #dateDpTo="ngbDatepicker"
+              (dateSelect)="setDateTo($event)"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateDpTo.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </label>
+      </form>
+    </div>
+    <div class="col">
+      <span class="form-label" jhiTranslate="mya.entity.operation.list.filter.category" for="field_category">Choix de la catégorie</span>
+      <select class="form-control form-select" id="field_category" name="category" [(ngModel)]="selectedCategory">
+        <option [ngValue]="null"></option>
+        <option [ngValue]="category" *ngFor="let category of categories">
+          {{ category.categoryName }}
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <span class="form-label" jhiTranslate="mya.entity.operation.list.filter.bankAccount" for="field_bankAccount"
+        >Choix du Compte en Banque</span
+      >
+      <select class="form-control form-select" id="field_bankAccount" name="bankAccount" [(ngModel)]="selectedBankAccount">
+        <option [ngValue]="null"></option>
+        <option [ngValue]="bankAccount" *ngFor="let bankAccount of bankAccounts">
+          {{ bankAccount.accountName }} ({{ bankAccount.accountBank }})
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-danger btn-lg" (click)="resetFilters()">
+        <fa-icon icon="trash-alt"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <!--</form>-->
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <legend class="mt-4" jhiTranslate="mya.entity.operation.list.search.label">Requete de Recherche</legend>
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" />
+        <button class="btn btn-info" (click)="setCurrentSearch(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+        <button class="btn btn-danger" (click)="setCurrentSearch('')" *ngIf="currentSearch">
+          <fa-icon icon="trash-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!--<jhi-filter [filters]="filters" (filterChange)="navigateToWithComponentValues()"></jhi-filter>-->
+
+  <jhi-mya-operation-list
+    [dateFrom]="dateFrom"
+    [dateTo]="dateTo"
+    [selectedCategory]="selectedCategory"
+    [selectedBankAccount]="selectedBankAccount"
+    [contains]="contains"
+    [currentSearch]="currentSearch"
+  ></jhi-mya-operation-list>
+</div>

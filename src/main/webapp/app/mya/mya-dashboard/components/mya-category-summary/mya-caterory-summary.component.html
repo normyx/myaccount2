@@ -1,0 +1,81 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2 jhiTranslate="mya.dashboard.category.summary.title" [translateValues]="{ name: (category | async)?.categoryName }">
+      Résumé pour la catégorie <i>{{ (category | async)?.categoryName }}</i>
+    </h2>
+  </div>
+  <div class="card-body">
+    <div class="container-fluid card-text">
+      <div class="row">
+        <div [class]="isSummary ? 'col-md-2' : ''">
+          <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.weather.title"></h5>
+          <jhi-mya-category-weather
+            [categoryId]="categoryId"
+            [monthTo]="monthTo"
+            [monthFrom]="monthTo"
+            [displayX]="false"
+          ></jhi-mya-category-weather>
+        </div>
+        <div [class]="isSummary ? 'col-md-3' : ''">
+          <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.evolutionAndAverage.title"></h5>
+          <jhi-mya-evolution-by-months
+            [categoryId]="categoryId"
+            [monthTo]="monthTo"
+            [monthFrom]="monthFrom"
+            [height]="isSummary ? '15vh' : '30vh'"
+            [displayX]="!isSummary"
+          ></jhi-mya-evolution-by-months>
+        </div>
+        <div [class]="isSummary ? 'col-md-3' : ''">
+          <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.evolutionAndMarked.title"></h5>
+          <jhi-mya-evolution-by-months-with-smoothed-and-marked
+            [categoryId]="categoryId"
+            [monthTo]="monthTo"
+            [monthFrom]="monthFrom"
+            [height]="isSummary ? '15vh' : '30vh'"
+            [displayX]="!isSummary"
+          >
+          </jhi-mya-evolution-by-months-with-smoothed-and-marked>
+        </div>
+        <div [class]="isSummary ? 'col-md-2' : ''">
+          <div class="container-fluid">
+            <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.split.title"></h5>
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.split.onemonth"></h5>
+                <jhi-mya-category-split
+                  [categoryId]="categoryId"
+                  [month]="monthTo"
+                  [numberOfMonth]="1"
+                  [height]="isSummary ? '15vh' : '30vh'"
+                ></jhi-mya-category-split>
+              </div>
+              <div class="col-md-6">
+                <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.split.twelvemonths"></h5>
+                <jhi-mya-category-split
+                  [categoryId]="categoryId"
+                  [month]="monthTo"
+                  [numberOfMonth]="12"
+                  [height]="isSummary ? '15vh' : '30vh'"
+                ></jhi-mya-category-split>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [class]="isSummary ? 'col-md-2' : ''">
+          <h5 class="text-center" jhiTranslate="mya.dashboard.category.summary.evolutionInMonth.title"></h5>
+          <jhi-mya-evolution-in-month
+            [categoryId]="categoryId"
+            [month]="monthTo"
+            [height]="isSummary ? '15vh' : '30vh'"
+            [displayX]="!isSummary"
+          >
+          </jhi-mya-evolution-in-month>
+        </div>
+      </div>
+      <div class="row" *ngIf="isSummary">
+        <a [routerLink]="['/mya/mya-dashboard/category', (category | async)?.id, getMonthStr()]">Afficher le détail</a>
+      </div>
+    </div>
+  </div>
+</div>

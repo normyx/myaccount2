@@ -1,0 +1,206 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="modal-header">
+        <h2
+          class="modal-title"
+          jhiTranslate="mya.entity.budgetItemPeriod.dialog.update.title"
+          *ngIf="budgetItemPeriod!.id"
+          [translateValues]="{ name: budgetItemPeriod!.budgetItem!.name, month: budgetItemPeriod!.month!.toDate() | date: 'MMM-YY' }"
+        >
+          Modification
+        </h2>
+        <h2 class="modal-title" jhiTranslate="mya.entity.budgetItemPeriod.dialog.create.title" *ngIf="!budgetItemPeriod!.id">Création</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="activeModal.dismiss('closed')">&times;</button>
+      </div>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <br />
+        <div class="container">
+          <div class="row mb-3">
+            <div class="col-sm form-check">
+              <legend class="mt-4" jhiTranslate="mya.entity.budgetItemPeriod.form.structure">Structure</legend>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="field_isSmoothed"
+                  name="isSmoothed"
+                  data-cy="isSmoothed"
+                  formControlName="isSmoothed"
+                />
+                <label class="form-check-label" for="field_isSmoothed" jhiTranslate="mya.entity.budgetItemPeriod.form.isSmoothed"
+                  >Is Smoothed</label
+                >
+              </div>
+              <div class="form-check form-switch" *ngIf="budgetItemPeriod!.id">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="field_modifyNexts"
+                  name="modifyNexts"
+                  data-cy="modifyNexts"
+                  formControlName="modifyNexts"
+                />
+                <label class="form-check-label" for="field_modifyNexts" jhiTranslate="mya.entity.budgetItemPeriod.form.modifyNexts"
+                  >Modifier les suivants</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row mb-3">
+            <legend class="mt-4" jhiTranslate="mya.entity.budgetItemPeriod.form.parameters">Paramètres</legend>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm">
+              <label class="form-label" for="field_amount">
+                <div class="input-group form-floating">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="amount"
+                    id="field_amount"
+                    data-cy="amount"
+                    formControlName="amount"
+                    (change)="dataChange()"
+                  />
+                  <label jhiTranslate="mya.entity.budgetItemPeriod.form.amount" for="field_amount">Montant</label>
+                  <div>
+                    <span class="input-group-text fs-3">€</span>
+                  </div>
+                </div>
+                <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+                  <small
+                    class="form-text text-danger"
+                    *ngIf="editForm.get('amount')?.errors?.required"
+                    jhiTranslate="entity.validation.required"
+                  >
+                    Ce champ est obligatoire.
+                  </small>
+                  <small
+                    class="form-text text-danger"
+                    [hidden]="!editForm.get('amount')?.errors?.number"
+                    jhiTranslate="entity.validation.number"
+                  >
+                    Ce champ doit être un nombre.
+                  </small>
+                </div>
+              </label>
+            </div>
+            <div class="col-sm" *ngIf="!editForm.get('isSmoothed')!.getRawValue()">
+              <div class="form-floating mb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  name="dayInMonth"
+                  id="field_dayInMonth"
+                  data-cy="dayInMonth"
+                  formControlName="dayInMonth"
+                  (change)="dataChange()"
+                  placeholder="dayInMonth"
+                />
+                <label jhiTranslate="mya.entity.budgetItemPeriod.form.dayInMonth" for="field_dayInMonth"></label>
+              </div>
+              <div
+                *ngIf="editForm.get('dayInMonth')!.invalid && (editForm.get('dayInMonth')!.dirty || editForm.get('dayInMonth')!.touched)"
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('dayInMonth')?.errors?.required"
+                  jhiTranslate="entity.validation.required"
+                >
+                  Ce champ est obligatoire.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('dayInMonth')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                >
+                  Ce champ doit être un nombre.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm!.get('dayInMonth')?.errors?.min"
+                  jhiTranslate="entity.validation.min"
+                  [translateValues]="{ min: 1 }"
+                >
+                  Ce champ doit faire au minimum 5 caractères.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm!.get('dayInMonth')?.errors?.max"
+                  jhiTranslate="entity.validation.max"
+                  [translateValues]="{ max: 31 }"
+                >
+                  Ce champ doit faire moins de 100 caractères.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container" *ngIf="operationsCollection?.length != 0">
+          <div class="row mb-3">
+            <legend class="mt-4" jhiTranslate="mya.entity.budgetItemPeriod.form.operation">Opération à pointer</legend>
+          </div>
+          <div class="row mb-3">
+            <fieldset>
+              <div class="form-check" *ngIf="editForm.get('operationId')!.getRawValue()">
+                <input
+                  class="form-check-input"
+                  formControlName="operationId"
+                  name="operationId"
+                  type="radio"
+                  id="optionNull"
+                  [value]="null"
+                  (change)="selectOperation()"
+                />
+                <label class="form-check-label text-muted" id="optionNull" jhiTranslate="mya.entity.budgetItemPeriod.form.operationNull"
+                  >Ne plus pointer
+                </label>
+              </div>
+              <div class="form-check" *ngFor="let operationOption of operationsCollection; let index = index">
+                <input
+                  class="form-check-input"
+                  formControlName="operationId"
+                  name="operationId"
+                  type="radio"
+                  [id]="'optionsOperationRadios' + index"
+                  [value]="operationOption.id"
+                  (change)="selectOperation()"
+                  [attr.disabled]="checkOperationDisable(operationOption)"
+                />
+                <label class="form-check-label" [id]="'optionsOperationRadios' + index">
+                  <fa-icon icon="wallet" *ngIf="operationOption.budgetItemPeriod" [styles]="{ color: 'green' }"> </fa-icon>
+                  <span [class]="amountsEqual(operationOption.amount, editForm.get('amount')?.getRawValue()) ? 'text-info' : 'text-primary'"
+                    >{{ operationOption.date?.toDate() | date: 'dd MMM-YY' }} - {{ operationOption.label }} -
+                    {{ operationOption.amount | currency: 'EUR' }}</span
+                  >
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="dismiss()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

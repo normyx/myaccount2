@@ -1,0 +1,7 @@
+<div
+  *ngFor="let budgetItemPeriod of budgetItemPeriods; let index = index"
+  mya-budget-item-period-cell-element
+  [budgetItemPeriod]="budgetItemPeriod"
+  [budgetItem]="budgetItem"
+  [editable]="editable"
+></div>

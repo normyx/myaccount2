@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <table style="text-align: center">
+      <tr style="vertical-align: middle">
+        <td>
+          <ng-template [ngIf]="isGreen()">
+            <fa-icon [icon]="'sun'" class="fas fa-5x" style="color: green"></fa-icon>
+          </ng-template>
+
+          <ng-template [ngIf]="isOrange()">
+            <fa-icon [icon]="'cloud-sun'" class="fas fa-5x" style="color: orange"></fa-icon>
+          </ng-template>
+          <ng-template [ngIf]="isRed()">
+            <fa-icon [icon]="'cloud-sun-rain'" class="fas fa-5x" style="color: red"></fa-icon>
+          </ng-template>
+        </td>
+        <td>
+          <span style="font-size: 48px"> {{ operationADate! - budgetADate! | currency: 'EUR' }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <p-chart type="bar" [data]="data" [options]="options" height="70px" width="300px"></p-chart>
+  </div>
+</div>

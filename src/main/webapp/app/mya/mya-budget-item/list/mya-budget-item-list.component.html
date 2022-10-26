@@ -1,0 +1,35 @@
+<div class="alert alert-warning" id="no-result" *ngIf="budgetItems?.length === 0">
+  <span jhiTranslate="myaccount2App.budgetItem.home.notFound">Aucun Budget Item trouvé</span>
+</div>
+
+<div class="table-responsive" id="entities" *ngIf="budgetItems && budgetItems.length > 0">
+  <table class="table table-sm table-striped table-hover" aria-describedby="page-heading">
+    <thead>
+      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+        <th></th>
+        <th></th>
+        <th scope="col" jhiSortBy="name">
+          <span jhiTranslate="myaccount2App.budgetItem.name">Name</span>
+          <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+        </th>
+        <th *ngFor="let monthToDisplay of getMonthsToDisplay()">
+          {{ monthToDisplay.toDate() | date: 'MMM-YY' }}
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let budgetItem of budgetItems; trackBy: trackId; let i = index; let isFirst = first; let isLast = last">
+        <tr
+          jhi-mya-budget-item-row
+          [budgetItem]="budgetItem"
+          [monthSelected]="monthSelected"
+          [numberOfMonthsToDisplay]="getNumberOfMonthsToDisplay()"
+          [isFirst]="isFirst"
+          [isLast]="isLast"
+          data-cy="entityTable"
+        ></tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

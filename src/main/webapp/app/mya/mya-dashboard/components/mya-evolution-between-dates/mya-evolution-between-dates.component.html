@@ -1,0 +1,6 @@
+<h3
+  *ngIf="bankAccountId"
+  jhiTranslate="mya.dashboard.category.summary.evolutionBetweenDates.summary"
+  [translateValues]="{ date: maxDate | date: 'dd-MMM-YY', amount: maxAmount | currency: 'EUR' }"
+></h3>
+<p-chart type="line" [data]="data" [options]="options" [height]="height"></p-chart>

@@ -1,0 +1,29 @@
+<form *ngIf="budgetItem" name="deleteForm" (ngSubmit)="confirmDelete()">
+  <div class="modal-header">
+    <h2 class="modal-title" data-cy="budgetItemDeleteDialogHeading" jhiTranslate="mya.entity.budgetItem.dialog.delete.title">
+      Confirmation de suppression
+    </h2>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <p
+      id="jhi-delete-budgetItem-heading"
+      jhiTranslate="mya.entity.budgetItem.dialog.delete.question"
+      [translateValues]="{ name: budgetItem.name }"
+    >
+      Êtes-vous certain de vouloir supprimer le Budget Item {{ budgetItem.name }} ?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+    </button>
+
+    <button id="jhi-confirm-delete-budgetItem" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+      <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Supprimer</span>
+    </button>
+  </div>
+</form>

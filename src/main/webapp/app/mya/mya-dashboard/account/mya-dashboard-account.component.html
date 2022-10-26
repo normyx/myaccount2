@@ -1,0 +1,70 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <label class="form-label" for="field_month">
+      <span class="form-label" jhiTranslate="mya.entity.budgetItem.list.chooseMonth" for="field_month">Sélectionner le mois :</span>
+      <div class="input-group">
+        <input
+          type="text"
+          id="field_month"
+          placeholder="Choisir le mois"
+          aria-describedby="basic-addon1"
+          class="form-control"
+          #dp="bsDatepicker"
+          bsDatepicker
+          [(ngModel)]="selectedMonth"
+          (ngModelChange)="setSelectedMonth()"
+          [bsConfig]="bsConfig"
+        />
+        <button
+          type="button"
+          class="btn btn-secondary input-group-prepend"
+          (click)="dp.toggle()"
+          [attr.aria-expanded]="dp.isOpen"
+          id="basic-addon1"
+        >
+          <fa-icon icon="calendar-alt"></fa-icon>
+        </button>
+      </div>
+    </label>
+  </div>
+
+  <div class="card-body">
+    <div class="container-fluid card-text">
+      <div class="row">
+        <jhi-mya-evolution-between-dates-for-bank-account [dateFrom]="balanceDateFrom" [dateTo]="balanceDateTo" [height]="'40vh'">
+        </jhi-mya-evolution-between-dates-for-bank-account>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="container-fluid card-text">
+      <div class="row">
+        <div class="col-md-4">
+          <jhi-mya-evolution-between-dates [dateFrom]="balanceDateFrom" [dateTo]="balanceDateTo" [height]="'40vh'">
+          </jhi-mya-evolution-between-dates>
+        </div>
+        <div class="col-md-4">
+          <jhi-mya-evolution-in-month [month]="selectedMonth" [height]="'40vh'"></jhi-mya-evolution-in-month>
+        </div>
+        <div class="col-md-4">
+          <jhi-mya-evolution-by-months [monthFrom]="balanceDateFrom" [monthTo]="selectedMonth" [height]="'40vh'">
+          </jhi-mya-evolution-by-months>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<ng-template ngFor let-categoryId [ngForOf]="categoryIds">
+  <br />
+  <jhi-mya-category-summary
+    [categoryId]="categoryId"
+    [monthTo]="selectedMonth"
+    [monthFrom]="selectedMonthMinusNumberOfMonth"
+    [isSummary]="true"
+  ></jhi-mya-category-summary>
+</ng-template>
+<br />

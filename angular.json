@@ -23,6 +23,7 @@
             "customWebpackConfig": {
               "path": "./webpack/webpack.custom.js"
             },
+            "allowedCommonJsDependencies": ["dayjs", "moment"],
             "outputPath": "target/classes/static/",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",

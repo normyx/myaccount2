@@ -1,0 +1,231 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="modal-header">
+        <h2 id="jhi-budget-item-heading" data-cy="BudgetItemCreateUpdateHeading" jhiTranslate="mya.entity.budgetItem.dialog.create.title">
+          Création d'un nouveau poste budgétaire
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="dismiss()">&times;</button>
+      </div>
+      <br />
+      <div>
+        <div class="row mb-3">
+          <legend class="mt-4" jhiTranslate="mya.entity.budgetItem.dialog.create.form.name">Titre</legend>
+        </div>
+        <div class="row mb-3">
+          <div class="form-group">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                id="field_name"
+                data-cy="name"
+                formControlName="name"
+                placeholder="Toto"
+              />
+              <label jhiTranslate="mya.entity.budgetItem.dialog.create.form.name" for="field_name"></label>
+            </div>
+            <div *ngIf="editForm!.get('name')!.invalid && (editForm!.get('name')!.dirty || editForm!.get('name')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('name')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Ce champ est obligatoire.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('name')?.errors?.minlength"
+                jhiTranslate="entity.validation.minlength"
+                [translateValues]="{ min: 5 }"
+              >
+                Ce champ doit faire au minimum 5 caractères.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('name')?.errors?.maxlength"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: 100 }"
+              >
+                Ce champ doit faire moins de 100 caractères.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <legend class="mt-4" jhiTranslate="mya.entity.budgetItem.dialog.create.form.dates">Définition des dates</legend>
+        </div>
+        <div class="row mb-3">
+          <div class="col-lg">
+            <label class="form-label" for="field_month">
+              <div class="input-group form-floating">
+                <input
+                  type="text"
+                  id="field_createbi_month"
+                  placeholder="Choisir le mois"
+                  aria-describedby="basic-addon2"
+                  class="form-control"
+                  #dp="bsDatepicker"
+                  bsDatepicker
+                  [bsConfig]="bsConfig"
+                  name="month"
+                  formControlName="month"
+                  placeholder="Toto"
+                />
+                <label jhiTranslate="mya.entity.budgetItem.dialog.create.form.month" for="field_month"></label>
+                <button
+                  type="button"
+                  class="btn btn-secondary input-group-prepend"
+                  (click)="dp.toggle()"
+                  [attr.aria-expanded]="dp.isOpen"
+                  id="basic-addon2"
+                >
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+            </label>
+            <div *ngIf="editForm!.get('month')!.invalid && (editForm!.get('month')!.dirty || editForm!.get('month')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('month')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Ce champ est obligatoire.
+              </small>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="form-floating mb-3">
+              <input
+                type="number"
+                class="form-control"
+                name="dayInMonth"
+                id="field_dayInMonth"
+                data-cy="dayInMonth"
+                formControlName="dayInMonth"
+                placeholder="Toto"
+              />
+              <label jhiTranslate="mya.entity.budgetItem.dialog.create.form.dayInMonth" for="field_dayInMonth"></label>
+            </div>
+            <div *ngIf="editForm.get('dayInMonth')!.invalid && (editForm.get('dayInMonth')!.dirty || editForm.get('dayInMonth')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('dayInMonth')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Ce champ est obligatoire.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dayInMonth')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                Ce champ doit être un nombre.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('dayInMonth')?.errors?.min"
+                jhiTranslate="entity.validation.min"
+                [translateValues]="{ min: 1 }"
+              >
+                Ce champ doit faire au minimum 5 caractères.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm!.get('dayInMonth')?.errors?.max"
+                jhiTranslate="entity.validation.max"
+                [translateValues]="{ max: 31 }"
+              >
+                Ce champ doit faire moins de 100 caractères.
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <legend class="mt-4" jhiTranslate="mya.entity.budgetItem.dialog.create.form.budget">Définition du budget</legend>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm">
+          <label class="form-label" for="field_amount">
+            <div class="input-group form-floating">
+              <input
+                type="number"
+                class="form-control"
+                name="amount"
+                id="field_amount"
+                data-cy="amount"
+                formControlName="amount"
+                placeholder="Amount"
+              />
+              <label jhiTranslate="mya.entity.budgetItem.dialog.create.form.amount" for="field_amount"></label>
+              <div>
+                <span class="input-group-text fs-3">€</span>
+              </div>
+            </div>
+          </label>
+          <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('amount')?.errors?.required" jhiTranslate="entity.validation.required">
+              Ce champ est obligatoire.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+        <div class="col-sm form-check">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="field_isSmoothed"
+              name="isSmoothed"
+              data-cy="isSmoothed"
+              formControlName="isSmoothed"
+            />
+            <label class="form-check-label" for="field_isSmoothed" jhiTranslate="mya.entity.budgetItemPeriod.form.isSmoothed"
+              >Is Smoothed</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm">
+          <legend class="mt-4" jhiTranslate="mya.entity.budgetItem.dialog.create.form.category">Choix de la catégorie</legend>
+        </div>
+        <select class="form-control form-select" id="field_category" data-cy="category" name="categoryId" formControlName="categoryId">
+          <option [ngValue]="null"></option>
+          <option [ngValue]="categoryOption.id" *ngFor="let categoryOption of categoriesSharedCollection">
+            {{ categoryOption.categoryName }}
+          </option>
+        </select>
+        <div *ngIf="editForm!.get('categoryId')!.invalid && (editForm!.get('categoryId')!.dirty || editForm!.get('categoryId')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm!.get('categoryId')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            Ce champ est obligatoire.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="dismiss()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

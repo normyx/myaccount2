@@ -1,0 +1,96 @@
+<div>
+  <h2 id="page-heading" data-cy="BudgetItemHeading">
+    <span jhiTranslate="myaccount2App.budgetItem.home.title">BudgetItems</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()">
+        <fa-icon icon="sync"></fa-icon>
+        <span jhiTranslate="myaccount2App.budgetItem.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-budget-item"
+        (click)="create()"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="mya.entity.budgetItem.list.createLabel"> Créer un nouveau Budget Item </span>
+      </button>
+    </div>
+  </h2>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <label class="form-label" for="field_month">
+          <span class="form-label" jhiTranslate="mya.entity.budgetItem.list.chooseMonth" for="field_month">Sélectionner le mois :</span>
+          <div class="input-group">
+            <input
+              type="text"
+              id="field_month"
+              placeholder="Choisir le mois"
+              aria-describedby="basic-addon1"
+              class="form-control"
+              #dp="bsDatepicker"
+              bsDatepicker
+              [(ngModel)]="monthSelected"
+              [bsConfig]="bsConfig"
+            />
+            <button
+              type="button"
+              class="btn btn-secondary input-group-prepend"
+              (click)="dp.toggle()"
+              [attr.aria-expanded]="dp.isOpen"
+              id="basic-addon1"
+            >
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <span class="form-label" jhiTranslate="mya.dashboard.category.summary.filter.category" for="field_category"
+          >Sélectionner une Catégorie</span
+        >
+        <select class="form-control form-select" id="field_category" [(ngModel)]="selectedCategoryId">
+          <option [ngValue]="null"></option>
+          <option [ngValue]="category.id" *ngFor="let category of categories">
+            {{ category.categoryName }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" jhiTranslate="myaccount2App.budgetItem.home.search"
+          >Recherche pour Budget Item</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'myaccount2App.budgetItem.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        <button class="btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+          <fa-icon icon="trash-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <jhi-mya-budget-item-list
+    [currentSearch]="currentSearch"
+    [monthSelected]="monthSelected"
+    [selectedCategoryId]="selectedCategoryId"
+  ></jhi-mya-budget-item-list>
+</div>

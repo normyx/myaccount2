@@ -10,7 +10,7 @@ export interface IBudgetItemPeriod {
   isSmoothed?: boolean | null;
   isRecurrent?: boolean | null;
   operation?: Pick<IOperation, 'id'> | null;
-  budgetItem?: Pick<IBudgetItem, 'id'> | null;
+  budgetItem?: Pick<IBudgetItem, 'id' | 'name'> | null;
 }
 
 export type NewBudgetItemPeriod = Omit<IBudgetItemPeriod, 'id'> & { id: null };

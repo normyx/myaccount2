@@ -1,0 +1,33 @@
+<ng-container *ngIf="!isbudgetItemPeriodsEmpty()">
+  <td>
+    <a *ngIf="!isFirst" (click)="reorder('up')" class="nav-link">
+      <fa-icon icon="caret-up" [fixedWidth]="true"></fa-icon>
+    </a>
+    <a *ngIf="!isLast" (click)="reorder('down')" class="nav-link">
+      <fa-icon icon="caret-down" [fixedWidth]="true"></fa-icon>
+    </a>
+  </td>
+  <td></td>
+  <td>
+    <jhi-mya-category-icon categoryId="{{ budgetItem?.category?.id }}" iconSize="36"> </jhi-mya-category-icon>
+    {{ budgetItem!.name }}
+  </td>
+  <td
+    *ngFor="let budgetItemPeriods of budgetItemPeriodss; let isFirst = first"
+    data-cy="entityTable"
+    mya-budget-item-period-cell
+    [budgetItemPeriods]="budgetItemPeriods"
+    [budgetItem]="budgetItem"
+    [editable]="isFirst"
+  ></td>
+  <td>
+    <div class="btn-group">
+      <button type="submit" (click)="edit()" class="btn btn-secondary btn-sm">
+        <fa-icon icon="pen-to-square" [fixedWidth]="true"></fa-icon>
+      </button>
+      <button type="submit" (click)="delete()" class="btn btn-danger btn-sm">
+        <fa-icon icon="trash-can" [fixedWidth]="true"></fa-icon>
+      </button>
+    </div>
+  </td>
+</ng-container>

@@ -1,0 +1,615 @@
+<div class="row mb-3">
+  <legend for="file" class="form-label" jhiTranslate="mya.entity.operation.import.fileLegend">Choisir le fichier à importer</legend>
+</div>
+<div class="row mb-3">
+  <div class="col-6">
+    <div class="input-group">
+      <input class="form-control" type="file" accept="text/csv" id="file" (change)="handleFileInput($event)" aria-describedby="fileId" />
+      <button type="button" class="btn btn-info input-group-prepend" id="fileId" (click)="uploadFile()">
+        <fa-icon icon="arrow-up-from-bracket"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <div class="col-6">
+    <button class="btn btn-primary" (click)="validateImport()" *ngIf="actions">
+      <span jhiTranslate="mya.entity.operation.import.validate">Valider l'importation</span>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="row">
+  <fa-icon class="fa-10x text-muted text-center" icon="spinner" [spin]="true"></fa-icon>
+</div>
+
+<div *ngIf="!isLoading && actions">
+  <div class="card bg-light mb-3">
+    <div class="card-header d-flex w-100 justify-content-between">
+      <h3 jhiTranslate="mya.entity.operation.import.operationToCreate">Liste des opérations à créer</h3>
+      <button type="button" class="btn" (click)="switchOperationToCreateVisible()">
+        <fa-icon *ngIf="operationToCreateVisible" icon="chevron-up"></fa-icon>
+        <fa-icon *ngIf="!operationToCreateVisible" icon="chevron-down"></fa-icon>
+      </button>
+    </div>
+    <div class="card-body" *ngIf="operationToCreateVisible">
+      <div class="table-responsive" id="operationsToCreate" *ngIf="actions.operationsToCreate && actions.operationsToCreate.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <button type="submit" (click)="checkOperationToCreate()" class="btn btn-primary btn-sm">
+                  <fa-icon icon="plus" class="text-light"></fa-icon>
+                </button>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.label">Label</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.date">Date</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.amount">Amount</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.note">Note</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.checkNumber">Check Number</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.category">Category</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.subCategory">Sub Category</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.bankAccount">Bank Account</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let operation of actions.operationsToCreate" data-cy="entityTable">
+              <td>
+                <input class="form-check-input" type="checkbox" [(ngModel)]="operation.checked" />
+              </td>
+              <td>
+                {{ operation.label }}
+              </td>
+              <td>{{ operation.date | formatMediumDate }}</td>
+              <td style="text-align: right">{{ operation.amount | currency: 'EUR' }}</td>
+              <td>{{ operation.note }}</td>
+              <td>{{ operation.checkNumber }}</td>
+
+              <td>
+                {{ operation.subCategory?.category?.categoryName }}
+              </td>
+              <td>
+                {{ operation.subCategory?.subCategoryName }}
+              </td>
+
+              <td>
+                {{ operation.bankAccount?.accountName }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-light mb-3">
+    <div class="card-header d-flex w-100 justify-content-between">
+      <h3 jhiTranslate="mya.entity.operation.import.operationToUpdate">Liste des opérations à modifier et proches</h3>
+      <button type="button" class="btn" (click)="switchOperationToUpdateVisible()">
+        <fa-icon *ngIf="operationToUpdateVisible" icon="chevron-up"></fa-icon>
+        <fa-icon *ngIf="!operationToUpdateVisible" icon="chevron-down"></fa-icon>
+      </button>
+    </div>
+    <div class="card-body" *ngIf="operationToUpdateVisible">
+      <div class="table-responsive" id="operationsToUpdate" *ngIf="actions.operationsToUpdate && actions.operationsToUpdate.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <button type="submit" (click)="checkOperationToUpdate()" class="btn btn-primary btn-sm">
+                  <fa-icon icon="pen" class="text-light"></fa-icon>
+                </button>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.label">Label</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.date">Date</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.amount">Amount</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.note">Note</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.checkNumber">Check Number</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.category">Category</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.subCategory">Sub Category</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.bankAccount">Bank Account</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-sourcetarget [ngForOf]="actions.operationsToUpdate">
+              <tr data-cy="entityTable">
+                <td rowspan="2" style="vertical-align: middle; text-align: center">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="sourcetarget.checked" />
+                </td>
+                <td [class]="checkDifferent(sourcetarget.source?.label, sourcetarget.target?.label) ? 'text-info' : 'text-primary'">
+                  {{ sourcetarget.source?.label }}
+                </td>
+                <td [class]="checkDifferentDate(sourcetarget.source?.date, sourcetarget.target?.date) ? 'text-info' : 'text-primary'">
+                  {{ sourcetarget.source?.date | formatMediumDate }}
+                </td>
+                <td
+                  style="text-align: right"
+                  [class]="checkDifferent(sourcetarget.source?.amount, sourcetarget.target?.amount) ? 'text-info' : 'text-primary'"
+                >
+                  {{ sourcetarget.source?.amount | currency: 'EUR' }}
+                </td>
+                <td [class]="checkDifferent(sourcetarget.source?.note, sourcetarget.target?.note) ? 'text-info' : 'text-primary'">
+                  {{ sourcetarget.source?.note }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.checkNumber, sourcetarget.target?.checkNumber) ? 'text-info' : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.checkNumber }}
+                </td>
+
+                <td
+                  [class]="
+                    checkDifferent(
+                      sourcetarget.source?.subCategory?.category?.categoryName,
+                      sourcetarget.target?.subCategory?.category?.categoryName
+                    )
+                      ? 'text-info'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.subCategory?.category?.categoryName }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.subCategory?.subCategoryName, sourcetarget.target?.subCategory?.subCategoryName)
+                      ? 'text-info'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.subCategory?.subCategoryName }}
+                </td>
+
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.bankAccount?.accountName, sourcetarget.target?.bankAccount?.accountName)
+                      ? 'text-info'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.bankAccount?.accountName }}
+                </td>
+              </tr>
+              <tr data-cy="entityTable">
+                <td [class]="checkDifferent(sourcetarget.source?.label, sourcetarget.target?.label) ? 'text-muted' : 'text-primary'">
+                  {{ sourcetarget.target?.label }}
+                </td>
+                <td [class]="checkDifferentDate(sourcetarget.source?.date, sourcetarget.target?.date) ? 'text-muted' : 'text-primary'">
+                  {{ sourcetarget.target?.date | formatMediumDate }}
+                </td>
+                <td
+                  style="text-align: right"
+                  [class]="checkDifferent(sourcetarget.source?.amount, sourcetarget.target?.amount) ? 'text-muted' : 'text-primary'"
+                >
+                  {{ sourcetarget.target?.amount | currency: 'EUR' }}
+                </td>
+                <td [class]="checkDifferent(sourcetarget.source?.note, sourcetarget.target?.note) ? 'text-muted' : 'text-primary'">
+                  {{ sourcetarget.target?.note }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.checkNumber, sourcetarget.target?.checkNumber) ? 'text-muted' : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.checkNumber }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(
+                      sourcetarget.source?.subCategory?.category?.categoryName,
+                      sourcetarget.target?.subCategory?.category?.categoryName
+                    )
+                      ? 'text-muted'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.subCategory?.category?.categoryName }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.subCategory?.subCategoryName, sourcetarget.target?.subCategory?.subCategoryName)
+                      ? 'text-muted'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.subCategory?.subCategoryName }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.bankAccount?.accountName, sourcetarget.target?.bankAccount?.accountName)
+                      ? 'text-muted'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.bankAccount?.accountName }}
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-light mb-3">
+    <div class="card-header d-flex w-100 justify-content-between">
+      <h3 jhiTranslate="mya.entity.operation.import.operationNotClosed">Liste des opérations à modifier et Libellés non proches</h3>
+      <button type="button" class="btn" (click)="switchOperationNotClosedVisible()">
+        <fa-icon *ngIf="operationNotClosedVisible" icon="chevron-up"></fa-icon>
+        <fa-icon *ngIf="!operationNotClosedVisible" icon="chevron-down"></fa-icon>
+      </button>
+    </div>
+    <div class="card-body" *ngIf="operationNotClosedVisible">
+      <div class="table-responsive" id="operationsNotClosed" *ngIf="actions.operationsNotClosed && actions.operationsNotClosed.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <button type="submit" (click)="checkOperationNotClosed()" class="btn btn-primary btn-sm">
+                  <fa-icon icon="pen" class="text-light"></fa-icon>
+                </button>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.label">Label</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.date">Date</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.amount">Amount</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.note">Note</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.checkNumber">Check Number</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.category">Category</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.subCategory">Sub Category</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.bankAccount">Bank Account</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-sourcetarget [ngForOf]="actions.operationsNotClosed">
+              <tr data-cy="entityTable">
+                <td rowspan="2" style="vertical-align: middle; text-align: center">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="sourcetarget.checked" />
+                </td>
+                <td [class]="checkDifferent(sourcetarget.source?.label, sourcetarget.target?.label) ? 'text-info' : 'text-primary'">
+                  {{ sourcetarget.source?.label }}
+                </td>
+                <td [class]="checkDifferentDate(sourcetarget.source?.date, sourcetarget.target?.date) ? 'text-info' : 'text-primary'">
+                  {{ sourcetarget.source?.date | formatMediumDate }}
+                </td>
+                <td
+                  style="text-align: right"
+                  [class]="checkDifferent(sourcetarget.source?.amount, sourcetarget.target?.amount) ? 'text-info' : 'text-primary'"
+                >
+                  {{ sourcetarget.source?.amount | currency: 'EUR' }}
+                </td>
+                <td [class]="checkDifferent(sourcetarget.source?.note, sourcetarget.target?.note) ? 'text-info' : 'text-primary'">
+                  {{ sourcetarget.source?.note }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.checkNumber, sourcetarget.target?.checkNumber) ? 'text-info' : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.checkNumber }}
+                </td>
+
+                <td
+                  [class]="
+                    checkDifferent(
+                      sourcetarget.source?.subCategory?.category?.categoryName,
+                      sourcetarget.target?.subCategory?.category?.categoryName
+                    )
+                      ? 'text-info'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.subCategory?.category?.categoryName }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.subCategory?.subCategoryName, sourcetarget.target?.subCategory?.subCategoryName)
+                      ? 'text-info'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.subCategory?.subCategoryName }}
+                </td>
+
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.bankAccount?.accountName, sourcetarget.target?.bankAccount?.accountName)
+                      ? 'text-info'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.source?.bankAccount?.accountName }}
+                </td>
+              </tr>
+              <tr data-cy="entityTable">
+                <td [class]="checkDifferent(sourcetarget.source?.label, sourcetarget.target?.label) ? 'text-muted' : 'text-primary'">
+                  {{ sourcetarget.target?.label }}
+                </td>
+                <td [class]="checkDifferentDate(sourcetarget.source?.date, sourcetarget.target?.date) ? 'text-muted' : 'text-primary'">
+                  {{ sourcetarget.target?.date | formatMediumDate }}
+                </td>
+                <td
+                  style="text-align: right"
+                  [class]="checkDifferent(sourcetarget.source?.amount, sourcetarget.target?.amount) ? 'text-muted' : 'text-primary'"
+                >
+                  {{ sourcetarget.target?.amount | currency: 'EUR' }}
+                </td>
+                <td [class]="checkDifferent(sourcetarget.source?.note, sourcetarget.target?.note) ? 'text-muted' : 'text-primary'">
+                  {{ sourcetarget.target?.note }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.checkNumber, sourcetarget.target?.checkNumber) ? 'text-muted' : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.checkNumber }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(
+                      sourcetarget.source?.subCategory?.category?.categoryName,
+                      sourcetarget.target?.subCategory?.category?.categoryName
+                    )
+                      ? 'text-muted'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.subCategory?.category?.categoryName }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.subCategory?.subCategoryName, sourcetarget.target?.subCategory?.subCategoryName)
+                      ? 'text-muted'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.subCategory?.subCategoryName }}
+                </td>
+                <td
+                  [class]="
+                    checkDifferent(sourcetarget.source?.bankAccount?.accountName, sourcetarget.target?.bankAccount?.accountName)
+                      ? 'text-muted'
+                      : 'text-primary'
+                  "
+                >
+                  {{ sourcetarget.target?.bankAccount?.accountName }}
+                </td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-light mb-3">
+    <div class="card-header d-flex w-100 justify-content-between">
+      <h3 jhiTranslate="mya.entity.operation.import.operationToDelete">Liste des opérations à supprimer et sans verrou</h3>
+      <button type="button" class="btn" (click)="switchOperationToDeleteVisible()">
+        <fa-icon *ngIf="operationToDeleteVisible" icon="chevron-up"></fa-icon>
+        <fa-icon *ngIf="!operationToDeleteVisible" icon="chevron-down"></fa-icon>
+      </button>
+    </div>
+    <div class="card-body" *ngIf="operationToDeleteVisible">
+      <div class="table-responsive" id="operationsToDelete" *ngIf="actions.operationsToDelete && actions.operationsToDelete.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <button type="submit" (click)="checkOperationToDelete()" class="btn btn-danger btn-sm">
+                  <fa-icon icon="trash-can" class="text-light"></fa-icon>
+                </button>
+              </th>
+              <th scope="col">
+                <button type="submit" (click)="hardLockOperationToDelete()" class="btn btn-warning btn-sm">
+                  <fa-icon icon="lock" class="text-light"></fa-icon>
+                </button>
+              </th>
+              <th scope="col"></th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.label">Label</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.date">Date</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.amount">Amount</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.note">Note</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.checkNumber">Check Number</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.category">Category</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.subCategory">Sub Category</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.bankAccount">Bank Account</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let operation of actions.operationsToDelete" data-cy="entityTable">
+              <td>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [attr.disabled]="operation.budgetItemPeriod"
+                  [(ngModel)]="operation.checked"
+                />
+              </td>
+              <td>
+                <input class="form-check-input" type="checkbox" [(ngModel)]="operation.checkHardLock" />
+              </td>
+              <td>
+                <fa-icon *ngIf="operation.budgetItemPeriod" icon="wallet" class="text-success"></fa-icon>
+              </td>
+              <td>
+                {{ operation.label }}
+              </td>
+              <td>{{ operation.date | formatMediumDate }}</td>
+              <td style="text-align: right">{{ operation.amount | currency: 'EUR' }}</td>
+              <td>{{ operation.note }}</td>
+              <td>{{ operation.checkNumber }}</td>
+
+              <td>
+                {{ operation.subCategory?.category?.categoryName }}
+              </td>
+              <td>
+                {{ operation.subCategory?.subCategoryName }}
+              </td>
+
+              <td>
+                {{ operation.bankAccount?.accountName }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-light mb-3">
+    <div class="card-header d-flex w-100 justify-content-between">
+      <h3 jhiTranslate="mya.entity.operation.import.operationToDeleteWithHardLock">Liste des opérations à supprimer avec un verrou</h3>
+      <button type="button" class="btn" (click)="switchOperationToDeleteWithHardLockVisible()">
+        <fa-icon *ngIf="operationToDeleteWithHardLockVisible" icon="chevron-up"></fa-icon>
+        <fa-icon *ngIf="!operationToDeleteWithHardLockVisible" icon="chevron-down"></fa-icon>
+      </button>
+    </div>
+    <div class="card-body" *ngIf="operationToDeleteWithHardLockVisible">
+      <div
+        class="table-responsive"
+        id="operationsToDeleteWithHardLock"
+        *ngIf="actions.operationsToDeleteWithHardLock && actions.operationsToDeleteWithHardLock.length > 0"
+      >
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <button type="submit" (click)="checkOperationToDeleteWithHardLock()" class="btn btn-danger btn-sm">
+                  <fa-icon icon="trash-can" class="text-light"></fa-icon>
+                </button>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.label">Label</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.date">Date</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.amount">Amount</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.note">Note</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.checkNumber">Check Number</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.category">Category</span>
+              </th>
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.subCategory">Sub Category</span>
+              </th>
+
+              <th scope="col">
+                <span jhiTranslate="myaccount2App.operation.bankAccount">Bank Account</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let operation of actions.operationsToDeleteWithHardLock" data-cy="entityTable">
+              <td>
+                <input class="form-check-input" type="checkbox" [(ngModel)]="operation.checked" />
+              </td>
+
+              <td>
+                {{ operation.label }}
+              </td>
+              <td>{{ operation.date | formatMediumDate }}</td>
+              <td style="text-align: right">{{ operation.amount | currency: 'EUR' }}</td>
+              <td>{{ operation.note }}</td>
+              <td>{{ operation.checkNumber }}</td>
+
+              <td>
+                {{ operation.subCategory?.category?.categoryName }}
+              </td>
+              <td>
+                {{ operation.subCategory?.subCategoryName }}
+              </td>
+
+              <td>
+                {{ operation.bankAccount?.accountName }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

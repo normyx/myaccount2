@@ -1,0 +1,76 @@
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <label class="form-label" for="field_month">
+            <span class="form-label" jhiTranslate="mya.entity.budgetItem.list.chooseMonth" for="field_month">Sélectionner le mois :</span>
+            <div class="input-group">
+              <input
+                type="text"
+                id="field_month"
+                placeholder="Choisir le mois"
+                aria-describedby="basic-addon1"
+                class="form-control"
+                #dp="bsDatepicker"
+                bsDatepicker
+                [(ngModel)]="selectedMonth"
+                (ngModelChange)="setSelectedMonth()"
+                [bsConfig]="bsConfig"
+              />
+              <button
+                type="button"
+                class="btn btn-secondary input-group-prepend"
+                (click)="dp.toggle()"
+                [attr.aria-expanded]="dp.isOpen"
+                id="basic-addon1"
+              >
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <span class="form-label" jhiTranslate="mya.dashboard.category.summary.filter.category" for="field_category"
+            >Sélectionner le mois :</span
+          >
+          <select
+            class="form-control form-select"
+            id="field_category"
+            data-cy="category"
+            [(ngModel)]="selectedCategoryId"
+            (ngModelChange)="setSelectedCategoryId()"
+          >
+            <option [ngValue]="category.id" *ngFor="let category of categories">
+              {{ category.categoryName }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2 jhiTranslate="mya.dashboard.category.detail.budgetItems" [translateValues]="{ categoryName: category!.categoryName }">Budgets</h2>
+  </div>
+  <div class="card-body">
+    <jhi-mya-budget-item-list [monthSelected]="selectedMonth" [selectedCategoryId]="selectedCategoryId"> </jhi-mya-budget-item-list>
+  </div>
+</div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2
+      jhiTranslate="mya.dashboard.category.detail.operations"
+      [translateValues]="{ categoryName: category!.categoryName, date: selectedMonth | date: 'MMM-YY' }"
+    >
+      Budgets
+    </h2>
+  </div>
+  <div class="card-body">
+    <jhi-mya-operation-list [dateFrom]="selectedMonth" [dateTo]="selectedMonthLastDay" [selectedCategory]="category">
+    </jhi-mya-operation-list>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-package org.mgoulene.web.rest.util;
+package org.mgoulene.mya.util;
 
 import java.time.LocalDate;
 

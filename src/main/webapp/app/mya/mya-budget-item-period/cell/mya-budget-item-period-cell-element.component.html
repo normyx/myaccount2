@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 cell-align-right">
+      <ng-template [ngIf]="!budgetItemPeriod!.isSmoothed" [ngIfElse]="smoothedBlock">
+        <fa-icon icon="calendar-days" class="text-muted"></fa-icon>&nbsp; {{ budgetItemPeriod!.date!.date() }}
+        <ng-template [ngIf]="budgetItemPeriod!.operation" [ngIfElse]="operationNotSetBlock">
+          <fa-icon icon="wallet" class="text-success"></fa-icon>
+        </ng-template>
+        <ng-template #operationNotSetBlock>
+          <ng-template [ngIf]="budgetItemPeriod!.amount != 0">
+            <ng-template [ngIf]="dateInFuture(budgetItemPeriod!.date!)" [ngIfElse]="inPast">
+              <fa-icon icon="wallet" class="text-muted"></fa-icon>
+            </ng-template>
+
+            <ng-template #inPast>
+              <fa-icon icon="wallet" class="text-warning"></fa-icon>
+            </ng-template>
+          </ng-template>
+        </ng-template>
+      </ng-template>
+      <ng-template #smoothedBlock>
+        <fa-icon icon="arrow-trend-up" class="text-muted"></fa-icon>
+      </ng-template>
+      <ng-template
+        [ngIf]="
+          editable &&
+          budgetItemPeriod!.amount != 0 &&
+          !budgetItemPeriod!.isSmoothed &&
+          !budgetItemPeriod!.operation &&
+          numberOfOperationsClose != 0
+        "
+      >
+        <sup
+          ><small
+            ><span class="badge bg-secondary">{{ numberOfOperationsClose }}</span></small
+          ></sup
+        >
+      </ng-template>
+    </div>
+
+    <div class="col-md-4 cell-align-left">
+      <div ngbDropdown>
+        <a class="nav-link dropdown-toggle remove-after" ngbDropdownToggle href="javascript:void(0);" id="menu">
+          <span>
+            <fa-icon icon="ellipsis"></fa-icon>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="menu">
+          <li>
+            <a class="dropdown-item" (click)="edit()">
+              <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
+              <span jhiTranslate="entity.action.edit">Modifier</span>
+            </a>
+          </li>
+          <li *ngIf="budgetItemPeriod!.isRecurrent">
+            <a class="dropdown-item" (click)="new()">
+              <fa-icon icon="circle-plus" [fixedWidth]="true" class="text-info"></fa-icon>
+              <span jhiTranslate="entity.action.add">Ajouter</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="delete()" routerLinkActive="active">
+              <fa-icon icon="trash-can" [fixedWidth]="true" class="text-danger"></fa-icon>
+              <span jhiTranslate="entity.action.delete">Supprimer</span>
+            </a>
+          </li>
+
+          <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 cell-align-right">
+      <span>{{ budgetItemPeriod!.amount | currency: 'EUR' }} </span>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
