@@ -248,6 +248,29 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
+## Building the application
+
+### Build the jar
+
+1. Build the Jar
+
+```
+mvnw -Pprod -Dmaven.test.skip=true clean verify
+```
+
+2. Copy the jar to destination
+3. Build the image
+
+```
+docker build -t mgoulene/myaccount2 . -f ./Dockerfile2
+```
+
+4. Deploy the container
+
+```
+docker-compose -f myaccount2.yml up -d
+```
+
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
 [jhipster 7.9.3 archive]: https://www.jhipster.tech/documentation-archive/v7.9.3
 [using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.9.3/development/

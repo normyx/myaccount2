@@ -39,7 +39,7 @@
           <a class="nav-link" routerLink="mya/mya-budget-item" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="arrow-trend-up"></fa-icon>
-              <span jhiTranslate="global.menu.mya-budgetItem">Gestion du Budget</span>
+              <span jhiTranslate="mya.global.menu.budgetItem">Gestion du Budget</span>
             </span>
           </a>
         </li>
@@ -47,7 +47,7 @@
           <a class="nav-link" routerLink="mya/mya-operation" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="money-check-dollar"></fa-icon>
-              <span jhiTranslate="global.menu.mya-operation">Mes Opérations</span>
+              <span jhiTranslate="mya.global.menu.operation">Mes Opérations</span>
             </span>
           </a>
         </li>
@@ -55,7 +55,7 @@
           <a class="nav-link" routerLink="mya/mya-bank-account" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="money-check-dollar"></fa-icon>
-              <span jhiTranslate="global.menu.mya-bank-account">Mes Comptes</span>
+              <span jhiTranslate="mya.global.menu.bankAccount">Mes Comptes</span>
             </span>
           </a>
         </li>
@@ -211,6 +211,12 @@
               <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.admin.apidocs">API</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/elasticsearch-reindex" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="search" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="mya.global.menu.admin.adminElasticsearchReindex">Admin Elasticsearch Reindex</span>
               </a>
             </li>
             <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->

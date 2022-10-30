@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges } from '@angular/core';
+import { ChartConfiguration, ChartOptions, Tick } from 'chart.js';
 import 'chartjs-adapter-moment';
 import dayjs from 'dayjs';
 import { MyaDashboardService } from '../../service/mya-dashboard.service';
@@ -14,8 +15,8 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
   @Input() dateTo: Date | null = null;
   @Input() height = '30vh';
   @Input() bankAccountId: number | null = null;
-  data: any;
-  options: any;
+  data: ChartConfiguration<'line'>['data'] | null = null;
+  options: ChartOptions<'line'> | null = null;
   maxDate: Date | null = null;
   maxAmount: number | null = null;
 
@@ -44,6 +45,8 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
           data: amounts,
           borderColor: '#0099ff',
           backgroundColor: '#0099ff',
+          pointBorderColor: '#0099ff',
+          pointBackgroundColor: '#0099ff',
           fill: false,
           pointRadius: 0,
         },
@@ -52,6 +55,8 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
           data: predictiveAmounts,
           borderColor: '#ff0000',
           backgroundColor: '#ff0000',
+          pointBorderColor: '#ff0000',
+          pointBackgroundColor: '#ff0000',
           fill: false,
           pointRadius: 0,
         },
@@ -63,7 +68,6 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
         title: {
           display: false,
           text: 'Evolutions du solde',
-          fontSize: 12,
         },
         tooltip: {
           position: 'average',
@@ -97,8 +101,8 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
             text: 'Montants',
           },
           ticks: {
-            callback(value: string): string {
-              return value + ' €';
+            callback(value: string | number, index: number, ticks: Tick[]): string {
+              return String(value) + ' €';
             },
           },
         },

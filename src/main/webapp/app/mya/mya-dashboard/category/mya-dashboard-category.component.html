@@ -44,15 +44,39 @@
     </div>
   </div>
 </div>
-<button type="button" class="btn btn-secondary" [routerLink]="['/mya/mya-dashboard/category/details', category!.id, getMonthStr()]">
+<!--<button type="button" class="btn btn-secondary" [routerLink]="['/mya/mya-dashboard/category/details', category!.id, getMonthStr()]">
   <fa-icon icon="chart-pie"></fa-icon>&nbsp;<strong jhiTranslate="mya.dashboard.category.detail.displayDetails"
     >Afficher le détail des budgets & opération</strong
   >&nbsp;<fa-icon icon="arrow-trend-up"></fa-icon>
 </button>
-<div class="row"></div>
+<div class="row"></div>-->
 <jhi-mya-category-summary
   [categoryId]="category!.id"
   [monthTo]="selectedMonth"
   [monthFrom]="selectedMonthMinusNumberOfMonth"
   [isSummary]="false"
 ></jhi-mya-category-summary>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2 jhiTranslate="mya.dashboard.category.detail.budgetItems" [translateValues]="{ categoryName: category!.categoryName }">Budgets</h2>
+  </div>
+  <div class="card-body">
+    <jhi-mya-budget-item-list [monthSelected]="selectedMonth" [selectedCategoryId]="selectedCategoryId"> </jhi-mya-budget-item-list>
+  </div>
+</div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2
+      jhiTranslate="mya.dashboard.category.detail.operations"
+      [translateValues]="{ categoryName: category!.categoryName, date: selectedMonth | date: 'MMM-YY' }"
+    >
+      Budgets
+    </h2>
+  </div>
+  <div class="card-body">
+    <jhi-mya-operation-list [dateFrom]="selectedMonth" [dateTo]="selectedMonthLastDay" [selectedCategory]="category">
+    </jhi-mya-operation-list>
+  </div>
+</div>

@@ -1,11 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="BudgetItemHeading">
-    <span jhiTranslate="myaccount2App.budgetItem.home.title">BudgetItems</span>
+    <span jhiTranslate="myaccount21App.budgetItem.home.title">BudgetItems</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()">
         <fa-icon icon="sync"></fa-icon>
-        <span jhiTranslate="myaccount2App.budgetItem.home.refreshListLabel">Actualiser la liste</span>
+        <span jhiTranslate="myaccount21App.budgetItem.home.refreshListLabel">Actualiser la liste</span>
       </button>
 
       <button
@@ -65,7 +65,7 @@
   <form name="searchForm" class="row row-cols-sm-auto align-items-center">
     <div class="col-sm-12">
       <div class="input-group w-100 mt-3">
-        <label class="visually-hidden" for="currentSearch" jhiTranslate="myaccount2App.budgetItem.home.search"
+        <label class="visually-hidden" for="currentSearch" jhiTranslate="myaccount21App.budgetItem.home.search"
           >Recherche pour Budget Item</label
         >
         <input
@@ -74,7 +74,7 @@
           [(ngModel)]="currentSearch"
           id="currentSearch"
           name="currentSearch"
-          placeholder="{{ 'myaccount2App.budgetItem.home.search' | translate }}"
+          placeholder="{{ 'myaccount21App.budgetItem.home.search' | translate }}"
         />
 
         <button class="btn btn-info" (click)="search(currentSearch)">

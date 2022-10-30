@@ -1,5 +1,5 @@
 <div class="alert alert-warning" id="no-result" *ngIf="budgetItems?.length === 0">
-  <span jhiTranslate="myaccount2App.budgetItem.home.notFound">Aucun Budget Item trouvé</span>
+  <span jhiTranslate="myaccount21App.budgetItem.home.notFound">Aucun Budget Item trouvé</span>
 </div>
 
 <div class="table-responsive" id="entities" *ngIf="budgetItems && budgetItems.length > 0">
@@ -9,7 +9,7 @@
         <th></th>
         <th></th>
         <th scope="col" jhiSortBy="name">
-          <span jhiTranslate="myaccount2App.budgetItem.name">Name</span>
+          <span jhiTranslate="mya.entity.budgetItem.list.name">Name</span>
           <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
         </th>
         <th *ngFor="let monthToDisplay of getMonthsToDisplay()">

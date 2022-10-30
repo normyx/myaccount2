@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges } from '@angular/core';
+import { ChartConfiguration, ChartOptions, Tick } from 'chart.js';
 import 'chartjs-adapter-moment';
 import dayjs from 'dayjs';
 import { MyaDashboardService } from '../../service/mya-dashboard.service';
@@ -14,8 +15,8 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
   @Input() monthFrom: Date | null = null;
   @Input() height = '30vh';
   @Input() displayX = true;
-  data: any;
-  options: any;
+  data: ChartConfiguration<'line'>['data'] | null = null;
+  options: ChartOptions<'line'> | null = null;
 
   constructor(private dashboardService: MyaDashboardService) {}
 
@@ -25,13 +26,14 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
         .getEvolutionByMonth(this.categoryId, dayjs(this.monthFrom), dayjs(this.monthTo))
         .subscribe((res: HttpResponse<any>) => {
           this.data = {
-            labels: res.body.months,
+            labels: res.body ? res.body.months : null,
             datasets: [
               {
                 label: 'Montant',
-                data: res.body.amounts,
+                data: res.body ? res.body.amounts : null,
                 borderColor: '#49ab81',
                 backgroundColor: '#49ab81',
+
                 fill: false,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
@@ -39,9 +41,11 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
               },
               {
                 label: 'Budget',
-                data: res.body.budgetAmounts,
+                data: res.body ? res.body.budgetAmounts : null,
                 borderColor: '#3b5998',
                 backgroundColor: '#3b5998',
+                pointBorderColor: '#3b5998',
+                pointBackgroundColor: '#3b5998',
                 fill: false,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
@@ -49,12 +53,12 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
               },
               {
                 label: 'Montant Moy. 3 mois',
-                data: res.body.amountsAvg3,
+                data: res.body ? res.body.amountsAvg3 : null,
                 borderColor: '#8b9dc3',
                 backgroundColor: '#8b9dc3',
-                // borderColor: '##35bf4d',
+                pointBorderColor: '#8b9dc3',
+                pointBackgroundColor: '#8b9dc3',
                 fill: false,
-                // borderDash: [5, 5],
                 borderWidth: 2,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
@@ -62,12 +66,12 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
               },
               {
                 label: 'Montant Moy. 12 mois',
-                data: res.body.amountsAvg12,
+                data: res.body ? res.body.amountsAvg12 : null,
                 borderColor: '#dfe3ee',
                 backgroundColor: '#dfe3ee',
-                // borderColor: '##35bf4d',
+                pointBorderColor: '#dfe3ee',
+                pointBackgroundColor: '#dfe3ee',
                 fill: false,
-                // borderDash: [10, 10],
                 borderWidth: 2,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
@@ -109,12 +113,12 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
               y: {
                 title: {
                   display: false,
-                  labelString: 'Montants',
+                  //labelString: 'Montants',
                 },
                 ticks: {
-                  suggestedMax: 0,
-                  callback(value: string): string {
-                    return value + ' €';
+                  //suggestedMax: 0,
+                  callback(value: string | number, index: number, ticks: Tick[]): string {
+                    return String(value) + ' €';
                   },
                 },
               },

@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges } from '@angular/core';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 import dayjs from 'dayjs';
 import { MyaDashboardService } from '../../service/mya-dashboard.service';
 
@@ -12,8 +13,8 @@ export class MyaCategorySplitComponent implements OnChanges {
   @Input() month: Date | null = null;
   @Input() numberOfMonth: number | null = null;
   @Input() height: string | null = null;
-  data: any;
-  options: any;
+  data: ChartConfiguration<'doughnut'>['data'] | null = null;
+  options: ChartOptions<'doughnut'> | null = null;
 
   constructor(private dashboardService: MyaDashboardService) {}
 

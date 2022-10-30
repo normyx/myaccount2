@@ -27,6 +27,7 @@ public interface OperationMapper extends EntityMapper<OperationDTO, Operation> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "subCategoryName", source = "subCategoryName")
+    @Mapping(target = "category", source = "category")
     SubCategoryDTO toDtoSubCategorySubCategoryName(SubCategory subCategory);
 
     @Named("applicationUserNickName")
@@ -38,6 +39,7 @@ public interface OperationMapper extends EntityMapper<OperationDTO, Operation> {
     @Named("bankAccountId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "accountName", source = "accountName")
     BankAccountDTO toDtoBankAccountId(BankAccount bankAccount);
 
     @Named("budgetItemPeriodId")

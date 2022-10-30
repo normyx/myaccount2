@@ -47,12 +47,12 @@ export class MyaOperationListPageComponent implements OnInit {
 
   setDateFrom(dateFrom: NgbDate): void {
     this.dateFromStruct = dateFrom;
-    this.dateFrom = new Date(dateFrom.year, dateFrom.month, dateFrom.day);
+    this.dateFrom = new Date(dateFrom.year, dateFrom.month - 1, dateFrom.day);
   }
 
   setDateTo(dateTo: NgbDate): void {
     this.dateToStruct = dateTo;
-    this.dateTo = new Date(dateTo.year, dateTo.month, dateTo.day);
+    this.dateTo = new Date(dateTo.year, dateTo.month - 1, dateTo.day);
   }
 
   setContains(containsEvent: any): void {

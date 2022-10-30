@@ -6,7 +6,7 @@
           id="jhi-budget-item-heading"
           class="modal-title"
           data-cy="BudgetItemCreateUpdateHeading"
-          jhiTranslate="myaccount2App.budgetItem.home.createOrEditLabel"
+          jhiTranslate="myaccount21App.budgetItem.home.createOrEditLabel"
         >
           Créer ou éditer un Budget Item
         </h2>
@@ -20,7 +20,7 @@
         <div class="row mb-3">
           <div class="form-floating mb-3">
             <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-            <label class="form-label" jhiTranslate="myaccount2App.budgetItem.name" for="field_name">Name</label>
+            <label class="form-label" jhiTranslate="myaccount21App.budgetItem.name" for="field_name">Name</label>
           </div>
           <div *ngIf="editForm!.get('name')!.invalid && (editForm!.get('name')!.dirty || editForm!.get('name')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm!.get('name')?.errors?.required" jhiTranslate="entity.validation.required">

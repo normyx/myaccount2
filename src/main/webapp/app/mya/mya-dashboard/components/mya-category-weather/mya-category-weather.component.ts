@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges } from '@angular/core';
+import { ChartConfiguration, ChartOptions, Tick } from 'chart.js';
 import dayjs from 'dayjs';
 import { MyaDashboardService } from '../../service/mya-dashboard.service';
 
@@ -13,8 +14,8 @@ export class MyaCategoryWeatherComponent implements OnChanges {
   @Input() categoryId: number | null = null;
   budgetADate: number | null = null;
   operationADate: number | null = null;
-  data: any;
-  options: any;
+  data: ChartConfiguration<'bar'>['data'] | null = null;
+  options: ChartOptions<'bar'> | null = null;
 
   constructor(private dashboardService: MyaDashboardService) {}
 
@@ -30,19 +31,18 @@ export class MyaCategoryWeatherComponent implements OnChanges {
           datasets: [
             {
               label: 'Budget',
-              data: [this.budgetADate],
+              data: [this.budgetADate!],
               borderColor: '#000000',
               backgroundColor: '#ffffff00',
-              fill: false,
+
               borderWidth: 4,
             },
             {
               label: 'Operations',
-              data: [this.operationADate],
+              data: [this.operationADate!],
               borderColor: '#49ab81',
               backgroundColor: '#49ab81',
               borderWidth: 0,
-              fill: false,
             },
           ],
         };
@@ -53,7 +53,6 @@ export class MyaCategoryWeatherComponent implements OnChanges {
             title: {
               display: false,
               text: 'Consommation du budget',
-              fontSize: 12,
             },
             legend: {
               display: false,
@@ -83,19 +82,18 @@ export class MyaCategoryWeatherComponent implements OnChanges {
               display: false,
               grid: {
                 display: false,
-                offsetGridLines: false,
               },
             },
             x: {
               display: false,
               ticks: {
-                beginAtZero: true,
+                //beginAtZero: true,
                 display: false,
-                grid: {
-                  display: false,
-                },
-                callback(value: string): string {
-                  return value + ' €';
+                //grid: {
+                //  display: false,
+                //},
+                callback(value: string | number, index: number, ticks: Tick[]): string {
+                  return String(value) + ' €';
                 },
               },
             },

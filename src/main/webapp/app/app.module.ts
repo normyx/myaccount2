@@ -27,7 +27,7 @@ import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChartModule } from 'primeng/chart';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -42,7 +42,7 @@ import { ChartModule } from 'primeng/chart';
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     TranslationModule,
     BrowserAnimationsModule,
-    ChartModule,
+    NgChartsModule,
     BsDatepickerModule.forRoot(),
   ],
   providers: [

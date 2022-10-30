@@ -23,6 +23,7 @@ export class MyaDashboardCategoryComponent implements OnInit {
   selectedMonth: Date = new Date();
   bsConfig?: Partial<BsDatepickerConfig>;
   minMode: BsDatepickerViewMode = 'month';
+  selectedMonthLastDay: Date = new Date();
 
   constructor(protected activatedRoute: ActivatedRoute, protected categoryService: CategoryService) {
     const currentDate: Dayjs = dayjs(Date.now());
@@ -62,6 +63,7 @@ export class MyaDashboardCategoryComponent implements OnInit {
       this.selectedMonth.getMonth() - MYA_REPORT_NUMBER_OF_MONTHS_FOR_RANGES,
       1
     );
+    this.selectedMonthLastDay = dayjs(this.selectedMonth).clone().add(1, 'month').add(-1, 'day').toDate();
   }
 
   getMonthStr(): string | null {

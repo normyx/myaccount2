@@ -3,12 +3,20 @@
     "global": {
       "menu": {
         "dashboard": "Tableau de board",
+        "operation": "Mes Opérations",
+        "budgetItem": "Mes budgets",
+        "bankAccount": "Mes comptes",
         "admin": {
           "adminElasticsearchReindex": "Réindexer Elasticsearch"
         }
       }
     },
     "entity": {
+      "bankAccount": {
+        "summary": {
+          "operationListTitle": "Opération pour le compte {{ accountName }}"
+        }
+      },
       "budgetItemPeriod": {
         "dialog": {
           "delete": {
@@ -36,7 +44,8 @@
       "budgetItem": {
         "list": {
           "chooseMonth": "Sélectionner le mois :",
-          "createLabel": "Créer un nouveau poste budgétaire"
+          "createLabel": "Créer un nouveau poste budgétaire",
+          "name": "Nom"
         },
         "dialog": {
           "delete": {
@@ -69,6 +78,14 @@
             "contains": "Le Libellé contient",
             "bankAccount": "Choix du Compte en Banque"
           },
+          "label": "Libellé",
+          "date": "Date",
+          "amount": "Montant",
+          "note": "Note",
+          "checkNumber": "N° de chèque",
+          "category": "Catégorie",
+          "subCategory": "Sous-Catégorie",
+          "bankAccount": "Compte",
           "search": {
             "title": "Recherche",
             "label": "Requête de recherche"

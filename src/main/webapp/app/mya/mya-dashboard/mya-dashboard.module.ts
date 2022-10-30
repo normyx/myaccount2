@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { ChartModule } from 'primeng/chart';
+//import { ChartModule } from 'primeng/chart';
 import { SharedModule } from '../../shared/shared.module';
 import { MyaBudgetItemModule } from '../mya-budget-item/mya-budget-item.module';
 import { MyaOperationModule } from '../mya-operation/mya-operation.module';
@@ -16,9 +16,17 @@ import { MyaEvolutionByMonthsWithSmoothedAndMarkedComponent } from './components
 import { MyaEvolutionByMonthsComponent } from './components/mya-evolution-by-months/mya-evolution-by-months.component';
 import { MyaEvolutionInMonthReportComponent } from './components/mya-evolution-in-month/mya-evolution-in-month.component';
 import { MyaDashboardRoutingModule } from './route/mya-dashboard-routing.module';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
-  imports: [SharedModule, ChartModule, MyaDashboardRoutingModule, MyaBudgetItemModule, MyaOperationModule, BsDatepickerModule.forRoot()],
+  imports: [
+    SharedModule,
+    /*ChartModule,*/ MyaDashboardRoutingModule,
+    MyaBudgetItemModule,
+    MyaOperationModule,
+    BsDatepickerModule.forRoot(),
+    NgChartsModule,
+  ],
   declarations: [
     MyaDashboardAccountComponent,
     MyaEvolutionBetweenDatesComponent,

@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges } from '@angular/core';
+import { ChartConfiguration, ChartOptions, Tick } from 'chart.js';
 import 'chartjs-adapter-moment';
 import dayjs from 'dayjs';
 import { MyaDashboardService } from '../../service/mya-dashboard.service';
@@ -11,11 +12,11 @@ import { MyaDashboardService } from '../../service/mya-dashboard.service';
 export class MyaEvolutionInMonthReportComponent implements OnChanges {
   @Input() month: Date | null = null;
   @Input() categoryId: number | null = null;
-  @Input() height = '30vh';
+  @Input() height = '40vh';
   @Input() displayX = true;
   // accountCategoryMonthReport: IAccountCategoryMonthReport;
-  data: any;
-  options: any;
+  data: ChartConfiguration<'line'>['data'] | null = null;
+  options: ChartOptions<'line'> | null = null;
 
   constructor(private dashboardService: MyaDashboardService) {}
 
@@ -28,6 +29,8 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           data: res.body.operationAmounts,
           borderColor: '#0099ff',
           backgroundColor: '#0099ff',
+          pointBorderColor: '#0099ff',
+          pointBackgroundColor: '#0099ff',
           fill: false,
           pointRadius: 0,
           cubicInterpolationMode: 'monotone',
@@ -38,6 +41,8 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           data: res.body.budgetAmounts,
           borderColor: '#565656',
           backgroundColor: '#565656',
+          pointBorderColor: '#565656',
+          pointBackgroundColor: '#565656',
           borderWidth: 1,
           fill: false,
           pointRadius: 0,
@@ -49,6 +54,8 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           data: res.body.predictiveBudgetAmounts,
           borderColor: '#ff0000',
           backgroundColor: '#ff0000',
+          pointBorderColor: '#ff0000',
+          pointBackgroundColor: '#ff0000',
           fill: false,
           pointRadius: 0,
           cubicInterpolationMode: 'monotone',
@@ -87,12 +94,13 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
         y: {
           title: {
             display: false,
-            labelString: 'Montants',
+            text: 'Montants',
+            //labelString: 'Montants',
           },
           ticks: {
-            suggestedMax: 0,
-            callback(value: string): string {
-              return value + ' €';
+            //suggestedMax: 0,
+            callback(value: string | number, index: number, ticks: Tick[]): string {
+              return String(value) + ' €';
             },
           },
         },

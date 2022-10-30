@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnChanges } from '@angular/core';
+import { ChartConfiguration, ChartOptions, Tick } from 'chart.js';
 import dayjs from 'dayjs';
 import { MyaDashboardService } from '../../service/mya-dashboard.service';
 
@@ -13,8 +14,8 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
   @Input() monthFrom: Date | null = null;
   @Input() height: string | null = null;
   @Input() displayX = true;
-  data: any;
-  options: any;
+  data: ChartConfiguration<'line'>['data'] | null = null;
+  options: ChartOptions<'line'> | null = null;
 
   constructor(private dashboardService: MyaDashboardService) {}
 
@@ -31,6 +32,8 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
                 data: res.body.operationAmounts,
                 borderColor: '#49ab81',
                 backgroundColor: '#49ab81',
+                pointBorderColor: '#49ab81',
+                pointBackgroundColor: '#49ab81',
                 fill: false,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
@@ -41,6 +44,8 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
                 data: res.body.budgetUnSmoothedMarkedAmounts,
                 borderColor: '#3b5998',
                 backgroundColor: '#3b5998',
+                pointBorderColor: '#3b5998',
+                pointBackgroundColor: '#3b5998',
                 fill: true,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
@@ -51,6 +56,8 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
                 data: res.body.budgetUnSmoothedUnMarkedAmounts,
                 borderColor: '#8b9dc3',
                 backgroundColor: '#8b9dc3',
+                pointBorderColor: '#8b9dc3',
+                pointBackgroundColor: '#8b9dc3',
                 fill: true,
                 borderWidth: 2,
                 pointRadius: 0,
@@ -62,6 +69,8 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
                 data: res.body.budgetSmoothedAmounts,
                 borderColor: '#dfe3ee',
                 backgroundColor: '#dfe3ee',
+                pointBorderColor: '#dfe3ee',
+                pointBackgroundColor: '#dfe3ee',
                 fill: true,
                 borderWidth: 2,
                 pointRadius: 0,
@@ -98,12 +107,12 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
               y: {
                 title: {
                   display: false,
-                  labelString: 'Montants',
+                  text: 'Montants',
                 },
                 ticks: {
-                  suggestedMax: 0,
-                  callback(value: string): string {
-                    return value + ' €';
+                  //suggestedMax: 0,
+                  callback(value: string | number, index: number, ticks: Tick[]): string {
+                    return String(value) + ' €';
                   },
                 },
               },

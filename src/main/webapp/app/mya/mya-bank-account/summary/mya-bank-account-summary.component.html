@@ -19,14 +19,19 @@
 <jhi-mya-evolution-between-dates
   [dateFrom]="dateFrom"
   [dateTo]="dateTo"
-  [height]="height"
+  height="100"
   [bankAccountId]="selectedBankAccount ? selectedBankAccount.id : null"
 >
 </jhi-mya-evolution-between-dates>
 
 <div class="card border-primary mb-3">
   <div class="card-header">
-    <h2 jhiTranslate="mya.dashboard.category.detail.operations" [translateValues]="">Budgets</h2>
+    <h2
+      jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
+      [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
+    >
+      Budgets
+    </h2>
   </div>
   <div class="card-body">
     <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>

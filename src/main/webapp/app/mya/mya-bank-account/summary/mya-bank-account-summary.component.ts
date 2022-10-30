@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import 'chartjs-adapter-moment';
 import { IBankAccount } from '../../../entities/bank-account/bank-account.model';
 import { MyaBankAccountService } from '../../mya-bank-account/service/mya-bank-account.service';
@@ -11,7 +11,7 @@ import { MyaBankAccountService } from '../../mya-bank-account/service/mya-bank-a
 export class MyaBankAccountSummaryComponent implements OnInit {
   dateFrom = new Date();
   dateTo = new Date();
-  height = '30vh';
+  height = '10vh';
   bankAccounts: IBankAccount[] | null = null;
   selectedBankAccount: IBankAccount | null = null;
 

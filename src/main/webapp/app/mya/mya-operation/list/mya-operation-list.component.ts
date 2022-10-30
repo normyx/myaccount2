@@ -191,25 +191,24 @@ export class MyaOperationListComponent implements OnInit, OnChanges {
     };
     this.filters.clear();
     if (this.dateFrom) {
-      filters?.filterOptions.push(new FilterOption('date.greaterThan', [dayjs(this.dateFrom).add(-1, 'day').format(DATE_FORMAT)]));
+      this.filters.addFilter('date.greaterThan', dayjs(this.dateFrom).add(-1, 'day').format(DATE_FORMAT));
     }
     if (this.dateTo) {
-      filters?.filterOptions.push(new FilterOption('date.lessThan', [dayjs(this.dateTo).add(1, 'day').format(DATE_FORMAT)]));
+      this.filters.addFilter('date.lessThan', dayjs(this.dateTo).add(1, 'day').format(DATE_FORMAT));
     }
     if (this.selectedCategory) {
-      filters?.filterOptions.push(new FilterOption('subCategoryId.in', [this.getSubCategoryIds(this.selectedCategory).toString()]));
+      this.filters.addFilter('subCategoryId.in', this.getSubCategoryIds(this.selectedCategory).toString());
     }
     if (this.selectedBankAccount) {
-      filters?.filterOptions.push(new FilterOption('bankAccountId.equals', [this.selectedBankAccount.id.toString()]));
+      this.filters.addFilter('bankAccountId.equals', this.selectedBankAccount.id.toString());
     }
     if (this.contains) {
-      filters?.filterOptions.push(new FilterOption('label.contains', [this.contains]));
+      this.filters.addFilter('label.contains', this.contains);
     }
-    if (filters?.hasAnyFilterSet()) {
-      filters.filterOptions.forEach(filterOption => {
-        queryObject[filterOption.name] = filterOption.values;
-      });
-    }
+    this.filters.filterOptions.forEach(filterOption => {
+      queryObject[filterOption.name] = filterOption.values;
+    });
+
     if (this.currentSearch && this.currentSearch !== '') {
       return this.operationService.searchWithSignedInUser(queryObject).pipe(tap(() => (this.isLoading = false)));
     } else {

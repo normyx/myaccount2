@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2">
         <fa-icon icon="sync"></fa-icon>
-        <span jhiTranslate="myaccount2App.operation.home.refreshListLabel">Actualiser la liste</span>
+        <span jhiTranslate="myaccount21App.operation.home.refreshListLabel">Actualiser la liste</span>
       </button>
 
       <button class="btn btn-primary" routerLink="/mya/mya-operation/import">
@@ -36,12 +36,14 @@
           <div class="input-group">
             <input
               id="field_dateFrom"
-              class="form-control"
-              [(ngModel)]="dateFrom"
               name="dateFrom"
+              class="form-control"
+              data-cy="date"
+              type="text"
               ngbDatepicker
               #dateDpFrom="ngbDatepicker"
               (dateSelect)="setDateFrom($event)"
+              formControlName="dateFrom"
             />
             <button type="button" class="btn btn-secondary" (click)="dateDpFrom.toggle()">
               <fa-icon icon="calendar-alt"></fa-icon>
