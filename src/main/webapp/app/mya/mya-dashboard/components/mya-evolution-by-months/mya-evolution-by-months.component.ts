@@ -33,7 +33,8 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
                 data: res.body ? res.body.amounts : null,
                 borderColor: '#49ab81',
                 backgroundColor: '#49ab81',
-
+                pointBorderColor: '#49ab81',
+                pointBackgroundColor: '#49ab81',
                 fill: false,
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
