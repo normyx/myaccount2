@@ -54,6 +54,12 @@
       "fieldType": "Float",
       "fieldValidateRules": ["required", "min"],
       "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "stockPriceAtAcquisitionDate",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
     }
   ],
   "jpaMetamodelFiltering": true,

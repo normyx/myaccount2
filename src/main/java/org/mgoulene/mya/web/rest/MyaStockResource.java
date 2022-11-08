@@ -1,6 +1,6 @@
 package org.mgoulene.mya.web.rest;
 
-import org.mgoulene.mya.service.MyaAlphaVantageService;
+import org.mgoulene.mya.service.alphavantage.MyaAlphaVantageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

@@ -47,6 +47,10 @@ public class StockPortfolioItemDTO implements Serializable {
     @DecimalMin(value = "0")
     private Float stockCurrentCurrencyFactor;
 
+    @NotNull
+    @DecimalMin(value = "0")
+    private Float stockPriceAtAcquisitionDate;
+
     private BankAccountDTO bankAccount;
 
     public Long getId() {
@@ -129,6 +133,14 @@ public class StockPortfolioItemDTO implements Serializable {
         this.stockCurrentCurrencyFactor = stockCurrentCurrencyFactor;
     }
 
+    public Float getStockPriceAtAcquisitionDate() {
+        return stockPriceAtAcquisitionDate;
+    }
+
+    public void setStockPriceAtAcquisitionDate(Float stockPriceAtAcquisitionDate) {
+        this.stockPriceAtAcquisitionDate = stockPriceAtAcquisitionDate;
+    }
+
     public BankAccountDTO getBankAccount() {
         return bankAccount;
     }
@@ -172,6 +184,7 @@ public class StockPortfolioItemDTO implements Serializable {
             ", stockCurrentDate='" + getStockCurrentDate() + "'" +
             ", stockAcquisitionCurrencyFactor=" + getStockAcquisitionCurrencyFactor() +
             ", stockCurrentCurrencyFactor=" + getStockCurrentCurrencyFactor() +
+            ", stockPriceAtAcquisitionDate=" + getStockPriceAtAcquisitionDate() +
             ", bankAccount=" + getBankAccount() +
             "}";
     }

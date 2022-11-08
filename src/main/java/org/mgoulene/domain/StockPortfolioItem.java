@@ -69,6 +69,11 @@ public class StockPortfolioItem implements Serializable {
     @Column(name = "stock_current_currency_factor", nullable = false)
     private Float stockCurrentCurrencyFactor;
 
+    @NotNull
+    @DecimalMin(value = "0")
+    @Column(name = "stock_price_at_acquisition_date", nullable = false)
+    private Float stockPriceAtAcquisitionDate;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "account", "stockPortfolioItems" }, allowSetters = true)
     private BankAccount bankAccount;
@@ -205,6 +210,19 @@ public class StockPortfolioItem implements Serializable {
         this.stockCurrentCurrencyFactor = stockCurrentCurrencyFactor;
     }
 
+    public Float getStockPriceAtAcquisitionDate() {
+        return this.stockPriceAtAcquisitionDate;
+    }
+
+    public StockPortfolioItem stockPriceAtAcquisitionDate(Float stockPriceAtAcquisitionDate) {
+        this.setStockPriceAtAcquisitionDate(stockPriceAtAcquisitionDate);
+        return this;
+    }
+
+    public void setStockPriceAtAcquisitionDate(Float stockPriceAtAcquisitionDate) {
+        this.stockPriceAtAcquisitionDate = stockPriceAtAcquisitionDate;
+    }
+
     public BankAccount getBankAccount() {
         return this.bankAccount;
     }
@@ -251,6 +269,7 @@ public class StockPortfolioItem implements Serializable {
             ", stockCurrentDate='" + getStockCurrentDate() + "'" +
             ", stockAcquisitionCurrencyFactor=" + getStockAcquisitionCurrencyFactor() +
             ", stockCurrentCurrencyFactor=" + getStockCurrentCurrencyFactor() +
+            ", stockPriceAtAcquisitionDate=" + getStockPriceAtAcquisitionDate() +
             "}";
     }
 }

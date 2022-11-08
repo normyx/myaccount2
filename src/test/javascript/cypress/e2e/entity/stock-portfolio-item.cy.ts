@@ -16,15 +16,16 @@ describe('StockPortfolioItem e2e test', () => {
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
   const stockPortfolioItemSample = {
-    stockSymbol: 'Outdoors C',
-    stockCurrency: 'EUR',
+    stockSymbol: 'TCP',
+    stockCurrency: 'GBP',
     stockAcquisitionDate: '2022-11-06',
-    stockSharesNumber: 48249,
-    stockAcquisitionPrice: 33006,
-    stockCurrentPrice: 30306,
+    stockSharesNumber: 97897,
+    stockAcquisitionPrice: 32029,
+    stockCurrentPrice: 14577,
     stockCurrentDate: '2022-11-06',
-    stockAcquisitionCurrencyFactor: 8948,
-    stockCurrentCurrencyFactor: 19872,
+    stockAcquisitionCurrencyFactor: 86462,
+    stockCurrentCurrencyFactor: 48249,
+    stockPriceAtAcquisitionDate: 33006,
   };
 
   let stockPortfolioItem;
@@ -187,6 +188,8 @@ describe('StockPortfolioItem e2e test', () => {
       cy.get(`[data-cy="stockAcquisitionCurrencyFactor"]`).type('90326').should('have.value', '90326');
 
       cy.get(`[data-cy="stockCurrentCurrencyFactor"]`).type('12974').should('have.value', '12974');
+
+      cy.get(`[data-cy="stockPriceAtAcquisitionDate"]`).type('96686').should('have.value', '96686');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

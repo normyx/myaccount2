@@ -87,6 +87,10 @@ class StockPortfolioItemResourceIT {
     private static final Float UPDATED_STOCK_CURRENT_CURRENCY_FACTOR = 1F;
     private static final Float SMALLER_STOCK_CURRENT_CURRENCY_FACTOR = 0F - 1F;
 
+    private static final Float DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE = 0F;
+    private static final Float UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE = 1F;
+    private static final Float SMALLER_STOCK_PRICE_AT_ACQUISITION_DATE = 0F - 1F;
+
     private static final String ENTITY_API_URL = "/api/stock-portfolio-items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
     private static final String ENTITY_SEARCH_API_URL = "/api/_search/stock-portfolio-items";
@@ -133,7 +137,8 @@ class StockPortfolioItemResourceIT {
             .stockCurrentPrice(DEFAULT_STOCK_CURRENT_PRICE)
             .stockCurrentDate(DEFAULT_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR)
-            .stockCurrentCurrencyFactor(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR);
+            .stockCurrentCurrencyFactor(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR)
+            .stockPriceAtAcquisitionDate(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
         return stockPortfolioItem;
     }
 
@@ -153,7 +158,8 @@ class StockPortfolioItemResourceIT {
             .stockCurrentPrice(UPDATED_STOCK_CURRENT_PRICE)
             .stockCurrentDate(UPDATED_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
-            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
         return stockPortfolioItem;
     }
 
@@ -202,6 +208,7 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockCurrentDate()).isEqualTo(DEFAULT_STOCK_CURRENT_DATE);
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR);
+        assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
     }
 
     @Test
@@ -457,6 +464,31 @@ class StockPortfolioItemResourceIT {
 
     @Test
     @Transactional
+    void checkStockPriceAtAcquisitionDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = stockPortfolioItemRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(stockPortfolioItemSearchRepository.findAll());
+        // set the field null
+        stockPortfolioItem.setStockPriceAtAcquisitionDate(null);
+
+        // Create the StockPortfolioItem, which fails.
+        StockPortfolioItemDTO stockPortfolioItemDTO = stockPortfolioItemMapper.toDto(stockPortfolioItem);
+
+        restStockPortfolioItemMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(stockPortfolioItemDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<StockPortfolioItem> stockPortfolioItemList = stockPortfolioItemRepository.findAll();
+        assertThat(stockPortfolioItemList).hasSize(databaseSizeBeforeTest);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(stockPortfolioItemSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
     void getAllStockPortfolioItems() throws Exception {
         // Initialize the database
         stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
@@ -477,7 +509,8 @@ class StockPortfolioItemResourceIT {
             .andExpect(
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
-            .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())));
+            .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())))
+            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -517,7 +550,8 @@ class StockPortfolioItemResourceIT {
             .andExpect(jsonPath("$.stockCurrentPrice").value(DEFAULT_STOCK_CURRENT_PRICE.doubleValue()))
             .andExpect(jsonPath("$.stockCurrentDate").value(DEFAULT_STOCK_CURRENT_DATE.toString()))
             .andExpect(jsonPath("$.stockAcquisitionCurrencyFactor").value(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
-            .andExpect(jsonPath("$.stockCurrentCurrencyFactor").value(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue()));
+            .andExpect(jsonPath("$.stockCurrentCurrencyFactor").value(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue()))
+            .andExpect(jsonPath("$.stockPriceAtAcquisitionDate").value(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue()));
     }
 
     @Test
@@ -1302,6 +1336,101 @@ class StockPortfolioItemResourceIT {
 
     @Test
     @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate equals to DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldBeFound("stockPriceAtAcquisitionDate.equals=" + DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate equals to UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldNotBeFound("stockPriceAtAcquisitionDate.equals=" + UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate in DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE or UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldBeFound(
+            "stockPriceAtAcquisitionDate.in=" + DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE + "," + UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        );
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate equals to UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldNotBeFound("stockPriceAtAcquisitionDate.in=" + UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is not null
+        defaultStockPortfolioItemShouldBeFound("stockPriceAtAcquisitionDate.specified=true");
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is null
+        defaultStockPortfolioItemShouldNotBeFound("stockPriceAtAcquisitionDate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is greater than or equal to DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldBeFound("stockPriceAtAcquisitionDate.greaterThanOrEqual=" + DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is greater than or equal to UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldNotBeFound(
+            "stockPriceAtAcquisitionDate.greaterThanOrEqual=" + UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is less than or equal to DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldBeFound("stockPriceAtAcquisitionDate.lessThanOrEqual=" + DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is less than or equal to SMALLER_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldNotBeFound("stockPriceAtAcquisitionDate.lessThanOrEqual=" + SMALLER_STOCK_PRICE_AT_ACQUISITION_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsLessThanSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is less than DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldNotBeFound("stockPriceAtAcquisitionDate.lessThan=" + DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is less than UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldBeFound("stockPriceAtAcquisitionDate.lessThan=" + UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockPriceAtAcquisitionDateIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is greater than DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldNotBeFound("stockPriceAtAcquisitionDate.greaterThan=" + DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+
+        // Get all the stockPortfolioItemList where stockPriceAtAcquisitionDate is greater than SMALLER_STOCK_PRICE_AT_ACQUISITION_DATE
+        defaultStockPortfolioItemShouldBeFound("stockPriceAtAcquisitionDate.greaterThan=" + SMALLER_STOCK_PRICE_AT_ACQUISITION_DATE);
+    }
+
+    @Test
+    @Transactional
     void getAllStockPortfolioItemsByBankAccountIsEqualToSomething() throws Exception {
         BankAccount bankAccount;
         if (TestUtil.findAll(em, BankAccount.class).isEmpty()) {
@@ -1342,7 +1471,8 @@ class StockPortfolioItemResourceIT {
             .andExpect(
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
-            .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())));
+            .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())))
+            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())));
 
         // Check, that the count call also returns 1
         restStockPortfolioItemMockMvc
@@ -1401,7 +1531,8 @@ class StockPortfolioItemResourceIT {
             .stockCurrentPrice(UPDATED_STOCK_CURRENT_PRICE)
             .stockCurrentDate(UPDATED_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
-            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
         StockPortfolioItemDTO stockPortfolioItemDTO = stockPortfolioItemMapper.toDto(updatedStockPortfolioItem);
 
         restStockPortfolioItemMockMvc
@@ -1425,6 +1556,7 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockCurrentDate()).isEqualTo(UPDATED_STOCK_CURRENT_DATE);
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+        assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
         await()
             .atMost(5, TimeUnit.SECONDS)
             .untilAsserted(() -> {
@@ -1442,6 +1574,8 @@ class StockPortfolioItemResourceIT {
                 assertThat(testStockPortfolioItemSearch.getStockAcquisitionCurrencyFactor())
                     .isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
                 assertThat(testStockPortfolioItemSearch.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+                assertThat(testStockPortfolioItemSearch.getStockPriceAtAcquisitionDate())
+                    .isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
             });
     }
 
@@ -1540,7 +1674,8 @@ class StockPortfolioItemResourceIT {
             .stockAcquisitionDate(UPDATED_STOCK_ACQUISITION_DATE)
             .stockAcquisitionPrice(UPDATED_STOCK_ACQUISITION_PRICE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
-            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
 
         restStockPortfolioItemMockMvc
             .perform(
@@ -1563,6 +1698,7 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockCurrentDate()).isEqualTo(DEFAULT_STOCK_CURRENT_DATE);
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+        assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
     }
 
     @Test
@@ -1586,7 +1722,8 @@ class StockPortfolioItemResourceIT {
             .stockCurrentPrice(UPDATED_STOCK_CURRENT_PRICE)
             .stockCurrentDate(UPDATED_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
-            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+            .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
 
         restStockPortfolioItemMockMvc
             .perform(
@@ -1609,6 +1746,7 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockCurrentDate()).isEqualTo(UPDATED_STOCK_CURRENT_DATE);
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
+        assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
     }
 
     @Test
@@ -1736,6 +1874,7 @@ class StockPortfolioItemResourceIT {
             .andExpect(
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
-            .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())));
+            .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())))
+            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())));
     }
 }

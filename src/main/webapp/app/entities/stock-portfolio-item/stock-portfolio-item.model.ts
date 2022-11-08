@@ -13,6 +13,7 @@ export interface IStockPortfolioItem {
   stockCurrentDate?: dayjs.Dayjs | null;
   stockAcquisitionCurrencyFactor?: number | null;
   stockCurrentCurrencyFactor?: number | null;
+  stockPriceAtAcquisitionDate?: number | null;
   bankAccount?: Pick<IBankAccount, 'id' | 'accountName'> | null;
 }
 

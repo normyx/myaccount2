@@ -1,4 +1,4 @@
-package org.mgoulene.mya.service;
+package org.mgoulene.mya.service.alphavantage;
 
 import com.crazzyghost.alphavantage.AlphaVantage;
 import com.crazzyghost.alphavantage.Config;
@@ -8,11 +8,12 @@ import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import org.mgoulene.mya.service.alphavantage.MyaAlphaVantageActivityStackService;
+import org.mgoulene.mya.service.MyaStockPortfolioItemService;
 import org.mgoulene.mya.service.alphavantage.MyaAlphaVantageActivityStackService.ActivityType;
 import org.mgoulene.service.dto.StockPortfolioItemDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +39,12 @@ public class MyaAlphaVantageService {
         log.debug("Service to Update StockPortfolioItem : {}", stockPortfolioItemId);
         Optional<StockPortfolioItemDTO> item = stockPortfolioItemService.findOne(stockPortfolioItemId);
         if (item.isPresent()) {
-            myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_CURRENT, item.get());
-            myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_CURRENT_CURRENCY, item.get());
+            myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_PRICES, item.get());
+            myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_CURRENCIES, item.get());
         }
     }
 
+    @Scheduled(fixedRateString = "${alphavantage.update-scheduled-fixe-rate}")
     public void updateAllStockPortfolioItem() {
         List<StockPortfolioItemDTO> stockPortfolioItemDTOs = stockPortfolioItemService.findAll();
         for (StockPortfolioItemDTO spi : stockPortfolioItemDTOs) {

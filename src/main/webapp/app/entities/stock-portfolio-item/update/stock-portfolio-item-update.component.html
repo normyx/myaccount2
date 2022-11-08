@@ -379,6 +379,52 @@
         </div>
 
         <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="myaccount21App.stockPortfolioItem.stockPriceAtAcquisitionDate"
+            for="field_stockPriceAtAcquisitionDate"
+            >Stock Price At Acquisition Date</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="stockPriceAtAcquisitionDate"
+            id="field_stockPriceAtAcquisitionDate"
+            data-cy="stockPriceAtAcquisitionDate"
+            formControlName="stockPriceAtAcquisitionDate"
+          />
+          <div
+            *ngIf="
+              editForm.get('stockPriceAtAcquisitionDate')!.invalid &&
+              (editForm.get('stockPriceAtAcquisitionDate')!.dirty || editForm.get('stockPriceAtAcquisitionDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockPriceAtAcquisitionDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockPriceAtAcquisitionDate')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Ce champ doit être supérieur à 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('stockPriceAtAcquisitionDate')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.bankAccount" for="field_bankAccount"
             >Bank Account</label
           >
