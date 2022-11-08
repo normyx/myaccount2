@@ -3,6 +3,7 @@ package org.mgoulene.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.mgoulene.domain.enumeration.Currency;
+import org.mgoulene.domain.enumeration.StockType;
 import org.springdoc.api.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
@@ -37,6 +38,23 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
         }
     }
 
+    /**
+     * Class for filtering StockType
+     */
+    public static class StockTypeFilter extends Filter<StockType> {
+
+        public StockTypeFilter() {}
+
+        public StockTypeFilter(StockTypeFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public StockTypeFilter copy() {
+            return new StockTypeFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
@@ -61,6 +79,12 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
 
     private FloatFilter stockPriceAtAcquisitionDate;
 
+    private StockTypeFilter stockType;
+
+    private InstantFilter lastStockUpdate;
+
+    private InstantFilter lastCurrencyUpdate;
+
     private LongFilter bankAccountId;
 
     private Boolean distinct;
@@ -80,6 +104,9 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             other.stockAcquisitionCurrencyFactor == null ? null : other.stockAcquisitionCurrencyFactor.copy();
         this.stockCurrentCurrencyFactor = other.stockCurrentCurrencyFactor == null ? null : other.stockCurrentCurrencyFactor.copy();
         this.stockPriceAtAcquisitionDate = other.stockPriceAtAcquisitionDate == null ? null : other.stockPriceAtAcquisitionDate.copy();
+        this.stockType = other.stockType == null ? null : other.stockType.copy();
+        this.lastStockUpdate = other.lastStockUpdate == null ? null : other.lastStockUpdate.copy();
+        this.lastCurrencyUpdate = other.lastCurrencyUpdate == null ? null : other.lastCurrencyUpdate.copy();
         this.bankAccountId = other.bankAccountId == null ? null : other.bankAccountId.copy();
         this.distinct = other.distinct;
     }
@@ -254,6 +281,51 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
         this.stockPriceAtAcquisitionDate = stockPriceAtAcquisitionDate;
     }
 
+    public StockTypeFilter getStockType() {
+        return stockType;
+    }
+
+    public StockTypeFilter stockType() {
+        if (stockType == null) {
+            stockType = new StockTypeFilter();
+        }
+        return stockType;
+    }
+
+    public void setStockType(StockTypeFilter stockType) {
+        this.stockType = stockType;
+    }
+
+    public InstantFilter getLastStockUpdate() {
+        return lastStockUpdate;
+    }
+
+    public InstantFilter lastStockUpdate() {
+        if (lastStockUpdate == null) {
+            lastStockUpdate = new InstantFilter();
+        }
+        return lastStockUpdate;
+    }
+
+    public void setLastStockUpdate(InstantFilter lastStockUpdate) {
+        this.lastStockUpdate = lastStockUpdate;
+    }
+
+    public InstantFilter getLastCurrencyUpdate() {
+        return lastCurrencyUpdate;
+    }
+
+    public InstantFilter lastCurrencyUpdate() {
+        if (lastCurrencyUpdate == null) {
+            lastCurrencyUpdate = new InstantFilter();
+        }
+        return lastCurrencyUpdate;
+    }
+
+    public void setLastCurrencyUpdate(InstantFilter lastCurrencyUpdate) {
+        this.lastCurrencyUpdate = lastCurrencyUpdate;
+    }
+
     public LongFilter getBankAccountId() {
         return bankAccountId;
     }
@@ -298,6 +370,9 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             Objects.equals(stockAcquisitionCurrencyFactor, that.stockAcquisitionCurrencyFactor) &&
             Objects.equals(stockCurrentCurrencyFactor, that.stockCurrentCurrencyFactor) &&
             Objects.equals(stockPriceAtAcquisitionDate, that.stockPriceAtAcquisitionDate) &&
+            Objects.equals(stockType, that.stockType) &&
+            Objects.equals(lastStockUpdate, that.lastStockUpdate) &&
+            Objects.equals(lastCurrencyUpdate, that.lastCurrencyUpdate) &&
             Objects.equals(bankAccountId, that.bankAccountId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -317,6 +392,9 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             stockAcquisitionCurrencyFactor,
             stockCurrentCurrencyFactor,
             stockPriceAtAcquisitionDate,
+            stockType,
+            lastStockUpdate,
+            lastCurrencyUpdate,
             bankAccountId,
             distinct
         );
@@ -337,6 +415,9 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             (stockAcquisitionCurrencyFactor != null ? "stockAcquisitionCurrencyFactor=" + stockAcquisitionCurrencyFactor + ", " : "") +
             (stockCurrentCurrencyFactor != null ? "stockCurrentCurrencyFactor=" + stockCurrentCurrencyFactor + ", " : "") +
             (stockPriceAtAcquisitionDate != null ? "stockPriceAtAcquisitionDate=" + stockPriceAtAcquisitionDate + ", " : "") +
+            (stockType != null ? "stockType=" + stockType + ", " : "") +
+            (lastStockUpdate != null ? "lastStockUpdate=" + lastStockUpdate + ", " : "") +
+            (lastCurrencyUpdate != null ? "lastCurrencyUpdate=" + lastCurrencyUpdate + ", " : "") +
             (bankAccountId != null ? "bankAccountId=" + bankAccountId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

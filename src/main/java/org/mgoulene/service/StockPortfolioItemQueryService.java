@@ -149,6 +149,17 @@ public class StockPortfolioItemQueryService extends QueryService<StockPortfolioI
                         buildRangeSpecification(criteria.getStockPriceAtAcquisitionDate(), StockPortfolioItem_.stockPriceAtAcquisitionDate)
                     );
             }
+            if (criteria.getStockType() != null) {
+                specification = specification.and(buildSpecification(criteria.getStockType(), StockPortfolioItem_.stockType));
+            }
+            if (criteria.getLastStockUpdate() != null) {
+                specification =
+                    specification.and(buildRangeSpecification(criteria.getLastStockUpdate(), StockPortfolioItem_.lastStockUpdate));
+            }
+            if (criteria.getLastCurrencyUpdate() != null) {
+                specification =
+                    specification.and(buildRangeSpecification(criteria.getLastCurrencyUpdate(), StockPortfolioItem_.lastCurrencyUpdate));
+            }
             if (criteria.getBankAccountId() != null) {
                 specification =
                     specification.and(

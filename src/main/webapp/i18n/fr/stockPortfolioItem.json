@@ -29,6 +29,9 @@
       "stockAcquisitionCurrencyFactor": "Stock Acquisition Currency Factor",
       "stockCurrentCurrencyFactor": "Stock Current Currency Factor",
       "stockPriceAtAcquisitionDate": "Stock Price At Acquisition Date",
+      "stockType": "Stock Type",
+      "lastStockUpdate": "Last Stock Update",
+      "lastCurrencyUpdate": "Last Currency Update",
       "bankAccount": "Bank Account"
     }
   }

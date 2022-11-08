@@ -17,7 +17,7 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
   templateUrl: './stock-portfolio-item.component.html',
 })
 export class StockPortfolioItemComponent implements OnInit {
-  private static readonly NOT_SORTABLE_FIELDS_AFTER_SEARCH = ['stockSymbol', 'stockCurrency'];
+  private static readonly NOT_SORTABLE_FIELDS_AFTER_SEARCH = ['stockSymbol', 'stockCurrency', 'stockType'];
 
   stockPortfolioItems?: IStockPortfolioItem[];
   isLoading = false;

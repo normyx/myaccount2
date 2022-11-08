@@ -30,6 +30,9 @@ describe('StockPortfolioItem Form Service', () => {
             stockAcquisitionCurrencyFactor: expect.any(Object),
             stockCurrentCurrencyFactor: expect.any(Object),
             stockPriceAtAcquisitionDate: expect.any(Object),
+            stockType: expect.any(Object),
+            lastStockUpdate: expect.any(Object),
+            lastCurrencyUpdate: expect.any(Object),
             bankAccount: expect.any(Object),
           })
         );
@@ -51,6 +54,9 @@ describe('StockPortfolioItem Form Service', () => {
             stockAcquisitionCurrencyFactor: expect.any(Object),
             stockCurrentCurrencyFactor: expect.any(Object),
             stockPriceAtAcquisitionDate: expect.any(Object),
+            stockType: expect.any(Object),
+            lastStockUpdate: expect.any(Object),
+            lastCurrencyUpdate: expect.any(Object),
             bankAccount: expect.any(Object),
           })
         );

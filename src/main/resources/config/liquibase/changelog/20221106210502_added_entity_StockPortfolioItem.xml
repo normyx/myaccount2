@@ -44,11 +44,22 @@
             <column name="stock_price_at_acquisition_date" type="${floatType}">
                 <constraints nullable="false" />
             </column>
+            <column name="stock_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_stock_update" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_currency_update" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
             <column name="bank_account_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <!--<dropDefaultValue tableName="stock_portfolio_item" columnName="last_stock_update" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="stock_portfolio_item" columnName="last_currency_update" columnDataType="${datetimeType}"/>-->
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -78,6 +89,9 @@
             <column name="stock_acquisition_currency_factor" type="numeric"/>
             <column name="stock_current_currency_factor" type="numeric"/>
             <column name="stock_price_at_acquisition_date" type="numeric"/>
+            <column name="stock_type" type="string"/>
+            <column name="last_stock_update" type="date"/>
+            <column name="last_currency_update" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

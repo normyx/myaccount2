@@ -1,10 +1,12 @@
 package org.mgoulene.service.dto;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
 import org.mgoulene.domain.enumeration.Currency;
+import org.mgoulene.domain.enumeration.StockType;
 
 /**
  * A DTO for the {@link org.mgoulene.domain.StockPortfolioItem} entity.
@@ -50,6 +52,13 @@ public class StockPortfolioItemDTO implements Serializable {
     @NotNull
     @DecimalMin(value = "0")
     private Float stockPriceAtAcquisitionDate;
+
+    @NotNull
+    private StockType stockType;
+
+    private Instant lastStockUpdate;
+
+    private Instant lastCurrencyUpdate;
 
     private BankAccountDTO bankAccount;
 
@@ -141,6 +150,30 @@ public class StockPortfolioItemDTO implements Serializable {
         this.stockPriceAtAcquisitionDate = stockPriceAtAcquisitionDate;
     }
 
+    public StockType getStockType() {
+        return stockType;
+    }
+
+    public void setStockType(StockType stockType) {
+        this.stockType = stockType;
+    }
+
+    public Instant getLastStockUpdate() {
+        return lastStockUpdate;
+    }
+
+    public void setLastStockUpdate(Instant lastStockUpdate) {
+        this.lastStockUpdate = lastStockUpdate;
+    }
+
+    public Instant getLastCurrencyUpdate() {
+        return lastCurrencyUpdate;
+    }
+
+    public void setLastCurrencyUpdate(Instant lastCurrencyUpdate) {
+        this.lastCurrencyUpdate = lastCurrencyUpdate;
+    }
+
     public BankAccountDTO getBankAccount() {
         return bankAccount;
     }
@@ -185,6 +218,9 @@ public class StockPortfolioItemDTO implements Serializable {
             ", stockAcquisitionCurrencyFactor=" + getStockAcquisitionCurrencyFactor() +
             ", stockCurrentCurrencyFactor=" + getStockCurrentCurrencyFactor() +
             ", stockPriceAtAcquisitionDate=" + getStockPriceAtAcquisitionDate() +
+            ", stockType='" + getStockType() + "'" +
+            ", lastStockUpdate='" + getLastStockUpdate() + "'" +
+            ", lastCurrencyUpdate='" + getLastCurrencyUpdate() + "'" +
             ", bankAccount=" + getBankAccount() +
             "}";
     }

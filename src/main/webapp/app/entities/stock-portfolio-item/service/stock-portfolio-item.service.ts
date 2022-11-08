@@ -13,9 +13,14 @@ import { IStockPortfolioItem, NewStockPortfolioItem } from '../stock-portfolio-i
 
 export type PartialUpdateStockPortfolioItem = Partial<IStockPortfolioItem> & Pick<IStockPortfolioItem, 'id'>;
 
-type RestOf<T extends IStockPortfolioItem | NewStockPortfolioItem> = Omit<T, 'stockAcquisitionDate' | 'stockCurrentDate'> & {
+type RestOf<T extends IStockPortfolioItem | NewStockPortfolioItem> = Omit<
+  T,
+  'stockAcquisitionDate' | 'stockCurrentDate' | 'lastStockUpdate' | 'lastCurrencyUpdate'
+> & {
   stockAcquisitionDate?: string | null;
   stockCurrentDate?: string | null;
+  lastStockUpdate?: string | null;
+  lastCurrencyUpdate?: string | null;
 };
 
 export type RestStockPortfolioItem = RestOf<IStockPortfolioItem>;
@@ -120,6 +125,8 @@ export class StockPortfolioItemService {
       ...stockPortfolioItem,
       stockAcquisitionDate: stockPortfolioItem.stockAcquisitionDate?.format(DATE_FORMAT) ?? null,
       stockCurrentDate: stockPortfolioItem.stockCurrentDate?.format(DATE_FORMAT) ?? null,
+      lastStockUpdate: stockPortfolioItem.lastStockUpdate?.toJSON() ?? null,
+      lastCurrencyUpdate: stockPortfolioItem.lastCurrencyUpdate?.toJSON() ?? null,
     };
   }
 
@@ -128,6 +135,8 @@ export class StockPortfolioItemService {
       ...restStockPortfolioItem,
       stockAcquisitionDate: restStockPortfolioItem.stockAcquisitionDate ? dayjs(restStockPortfolioItem.stockAcquisitionDate) : undefined,
       stockCurrentDate: restStockPortfolioItem.stockCurrentDate ? dayjs(restStockPortfolioItem.stockCurrentDate) : undefined,
+      lastStockUpdate: restStockPortfolioItem.lastStockUpdate ? dayjs(restStockPortfolioItem.lastStockUpdate) : undefined,
+      lastCurrencyUpdate: restStockPortfolioItem.lastCurrencyUpdate ? dayjs(restStockPortfolioItem.lastCurrencyUpdate) : undefined,
     };
   }
 

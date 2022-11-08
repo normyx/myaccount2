@@ -218,7 +218,3 @@ jhipster:
 
 alphavantage:
   update-scheduled-fixe-rate: 3600000
-  key: 'AFVQ4M4A8XB1IR6Q'
-  loop:
-    every: 60
-    iteration: 5

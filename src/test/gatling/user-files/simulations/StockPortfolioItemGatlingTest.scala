@@ -81,6 +81,9 @@ class StockPortfolioItemGatlingTest extends Simulation {
                 , "stockAcquisitionCurrencyFactor":"0"
                 , "stockCurrentCurrencyFactor":"0"
                 , "stockPriceAtAcquisitionDate":"0"
+                , "stockType":"STOCK"
+                , "lastStockUpdate":"2020-01-01T00:00:00.000Z"
+                , "lastCurrencyUpdate":"2020-01-01T00:00:00.000Z"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_stockPortfolioItem_url"))).exitHereIfFailed

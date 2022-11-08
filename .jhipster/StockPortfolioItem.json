@@ -60,6 +60,20 @@
       "fieldType": "Float",
       "fieldValidateRules": ["required", "min"],
       "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "stockType",
+      "fieldType": "StockType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STOCK,CRYPTO"
+    },
+    {
+      "fieldName": "lastStockUpdate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastCurrencyUpdate",
+      "fieldType": "Instant"
     }
   ],
   "jpaMetamodelFiltering": true,

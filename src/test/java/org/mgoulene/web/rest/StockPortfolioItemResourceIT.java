@@ -7,8 +7,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +28,7 @@ import org.mgoulene.IntegrationTest;
 import org.mgoulene.domain.BankAccount;
 import org.mgoulene.domain.StockPortfolioItem;
 import org.mgoulene.domain.enumeration.Currency;
+import org.mgoulene.domain.enumeration.StockType;
 import org.mgoulene.repository.StockPortfolioItemRepository;
 import org.mgoulene.repository.search.StockPortfolioItemSearchRepository;
 import org.mgoulene.service.StockPortfolioItemService;
@@ -91,6 +94,15 @@ class StockPortfolioItemResourceIT {
     private static final Float UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE = 1F;
     private static final Float SMALLER_STOCK_PRICE_AT_ACQUISITION_DATE = 0F - 1F;
 
+    private static final StockType DEFAULT_STOCK_TYPE = StockType.STOCK;
+    private static final StockType UPDATED_STOCK_TYPE = StockType.CRYPTO;
+
+    private static final Instant DEFAULT_LAST_STOCK_UPDATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_STOCK_UPDATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_LAST_CURRENCY_UPDATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_LAST_CURRENCY_UPDATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
     private static final String ENTITY_API_URL = "/api/stock-portfolio-items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
     private static final String ENTITY_SEARCH_API_URL = "/api/_search/stock-portfolio-items";
@@ -138,7 +150,10 @@ class StockPortfolioItemResourceIT {
             .stockCurrentDate(DEFAULT_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR)
             .stockCurrentCurrencyFactor(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR)
-            .stockPriceAtAcquisitionDate(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+            .stockPriceAtAcquisitionDate(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE)
+            .stockType(DEFAULT_STOCK_TYPE)
+            .lastStockUpdate(DEFAULT_LAST_STOCK_UPDATE)
+            .lastCurrencyUpdate(DEFAULT_LAST_CURRENCY_UPDATE);
         return stockPortfolioItem;
     }
 
@@ -159,7 +174,10 @@ class StockPortfolioItemResourceIT {
             .stockCurrentDate(UPDATED_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
             .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
-            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE)
+            .stockType(UPDATED_STOCK_TYPE)
+            .lastStockUpdate(UPDATED_LAST_STOCK_UPDATE)
+            .lastCurrencyUpdate(UPDATED_LAST_CURRENCY_UPDATE);
         return stockPortfolioItem;
     }
 
@@ -209,6 +227,9 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE);
+        assertThat(testStockPortfolioItem.getStockType()).isEqualTo(DEFAULT_STOCK_TYPE);
+        assertThat(testStockPortfolioItem.getLastStockUpdate()).isEqualTo(DEFAULT_LAST_STOCK_UPDATE);
+        assertThat(testStockPortfolioItem.getLastCurrencyUpdate()).isEqualTo(DEFAULT_LAST_CURRENCY_UPDATE);
     }
 
     @Test
@@ -489,6 +510,31 @@ class StockPortfolioItemResourceIT {
 
     @Test
     @Transactional
+    void checkStockTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = stockPortfolioItemRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(stockPortfolioItemSearchRepository.findAll());
+        // set the field null
+        stockPortfolioItem.setStockType(null);
+
+        // Create the StockPortfolioItem, which fails.
+        StockPortfolioItemDTO stockPortfolioItemDTO = stockPortfolioItemMapper.toDto(stockPortfolioItem);
+
+        restStockPortfolioItemMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(stockPortfolioItemDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<StockPortfolioItem> stockPortfolioItemList = stockPortfolioItemRepository.findAll();
+        assertThat(stockPortfolioItemList).hasSize(databaseSizeBeforeTest);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(stockPortfolioItemSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
     void getAllStockPortfolioItems() throws Exception {
         // Initialize the database
         stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
@@ -510,7 +556,10 @@ class StockPortfolioItemResourceIT {
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
             .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())))
-            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())));
+            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())))
+            .andExpect(jsonPath("$.[*].stockType").value(hasItem(DEFAULT_STOCK_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].lastStockUpdate").value(hasItem(DEFAULT_LAST_STOCK_UPDATE.toString())))
+            .andExpect(jsonPath("$.[*].lastCurrencyUpdate").value(hasItem(DEFAULT_LAST_CURRENCY_UPDATE.toString())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -551,7 +600,10 @@ class StockPortfolioItemResourceIT {
             .andExpect(jsonPath("$.stockCurrentDate").value(DEFAULT_STOCK_CURRENT_DATE.toString()))
             .andExpect(jsonPath("$.stockAcquisitionCurrencyFactor").value(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             .andExpect(jsonPath("$.stockCurrentCurrencyFactor").value(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue()))
-            .andExpect(jsonPath("$.stockPriceAtAcquisitionDate").value(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue()));
+            .andExpect(jsonPath("$.stockPriceAtAcquisitionDate").value(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue()))
+            .andExpect(jsonPath("$.stockType").value(DEFAULT_STOCK_TYPE.toString()))
+            .andExpect(jsonPath("$.lastStockUpdate").value(DEFAULT_LAST_STOCK_UPDATE.toString()))
+            .andExpect(jsonPath("$.lastCurrencyUpdate").value(DEFAULT_LAST_CURRENCY_UPDATE.toString()));
     }
 
     @Test
@@ -1431,6 +1483,125 @@ class StockPortfolioItemResourceIT {
 
     @Test
     @Transactional
+    void getAllStockPortfolioItemsByStockTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockType equals to DEFAULT_STOCK_TYPE
+        defaultStockPortfolioItemShouldBeFound("stockType.equals=" + DEFAULT_STOCK_TYPE);
+
+        // Get all the stockPortfolioItemList where stockType equals to UPDATED_STOCK_TYPE
+        defaultStockPortfolioItemShouldNotBeFound("stockType.equals=" + UPDATED_STOCK_TYPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockType in DEFAULT_STOCK_TYPE or UPDATED_STOCK_TYPE
+        defaultStockPortfolioItemShouldBeFound("stockType.in=" + DEFAULT_STOCK_TYPE + "," + UPDATED_STOCK_TYPE);
+
+        // Get all the stockPortfolioItemList where stockType equals to UPDATED_STOCK_TYPE
+        defaultStockPortfolioItemShouldNotBeFound("stockType.in=" + UPDATED_STOCK_TYPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByStockTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where stockType is not null
+        defaultStockPortfolioItemShouldBeFound("stockType.specified=true");
+
+        // Get all the stockPortfolioItemList where stockType is null
+        defaultStockPortfolioItemShouldNotBeFound("stockType.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByLastStockUpdateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where lastStockUpdate equals to DEFAULT_LAST_STOCK_UPDATE
+        defaultStockPortfolioItemShouldBeFound("lastStockUpdate.equals=" + DEFAULT_LAST_STOCK_UPDATE);
+
+        // Get all the stockPortfolioItemList where lastStockUpdate equals to UPDATED_LAST_STOCK_UPDATE
+        defaultStockPortfolioItemShouldNotBeFound("lastStockUpdate.equals=" + UPDATED_LAST_STOCK_UPDATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByLastStockUpdateIsInShouldWork() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where lastStockUpdate in DEFAULT_LAST_STOCK_UPDATE or UPDATED_LAST_STOCK_UPDATE
+        defaultStockPortfolioItemShouldBeFound("lastStockUpdate.in=" + DEFAULT_LAST_STOCK_UPDATE + "," + UPDATED_LAST_STOCK_UPDATE);
+
+        // Get all the stockPortfolioItemList where lastStockUpdate equals to UPDATED_LAST_STOCK_UPDATE
+        defaultStockPortfolioItemShouldNotBeFound("lastStockUpdate.in=" + UPDATED_LAST_STOCK_UPDATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByLastStockUpdateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where lastStockUpdate is not null
+        defaultStockPortfolioItemShouldBeFound("lastStockUpdate.specified=true");
+
+        // Get all the stockPortfolioItemList where lastStockUpdate is null
+        defaultStockPortfolioItemShouldNotBeFound("lastStockUpdate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByLastCurrencyUpdateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where lastCurrencyUpdate equals to DEFAULT_LAST_CURRENCY_UPDATE
+        defaultStockPortfolioItemShouldBeFound("lastCurrencyUpdate.equals=" + DEFAULT_LAST_CURRENCY_UPDATE);
+
+        // Get all the stockPortfolioItemList where lastCurrencyUpdate equals to UPDATED_LAST_CURRENCY_UPDATE
+        defaultStockPortfolioItemShouldNotBeFound("lastCurrencyUpdate.equals=" + UPDATED_LAST_CURRENCY_UPDATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByLastCurrencyUpdateIsInShouldWork() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where lastCurrencyUpdate in DEFAULT_LAST_CURRENCY_UPDATE or UPDATED_LAST_CURRENCY_UPDATE
+        defaultStockPortfolioItemShouldBeFound(
+            "lastCurrencyUpdate.in=" + DEFAULT_LAST_CURRENCY_UPDATE + "," + UPDATED_LAST_CURRENCY_UPDATE
+        );
+
+        // Get all the stockPortfolioItemList where lastCurrencyUpdate equals to UPDATED_LAST_CURRENCY_UPDATE
+        defaultStockPortfolioItemShouldNotBeFound("lastCurrencyUpdate.in=" + UPDATED_LAST_CURRENCY_UPDATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByLastCurrencyUpdateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+
+        // Get all the stockPortfolioItemList where lastCurrencyUpdate is not null
+        defaultStockPortfolioItemShouldBeFound("lastCurrencyUpdate.specified=true");
+
+        // Get all the stockPortfolioItemList where lastCurrencyUpdate is null
+        defaultStockPortfolioItemShouldNotBeFound("lastCurrencyUpdate.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllStockPortfolioItemsByBankAccountIsEqualToSomething() throws Exception {
         BankAccount bankAccount;
         if (TestUtil.findAll(em, BankAccount.class).isEmpty()) {
@@ -1472,7 +1643,10 @@ class StockPortfolioItemResourceIT {
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
             .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())))
-            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())));
+            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())))
+            .andExpect(jsonPath("$.[*].stockType").value(hasItem(DEFAULT_STOCK_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].lastStockUpdate").value(hasItem(DEFAULT_LAST_STOCK_UPDATE.toString())))
+            .andExpect(jsonPath("$.[*].lastCurrencyUpdate").value(hasItem(DEFAULT_LAST_CURRENCY_UPDATE.toString())));
 
         // Check, that the count call also returns 1
         restStockPortfolioItemMockMvc
@@ -1532,7 +1706,10 @@ class StockPortfolioItemResourceIT {
             .stockCurrentDate(UPDATED_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
             .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
-            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE)
+            .stockType(UPDATED_STOCK_TYPE)
+            .lastStockUpdate(UPDATED_LAST_STOCK_UPDATE)
+            .lastCurrencyUpdate(UPDATED_LAST_CURRENCY_UPDATE);
         StockPortfolioItemDTO stockPortfolioItemDTO = stockPortfolioItemMapper.toDto(updatedStockPortfolioItem);
 
         restStockPortfolioItemMockMvc
@@ -1557,6 +1734,9 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+        assertThat(testStockPortfolioItem.getStockType()).isEqualTo(UPDATED_STOCK_TYPE);
+        assertThat(testStockPortfolioItem.getLastStockUpdate()).isEqualTo(UPDATED_LAST_STOCK_UPDATE);
+        assertThat(testStockPortfolioItem.getLastCurrencyUpdate()).isEqualTo(UPDATED_LAST_CURRENCY_UPDATE);
         await()
             .atMost(5, TimeUnit.SECONDS)
             .untilAsserted(() -> {
@@ -1576,6 +1756,9 @@ class StockPortfolioItemResourceIT {
                 assertThat(testStockPortfolioItemSearch.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
                 assertThat(testStockPortfolioItemSearch.getStockPriceAtAcquisitionDate())
                     .isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+                assertThat(testStockPortfolioItemSearch.getStockType()).isEqualTo(UPDATED_STOCK_TYPE);
+                assertThat(testStockPortfolioItemSearch.getLastStockUpdate()).isEqualTo(UPDATED_LAST_STOCK_UPDATE);
+                assertThat(testStockPortfolioItemSearch.getLastCurrencyUpdate()).isEqualTo(UPDATED_LAST_CURRENCY_UPDATE);
             });
     }
 
@@ -1675,7 +1858,9 @@ class StockPortfolioItemResourceIT {
             .stockAcquisitionPrice(UPDATED_STOCK_ACQUISITION_PRICE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
             .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
-            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE)
+            .lastStockUpdate(UPDATED_LAST_STOCK_UPDATE)
+            .lastCurrencyUpdate(UPDATED_LAST_CURRENCY_UPDATE);
 
         restStockPortfolioItemMockMvc
             .perform(
@@ -1699,6 +1884,9 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+        assertThat(testStockPortfolioItem.getStockType()).isEqualTo(DEFAULT_STOCK_TYPE);
+        assertThat(testStockPortfolioItem.getLastStockUpdate()).isEqualTo(UPDATED_LAST_STOCK_UPDATE);
+        assertThat(testStockPortfolioItem.getLastCurrencyUpdate()).isEqualTo(UPDATED_LAST_CURRENCY_UPDATE);
     }
 
     @Test
@@ -1723,7 +1911,10 @@ class StockPortfolioItemResourceIT {
             .stockCurrentDate(UPDATED_STOCK_CURRENT_DATE)
             .stockAcquisitionCurrencyFactor(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR)
             .stockCurrentCurrencyFactor(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR)
-            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+            .stockPriceAtAcquisitionDate(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE)
+            .stockType(UPDATED_STOCK_TYPE)
+            .lastStockUpdate(UPDATED_LAST_STOCK_UPDATE)
+            .lastCurrencyUpdate(UPDATED_LAST_CURRENCY_UPDATE);
 
         restStockPortfolioItemMockMvc
             .perform(
@@ -1747,6 +1938,9 @@ class StockPortfolioItemResourceIT {
         assertThat(testStockPortfolioItem.getStockAcquisitionCurrencyFactor()).isEqualTo(UPDATED_STOCK_ACQUISITION_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockCurrentCurrencyFactor()).isEqualTo(UPDATED_STOCK_CURRENT_CURRENCY_FACTOR);
         assertThat(testStockPortfolioItem.getStockPriceAtAcquisitionDate()).isEqualTo(UPDATED_STOCK_PRICE_AT_ACQUISITION_DATE);
+        assertThat(testStockPortfolioItem.getStockType()).isEqualTo(UPDATED_STOCK_TYPE);
+        assertThat(testStockPortfolioItem.getLastStockUpdate()).isEqualTo(UPDATED_LAST_STOCK_UPDATE);
+        assertThat(testStockPortfolioItem.getLastCurrencyUpdate()).isEqualTo(UPDATED_LAST_CURRENCY_UPDATE);
     }
 
     @Test
@@ -1875,6 +2069,9 @@ class StockPortfolioItemResourceIT {
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
             .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())))
-            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())));
+            .andExpect(jsonPath("$.[*].stockPriceAtAcquisitionDate").value(hasItem(DEFAULT_STOCK_PRICE_AT_ACQUISITION_DATE.doubleValue())))
+            .andExpect(jsonPath("$.[*].stockType").value(hasItem(DEFAULT_STOCK_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].lastStockUpdate").value(hasItem(DEFAULT_LAST_STOCK_UPDATE.toString())))
+            .andExpect(jsonPath("$.[*].lastCurrencyUpdate").value(hasItem(DEFAULT_LAST_CURRENCY_UPDATE.toString())));
     }
 }

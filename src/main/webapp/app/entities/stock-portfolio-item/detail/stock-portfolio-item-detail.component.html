@@ -60,6 +60,18 @@
         <dd>
           <span>{{ stockPortfolioItem.stockPriceAtAcquisitionDate }}</span>
         </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockType">Stock Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'myaccount21App.StockType.' + stockPortfolioItem.stockType }}">{{ stockPortfolioItem.stockType }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.lastStockUpdate">Last Stock Update</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.lastStockUpdate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.lastCurrencyUpdate">Last Currency Update</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.lastCurrencyUpdate | formatMediumDatetime }}</span>
+        </dd>
         <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.bankAccount">Bank Account</span></dt>
         <dd>
           <div *ngIf="stockPortfolioItem.bankAccount">

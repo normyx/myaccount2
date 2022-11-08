@@ -425,6 +425,59 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockType" for="field_stockType">Stock Type</label>
+          <select class="form-control" name="stockType" formControlName="stockType" id="field_stockType" data-cy="stockType">
+            <option [ngValue]="null">{{ 'myaccount21App.StockType.null' | translate }}</option>
+            <option *ngFor="let stockType of stockTypeValues" [value]="stockType">
+              {{ 'myaccount21App.StockType.' + stockType | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('stockType')!.invalid && (editForm.get('stockType')!.dirty || editForm.get('stockType')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.lastStockUpdate" for="field_lastStockUpdate"
+            >Last Stock Update</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_lastStockUpdate"
+              data-cy="lastStockUpdate"
+              type="datetime-local"
+              class="form-control"
+              name="lastStockUpdate"
+              formControlName="lastStockUpdate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.lastCurrencyUpdate" for="field_lastCurrencyUpdate"
+            >Last Currency Update</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_lastCurrencyUpdate"
+              data-cy="lastCurrencyUpdate"
+              type="datetime-local"
+              class="form-control"
+              name="lastCurrencyUpdate"
+              formControlName="lastCurrencyUpdate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.bankAccount" for="field_bankAccount"
             >Bank Account</label
           >

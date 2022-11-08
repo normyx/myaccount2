@@ -11,6 +11,8 @@ const requireRestSample: RestStockPortfolioItem = {
   ...sampleWithRequiredData,
   stockAcquisitionDate: sampleWithRequiredData.stockAcquisitionDate?.format(DATE_FORMAT),
   stockCurrentDate: sampleWithRequiredData.stockCurrentDate?.format(DATE_FORMAT),
+  lastStockUpdate: sampleWithRequiredData.lastStockUpdate?.toJSON(),
+  lastCurrencyUpdate: sampleWithRequiredData.lastCurrencyUpdate?.toJSON(),
 };
 
 describe('StockPortfolioItem Service', () => {

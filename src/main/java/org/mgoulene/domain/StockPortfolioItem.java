@@ -2,12 +2,14 @@ package org.mgoulene.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.mgoulene.domain.enumeration.Currency;
+import org.mgoulene.domain.enumeration.StockType;
 
 /**
  * A StockPortfolioItem.
@@ -73,6 +75,17 @@ public class StockPortfolioItem implements Serializable {
     @DecimalMin(value = "0")
     @Column(name = "stock_price_at_acquisition_date", nullable = false)
     private Float stockPriceAtAcquisitionDate;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "stock_type", nullable = false)
+    private StockType stockType;
+
+    @Column(name = "last_stock_update")
+    private Instant lastStockUpdate;
+
+    @Column(name = "last_currency_update")
+    private Instant lastCurrencyUpdate;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "account", "stockPortfolioItems" }, allowSetters = true)
@@ -223,6 +236,45 @@ public class StockPortfolioItem implements Serializable {
         this.stockPriceAtAcquisitionDate = stockPriceAtAcquisitionDate;
     }
 
+    public StockType getStockType() {
+        return this.stockType;
+    }
+
+    public StockPortfolioItem stockType(StockType stockType) {
+        this.setStockType(stockType);
+        return this;
+    }
+
+    public void setStockType(StockType stockType) {
+        this.stockType = stockType;
+    }
+
+    public Instant getLastStockUpdate() {
+        return this.lastStockUpdate;
+    }
+
+    public StockPortfolioItem lastStockUpdate(Instant lastStockUpdate) {
+        this.setLastStockUpdate(lastStockUpdate);
+        return this;
+    }
+
+    public void setLastStockUpdate(Instant lastStockUpdate) {
+        this.lastStockUpdate = lastStockUpdate;
+    }
+
+    public Instant getLastCurrencyUpdate() {
+        return this.lastCurrencyUpdate;
+    }
+
+    public StockPortfolioItem lastCurrencyUpdate(Instant lastCurrencyUpdate) {
+        this.setLastCurrencyUpdate(lastCurrencyUpdate);
+        return this;
+    }
+
+    public void setLastCurrencyUpdate(Instant lastCurrencyUpdate) {
+        this.lastCurrencyUpdate = lastCurrencyUpdate;
+    }
+
     public BankAccount getBankAccount() {
         return this.bankAccount;
     }
@@ -270,6 +322,9 @@ public class StockPortfolioItem implements Serializable {
             ", stockAcquisitionCurrencyFactor=" + getStockAcquisitionCurrencyFactor() +
             ", stockCurrentCurrencyFactor=" + getStockCurrentCurrencyFactor() +
             ", stockPriceAtAcquisitionDate=" + getStockPriceAtAcquisitionDate() +
+            ", stockType='" + getStockType() + "'" +
+            ", lastStockUpdate='" + getLastStockUpdate() + "'" +
+            ", lastCurrencyUpdate='" + getLastCurrencyUpdate() + "'" +
             "}";
     }
 }

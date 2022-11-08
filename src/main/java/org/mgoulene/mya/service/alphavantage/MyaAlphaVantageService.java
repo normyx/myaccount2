@@ -8,6 +8,7 @@ import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import org.mgoulene.domain.enumeration.StockType;
 import org.mgoulene.mya.service.MyaStockPortfolioItemService;
 import org.mgoulene.mya.service.alphavantage.MyaAlphaVantageActivityStackService.ActivityType;
 import org.mgoulene.service.dto.StockPortfolioItemDTO;
@@ -37,10 +38,15 @@ public class MyaAlphaVantageService {
 
     public void updateStockPortfolioItem(Long stockPortfolioItemId) {
         log.debug("Service to Update StockPortfolioItem : {}", stockPortfolioItemId);
-        Optional<StockPortfolioItemDTO> item = stockPortfolioItemService.findOne(stockPortfolioItemId);
-        if (item.isPresent()) {
-            myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_PRICES, item.get());
-            myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_CURRENCIES, item.get());
+        Optional<StockPortfolioItemDTO> stockOpt = stockPortfolioItemService.findOne(stockPortfolioItemId);
+        if (stockOpt.isPresent()) {
+            StockPortfolioItemDTO stockPortfolioItemDTO = stockOpt.get();
+            if (stockPortfolioItemDTO.getStockType() == StockType.STOCK) {
+                myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_PRICES, stockPortfolioItemDTO);
+                myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_STOCK_CURRENCIES, stockPortfolioItemDTO);
+            } else if (stockPortfolioItemDTO.getStockType() == StockType.CRYPTO) {
+                myaAlphaVantageActivityStackService.add(ActivityType.UPDATE_CRYPTO, stockPortfolioItemDTO);
+            }
         }
     }
 

@@ -1,0 +1,9 @@
+{
+  "myaccount21App": {
+    "StockType": {
+      "null": "",
+      "STOCK": "STOCK",
+      "CRYPTO": "CRYPTO"
+    }
+  }
+}

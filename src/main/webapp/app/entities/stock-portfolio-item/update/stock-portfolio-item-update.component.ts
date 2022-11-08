@@ -10,6 +10,7 @@ import { StockPortfolioItemService } from '../service/stock-portfolio-item.servi
 import { IBankAccount } from 'app/entities/bank-account/bank-account.model';
 import { BankAccountService } from 'app/entities/bank-account/service/bank-account.service';
 import { Currency } from 'app/entities/enumerations/currency.model';
+import { StockType } from 'app/entities/enumerations/stock-type.model';
 
 @Component({
   selector: 'jhi-stock-portfolio-item-update',
@@ -19,6 +20,7 @@ export class StockPortfolioItemUpdateComponent implements OnInit {
   isSaving = false;
   stockPortfolioItem: IStockPortfolioItem | null = null;
   currencyValues = Object.keys(Currency);
+  stockTypeValues = Object.keys(StockType);
 
   bankAccountsSharedCollection: IBankAccount[] = [];
 
