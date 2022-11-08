@@ -67,6 +67,6 @@ class StockPortfolioItemSearchRepositoryInternalImpl implements StockPortfolioIt
 
     @Override
     public void index(StockPortfolioItem entity) {
-        repository.findById(entity.getId()).ifPresent(elasticsearchTemplate::save);
+        repository.findOneWithEagerRelationships(entity.getId()).ifPresent(elasticsearchTemplate::save);
     }
 }

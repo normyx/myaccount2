@@ -128,6 +128,15 @@ public class BankAccountQueryService extends QueryService<BankAccount> {
                         )
                     );
             }
+            if (criteria.getStockPortfolioItemId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getStockPortfolioItemId(),
+                            root -> root.join(BankAccount_.stockPortfolioItems, JoinType.LEFT).get(StockPortfolioItem_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

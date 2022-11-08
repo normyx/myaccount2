@@ -55,6 +55,12 @@
       "relationshipName": "account",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "stockPortfolioItem",
+      "otherEntityRelationshipName": "bankAccount",
+      "relationshipName": "stockPortfolioItem",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "elasticsearch",

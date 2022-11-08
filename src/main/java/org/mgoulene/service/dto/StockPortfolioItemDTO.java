@@ -47,6 +47,8 @@ public class StockPortfolioItemDTO implements Serializable {
     @DecimalMin(value = "0")
     private Float stockCurrentCurrencyFactor;
 
+    private BankAccountDTO bankAccount;
+
     public Long getId() {
         return id;
     }
@@ -127,6 +129,14 @@ public class StockPortfolioItemDTO implements Serializable {
         this.stockCurrentCurrencyFactor = stockCurrentCurrencyFactor;
     }
 
+    public BankAccountDTO getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(BankAccountDTO bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -162,6 +172,7 @@ public class StockPortfolioItemDTO implements Serializable {
             ", stockCurrentDate='" + getStockCurrentDate() + "'" +
             ", stockAcquisitionCurrencyFactor=" + getStockAcquisitionCurrencyFactor() +
             ", stockCurrentCurrencyFactor=" + getStockCurrentCurrencyFactor() +
+            ", bankAccount=" + getBankAccount() +
             "}";
     }
 }

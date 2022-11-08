@@ -27,6 +27,7 @@ type StockPortfolioItemFormGroupContent = {
   stockCurrentDate: FormControl<IStockPortfolioItem['stockCurrentDate']>;
   stockAcquisitionCurrencyFactor: FormControl<IStockPortfolioItem['stockAcquisitionCurrencyFactor']>;
   stockCurrentCurrencyFactor: FormControl<IStockPortfolioItem['stockCurrentCurrencyFactor']>;
+  bankAccount: FormControl<IStockPortfolioItem['bankAccount']>;
 };
 
 export type StockPortfolioItemFormGroup = FormGroup<StockPortfolioItemFormGroupContent>;
@@ -73,6 +74,7 @@ export class StockPortfolioItemFormService {
       stockCurrentCurrencyFactor: new FormControl(stockPortfolioItemRawValue.stockCurrentCurrencyFactor, {
         validators: [Validators.required, Validators.min(0)],
       }),
+      bankAccount: new FormControl(stockPortfolioItemRawValue.bankAccount),
     });
   }
 

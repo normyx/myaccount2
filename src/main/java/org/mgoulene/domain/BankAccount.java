@@ -2,6 +2,8 @@ package org.mgoulene.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -58,6 +60,12 @@ public class BankAccount implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private ApplicationUser account;
+
+    @OneToMany(mappedBy = "bankAccount")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @org.springframework.data.annotation.Transient
+    @JsonIgnoreProperties(value = { "bankAccount" }, allowSetters = true)
+    private Set<StockPortfolioItem> stockPortfolioItems = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -175,6 +183,37 @@ public class BankAccount implements Serializable {
 
     public BankAccount account(ApplicationUser applicationUser) {
         this.setAccount(applicationUser);
+        return this;
+    }
+
+    public Set<StockPortfolioItem> getStockPortfolioItems() {
+        return this.stockPortfolioItems;
+    }
+
+    public void setStockPortfolioItems(Set<StockPortfolioItem> stockPortfolioItems) {
+        if (this.stockPortfolioItems != null) {
+            this.stockPortfolioItems.forEach(i -> i.setBankAccount(null));
+        }
+        if (stockPortfolioItems != null) {
+            stockPortfolioItems.forEach(i -> i.setBankAccount(this));
+        }
+        this.stockPortfolioItems = stockPortfolioItems;
+    }
+
+    public BankAccount stockPortfolioItems(Set<StockPortfolioItem> stockPortfolioItems) {
+        this.setStockPortfolioItems(stockPortfolioItems);
+        return this;
+    }
+
+    public BankAccount addStockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
+        this.stockPortfolioItems.add(stockPortfolioItem);
+        stockPortfolioItem.setBankAccount(this);
+        return this;
+    }
+
+    public BankAccount removeStockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
+        this.stockPortfolioItems.remove(stockPortfolioItem);
+        stockPortfolioItem.setBankAccount(null);
         return this;
     }
 

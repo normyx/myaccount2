@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { IBankAccount } from 'app/entities/bank-account/bank-account.model';
 import { Currency } from 'app/entities/enumerations/currency.model';
 
 export interface IStockPortfolioItem {
@@ -12,6 +13,7 @@ export interface IStockPortfolioItem {
   stockCurrentDate?: dayjs.Dayjs | null;
   stockAcquisitionCurrencyFactor?: number | null;
   stockCurrentCurrencyFactor?: number | null;
+  bankAccount?: Pick<IBankAccount, 'id' | 'accountName'> | null;
 }
 
 export type NewStockPortfolioItem = Omit<IStockPortfolioItem, 'id'> & { id: null };

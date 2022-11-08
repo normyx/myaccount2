@@ -108,6 +108,15 @@ public class StockPortfolioItemService {
     }
 
     /**
+     * Get all the stockPortfolioItems with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<StockPortfolioItemDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return stockPortfolioItemRepository.findAllWithEagerRelationships(pageable).map(stockPortfolioItemMapper::toDto);
+    }
+
+    /**
      * Get one stockPortfolioItem by id.
      *
      * @param id the id of the entity.
@@ -116,7 +125,7 @@ public class StockPortfolioItemService {
     @Transactional(readOnly = true)
     public Optional<StockPortfolioItemDTO> findOne(Long id) {
         log.debug("Request to get StockPortfolioItem : {}", id);
-        return stockPortfolioItemRepository.findById(id).map(stockPortfolioItemMapper::toDto);
+        return stockPortfolioItemRepository.findOneWithEagerRelationships(id).map(stockPortfolioItemMapper::toDto);
     }
 
     /**

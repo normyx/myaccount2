@@ -26,6 +26,7 @@
     <include file="config/liquibase/changelog/20220817102051_added_entity_constraints_BudgetItemPeriod.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220817102251_added_entity_constraints_Operation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220817102351_added_entity_constraints_SubCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221106210502_added_entity_constraints_StockPortfolioItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
     <include file="config/liquibase/changelog/00000000000000_create_add_tables.xml" relativeToChangelogFile="false"/>

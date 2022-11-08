@@ -122,6 +122,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="bankAccount.accountName">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.bankAccount">Bank Account</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -139,6 +145,13 @@
           <td>{{ stockPortfolioItem.stockCurrentDate | formatMediumDate }}</td>
           <td>{{ stockPortfolioItem.stockAcquisitionCurrencyFactor }}</td>
           <td>{{ stockPortfolioItem.stockCurrentCurrencyFactor }}</td>
+          <td>
+            <div *ngIf="stockPortfolioItem.bankAccount">
+              <a [routerLink]="['/bank-account', stockPortfolioItem.bankAccount.id, 'view']">{{
+                stockPortfolioItem.bankAccount.accountName
+              }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

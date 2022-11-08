@@ -56,6 +56,14 @@
         <dd>
           <span>{{ stockPortfolioItem.stockCurrentCurrencyFactor }}</span>
         </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.bankAccount">Bank Account</span></dt>
+        <dd>
+          <div *ngIf="stockPortfolioItem.bankAccount">
+            <a [routerLink]="['/bank-account', stockPortfolioItem.bankAccount.id, 'view']">{{
+              stockPortfolioItem.bankAccount.accountName
+            }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

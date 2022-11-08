@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -20,14 +21,19 @@ import org.assertj.core.util.IterableUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mgoulene.IntegrationTest;
+import org.mgoulene.domain.BankAccount;
 import org.mgoulene.domain.StockPortfolioItem;
 import org.mgoulene.domain.enumeration.Currency;
 import org.mgoulene.repository.StockPortfolioItemRepository;
 import org.mgoulene.repository.search.StockPortfolioItemSearchRepository;
+import org.mgoulene.service.StockPortfolioItemService;
 import org.mgoulene.service.criteria.StockPortfolioItemCriteria;
 import org.mgoulene.service.dto.StockPortfolioItemDTO;
 import org.mgoulene.service.mapper.StockPortfolioItemMapper;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
@@ -42,6 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link StockPortfolioItemResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class StockPortfolioItemResourceIT {
@@ -90,8 +97,14 @@ class StockPortfolioItemResourceIT {
     @Autowired
     private StockPortfolioItemRepository stockPortfolioItemRepository;
 
+    @Mock
+    private StockPortfolioItemRepository stockPortfolioItemRepositoryMock;
+
     @Autowired
     private StockPortfolioItemMapper stockPortfolioItemMapper;
+
+    @Mock
+    private StockPortfolioItemService stockPortfolioItemServiceMock;
 
     @Autowired
     private StockPortfolioItemSearchRepository stockPortfolioItemSearchRepository;
@@ -465,6 +478,23 @@ class StockPortfolioItemResourceIT {
                 jsonPath("$.[*].stockAcquisitionCurrencyFactor").value(hasItem(DEFAULT_STOCK_ACQUISITION_CURRENCY_FACTOR.doubleValue()))
             )
             .andExpect(jsonPath("$.[*].stockCurrentCurrencyFactor").value(hasItem(DEFAULT_STOCK_CURRENT_CURRENCY_FACTOR.doubleValue())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllStockPortfolioItemsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(stockPortfolioItemServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restStockPortfolioItemMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(stockPortfolioItemServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllStockPortfolioItemsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(stockPortfolioItemServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restStockPortfolioItemMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(stockPortfolioItemRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -1268,6 +1298,29 @@ class StockPortfolioItemResourceIT {
 
         // Get all the stockPortfolioItemList where stockCurrentCurrencyFactor is greater than SMALLER_STOCK_CURRENT_CURRENCY_FACTOR
         defaultStockPortfolioItemShouldBeFound("stockCurrentCurrencyFactor.greaterThan=" + SMALLER_STOCK_CURRENT_CURRENCY_FACTOR);
+    }
+
+    @Test
+    @Transactional
+    void getAllStockPortfolioItemsByBankAccountIsEqualToSomething() throws Exception {
+        BankAccount bankAccount;
+        if (TestUtil.findAll(em, BankAccount.class).isEmpty()) {
+            stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+            bankAccount = BankAccountResourceIT.createEntity(em);
+        } else {
+            bankAccount = TestUtil.findAll(em, BankAccount.class).get(0);
+        }
+        em.persist(bankAccount);
+        em.flush();
+        stockPortfolioItem.setBankAccount(bankAccount);
+        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
+        Long bankAccountId = bankAccount.getId();
+
+        // Get all the stockPortfolioItemList where bankAccount equals to bankAccountId
+        defaultStockPortfolioItemShouldBeFound("bankAccountId.equals=" + bankAccountId);
+
+        // Get all the stockPortfolioItemList where bankAccount equals to (bankAccountId + 1)
+        defaultStockPortfolioItemShouldNotBeFound("bankAccountId.equals=" + (bankAccountId + 1));
     }
 
     /**

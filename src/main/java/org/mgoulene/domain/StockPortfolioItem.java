@@ -1,5 +1,6 @@
 package org.mgoulene.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
@@ -67,6 +68,10 @@ public class StockPortfolioItem implements Serializable {
     @DecimalMin(value = "0")
     @Column(name = "stock_current_currency_factor", nullable = false)
     private Float stockCurrentCurrencyFactor;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "account", "stockPortfolioItems" }, allowSetters = true)
+    private BankAccount bankAccount;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -198,6 +203,19 @@ public class StockPortfolioItem implements Serializable {
 
     public void setStockCurrentCurrencyFactor(Float stockCurrentCurrencyFactor) {
         this.stockCurrentCurrencyFactor = stockCurrentCurrencyFactor;
+    }
+
+    public BankAccount getBankAccount() {
+        return this.bankAccount;
+    }
+
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public StockPortfolioItem bankAccount(BankAccount bankAccount) {
+        this.setBankAccount(bankAccount);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

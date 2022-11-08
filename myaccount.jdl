@@ -1,0 +1,134 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName myaccount21
+    blueprints []
+    buildTool maven
+    cacheProvider ehcache
+    clientFramework angularX
+    clientPackageManager npm
+    clientTheme sketchy
+    clientThemeVariant dark
+    creationTimestamp 1660731411278
+    databaseType sql
+    devDatabaseType mysql
+    dtoSuffix DTO
+    enableGradleEnterprise false
+    enableHibernateCache true
+    enableSwaggerCodegen false
+    enableTranslation true
+    gradleEnterpriseHost ""
+    jhiPrefix jhi
+    jhipsterVersion "7.9.3"
+    jwtSecretKey "NjY5NGQzMTQ3MTNjNTVhMjBhNGVmYjg2MzFlZTMzY2E1ZmU0ZTUzYWJkMTEyNTI4YjNiYjAwOTU1YWVjYzVlZjBkODk3MTkyMTYyNjM0ZmNkYTg1MWVlNDcwODRiNDU1ZTI2MmYwMzNmYjM3MmQ4MzNlMjI2NGNhOWNmOGQ1MjY="
+    languages [fr, en]
+    messageBroker false
+    microfrontend false
+    microfrontends []
+    nativeLanguage fr
+    otherModules []
+    packageName org.mgoulene
+    prodDatabaseType mysql
+    reactive false
+    searchEngine elasticsearch
+    serverPort 8080
+    serviceDiscoveryType no
+    skipClient false
+    skipUserManagement false
+    testFrameworks [cypress, gatling, cucumber]
+    websocket false
+    withAdminUi true
+  }
+
+  entities ApplicationUser, BankAccount, BudgetItem, BudgetItemPeriod, Category, Operation, StockPortfolioItem, SubCategory
+}
+
+entity ApplicationUser {
+  nickName String required
+}
+entity BankAccount {
+  accountName String required
+  accountBank String required
+  initialAmount Float required
+  archived Boolean required
+  shortName String maxlength(40)
+  accountType BankAccountType required
+  adjustmentAmount Float required
+}
+entity BudgetItem {
+  name String required minlength(5) maxlength(100)
+  order Integer required
+}
+entity BudgetItemPeriod {
+  date LocalDate
+  month LocalDate required
+  amount Float required
+  isSmoothed Boolean
+  isRecurrent Boolean
+}
+entity Category {
+  categoryName String required
+  categoryType CategoryType required
+}
+entity Operation {
+  label String required maxlength(400)
+  date LocalDate required
+  amount Float required
+  note String maxlength(400)
+  checkNumber String maxlength(20)
+  isUpToDate Boolean required
+  deletingHardLock Boolean
+}
+entity StockPortfolioItem {
+  stockSymbol String required minlength(2) maxlength(10)
+  stockCurrency Currency required
+  stockAcquisitionDate LocalDate required
+  stockSharesNumber Float required min(0)
+  stockAcquisitionPrice Float required min(0)
+  stockCurrentPrice Float required min(0)
+  stockCurrentDate LocalDate required
+  stockAcquisitionCurrencyFactor Float required min(0)
+  stockCurrentCurrencyFactor Float required min(0)
+}
+entity SubCategory {
+  subCategoryName String required
+}
+enum BankAccountType {
+  CURRENTACCOUNT,
+  SAVINGSACCOUNT,
+  STOCKPORTFOLIO
+}
+enum CategoryType {
+  REVENUE,
+  SPENDING,
+  OTHER
+}
+enum Currency {
+  EUR,
+  USD,
+  GBP
+}
+
+relationship OneToOne {
+  ApplicationUser{user(login) required} to User
+  BudgetItemPeriod{operation} to Operation{budgetItemPeriod}
+}
+relationship OneToMany {
+  BudgetItem{budgetItemPeriods} to BudgetItemPeriod{budgetItem}
+  Category{subCategory} to SubCategory{category(categoryName)}
+}
+relationship ManyToOne {
+  BankAccount{account(nickName) required} to ApplicationUser
+  BudgetItem{category(categoryName)} to Category
+  BudgetItem{account(nickName)} to ApplicationUser
+  Operation{subCategory(subCategoryName)} to SubCategory
+  Operation{account(nickName)} to ApplicationUser
+  Operation{bankAccount required} to BankAccount
+}
+
+dto ApplicationUser, BankAccount, BudgetItem, BudgetItemPeriod, Category, Operation, StockPortfolioItem, SubCategory with mapstruct
+paginate ApplicationUser, Operation, StockPortfolioItem with pagination
+service ApplicationUser, BankAccount, BudgetItem, BudgetItemPeriod, Category, Operation, StockPortfolioItem, SubCategory with serviceClass
+search ApplicationUser, BankAccount, BudgetItem, BudgetItemPeriod, Category, Operation, SubCategory with elasticsearch
+filter ApplicationUser, BankAccount, BudgetItem, BudgetItemPeriod, Category, Operation, StockPortfolioItem, SubCategory
