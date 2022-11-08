@@ -71,6 +71,8 @@
             <column name="archived" type="boolean"/>
             <column name="short_name" type="string"/>
             <column name="account_id" type="numeric"/>
+            <column name="account_type" type="string"/>
+            <column name="adjustment_amount" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
@@ -142,6 +144,29 @@
                   tableName="param_days"
                   usePreparedStatements="true">
             
+        </loadData>
+    </changeSet>
+    <changeSet  id="20221106210502-2-delete-data" author="mathieu.goulene" context="test" >  
+        <delete  tableName="stock_portfolio_item">  
+        </delete>  
+    </changeSet>
+    <changeSet id="20221106210502-2-data" author="jhipster" context="test">
+        <loadData
+                  file="config/liquibase/test-data/stock_portfolio_item.csv"
+                  separator=";"
+                  tableName="stock_portfolio_item"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="stock_symbol" type="string"/>
+            <column name="stock_currency" type="string"/>
+            <column name="stock_acquisition_date" type="date"/>
+            <column name="stock_shares_number" type="numeric"/>
+            <column name="stock_acquisition_price" type="numeric"/>
+            <column name="stock_current_price" type="numeric"/>
+            <column name="stock_current_date" type="date"/>
+            <column name="stock_acquisition_currency_factor" type="numeric"/>
+            <column name="stock_current_currency_factor" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
 

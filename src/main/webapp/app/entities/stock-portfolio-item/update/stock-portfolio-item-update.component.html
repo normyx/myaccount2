@@ -1,0 +1,399 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-stock-portfolio-item-heading"
+        data-cy="StockPortfolioItemCreateUpdateHeading"
+        jhiTranslate="myaccount21App.stockPortfolioItem.home.createOrEditLabel"
+      >
+        Créer ou éditer un Stock Portfolio Item
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockSymbol" for="field_stockSymbol"
+            >Stock Symbol</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="stockSymbol"
+            id="field_stockSymbol"
+            data-cy="stockSymbol"
+            formControlName="stockSymbol"
+          />
+          <div *ngIf="editForm.get('stockSymbol')!.invalid && (editForm.get('stockSymbol')!.dirty || editForm.get('stockSymbol')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockSymbol')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockSymbol')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 2 }"
+            >
+              Ce champ doit faire au minimum 2 caractères.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockSymbol')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              Ce champ doit faire moins de 10 caractères.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrency" for="field_stockCurrency"
+            >Stock Currency</label
+          >
+          <select
+            class="form-control"
+            name="stockCurrency"
+            formControlName="stockCurrency"
+            id="field_stockCurrency"
+            data-cy="stockCurrency"
+          >
+            <option [ngValue]="null">{{ 'myaccount21App.Currency.null' | translate }}</option>
+            <option *ngFor="let currency of currencyValues" [value]="currency">
+              {{ 'myaccount21App.Currency.' + currency | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('stockCurrency')!.invalid && (editForm.get('stockCurrency')!.dirty || editForm.get('stockCurrency')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockCurrency')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionDate" for="field_stockAcquisitionDate"
+            >Stock Acquisition Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_stockAcquisitionDate"
+              data-cy="stockAcquisitionDate"
+              type="text"
+              class="form-control"
+              name="stockAcquisitionDate"
+              ngbDatepicker
+              #stockAcquisitionDateDp="ngbDatepicker"
+              formControlName="stockAcquisitionDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="stockAcquisitionDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('stockAcquisitionDate')!.invalid &&
+              (editForm.get('stockAcquisitionDate')!.dirty || editForm.get('stockAcquisitionDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockAcquisitionDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockSharesNumber" for="field_stockSharesNumber"
+            >Stock Shares Number</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="stockSharesNumber"
+            id="field_stockSharesNumber"
+            data-cy="stockSharesNumber"
+            formControlName="stockSharesNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('stockSharesNumber')!.invalid &&
+              (editForm.get('stockSharesNumber')!.dirty || editForm.get('stockSharesNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockSharesNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockSharesNumber')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Ce champ doit être supérieur à 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('stockSharesNumber')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionPrice" for="field_stockAcquisitionPrice"
+            >Stock Acquisition Price</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="stockAcquisitionPrice"
+            id="field_stockAcquisitionPrice"
+            data-cy="stockAcquisitionPrice"
+            formControlName="stockAcquisitionPrice"
+          />
+          <div
+            *ngIf="
+              editForm.get('stockAcquisitionPrice')!.invalid &&
+              (editForm.get('stockAcquisitionPrice')!.dirty || editForm.get('stockAcquisitionPrice')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockAcquisitionPrice')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockAcquisitionPrice')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Ce champ doit être supérieur à 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('stockAcquisitionPrice')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentPrice" for="field_stockCurrentPrice"
+            >Stock Current Price</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="stockCurrentPrice"
+            id="field_stockCurrentPrice"
+            data-cy="stockCurrentPrice"
+            formControlName="stockCurrentPrice"
+          />
+          <div
+            *ngIf="
+              editForm.get('stockCurrentPrice')!.invalid &&
+              (editForm.get('stockCurrentPrice')!.dirty || editForm.get('stockCurrentPrice')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockCurrentPrice')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockCurrentPrice')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Ce champ doit être supérieur à 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('stockCurrentPrice')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentDate" for="field_stockCurrentDate"
+            >Stock Current Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_stockCurrentDate"
+              data-cy="stockCurrentDate"
+              type="text"
+              class="form-control"
+              name="stockCurrentDate"
+              ngbDatepicker
+              #stockCurrentDateDp="ngbDatepicker"
+              formControlName="stockCurrentDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="stockCurrentDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('stockCurrentDate')!.invalid &&
+              (editForm.get('stockCurrentDate')!.dirty || editForm.get('stockCurrentDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockCurrentDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionCurrencyFactor"
+            for="field_stockAcquisitionCurrencyFactor"
+            >Stock Acquisition Currency Factor</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="stockAcquisitionCurrencyFactor"
+            id="field_stockAcquisitionCurrencyFactor"
+            data-cy="stockAcquisitionCurrencyFactor"
+            formControlName="stockAcquisitionCurrencyFactor"
+          />
+          <div
+            *ngIf="
+              editForm.get('stockAcquisitionCurrencyFactor')!.invalid &&
+              (editForm.get('stockAcquisitionCurrencyFactor')!.dirty || editForm.get('stockAcquisitionCurrencyFactor')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockAcquisitionCurrencyFactor')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockAcquisitionCurrencyFactor')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Ce champ doit être supérieur à 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('stockAcquisitionCurrencyFactor')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentCurrencyFactor"
+            for="field_stockCurrentCurrencyFactor"
+            >Stock Current Currency Factor</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="stockCurrentCurrencyFactor"
+            id="field_stockCurrentCurrencyFactor"
+            data-cy="stockCurrentCurrencyFactor"
+            formControlName="stockCurrentCurrencyFactor"
+          />
+          <div
+            *ngIf="
+              editForm.get('stockCurrentCurrencyFactor')!.invalid &&
+              (editForm.get('stockCurrentCurrencyFactor')!.dirty || editForm.get('stockCurrentCurrencyFactor')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockCurrentCurrencyFactor')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('stockCurrentCurrencyFactor')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Ce champ doit être supérieur à 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('stockCurrentCurrencyFactor')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

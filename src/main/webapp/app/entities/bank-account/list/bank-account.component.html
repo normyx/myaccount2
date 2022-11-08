@@ -94,9 +94,27 @@
               <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="accountType">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.bankAccount.accountType">Account Type</span>
+              <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="adjustmentAmount">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.bankAccount.adjustmentAmount">Adjustment Amount</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="account.nickName">
             <div class="d-flex">
               <span jhiTranslate="myaccount21App.bankAccount.account">Account</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockPortfolioItem.stockSymbol">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.bankAccount.stockPortfolioItem">Stock Portfolio Item</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -113,9 +131,18 @@
           <td>{{ bankAccount.initialAmount }}</td>
           <td>{{ bankAccount.archived }}</td>
           <td>{{ bankAccount.shortName }}</td>
+          <td jhiTranslate="{{ 'myaccount21App.BankAccountType.' + bankAccount.accountType }}">{{ bankAccount.accountType }}</td>
+          <td>{{ bankAccount.adjustmentAmount }}</td>
           <td>
             <div *ngIf="bankAccount.account">
               <a [routerLink]="['/application-user', bankAccount.account.id, 'view']">{{ bankAccount.account.nickName }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="bankAccount.stockPortfolioItem">
+              <a [routerLink]="['/stock-portfolio-item', bankAccount.stockPortfolioItem.id, 'view']">{{
+                bankAccount.stockPortfolioItem.stockSymbol
+              }}</a>
             </div>
           </td>
           <td class="text-end">

@@ -57,6 +57,8 @@ public class CacheConfiguration {
             createCache(cm, org.mgoulene.domain.Category.class.getName() + ".subCategories");
             createCache(cm, org.mgoulene.domain.Operation.class.getName());
             createCache(cm, org.mgoulene.domain.SubCategory.class.getName());
+            createCache(cm, org.mgoulene.domain.StockPortfolioItem.class.getName());
+            createCache(cm, org.mgoulene.domain.StockPortfolioItem.class.getName() + ".bankAccounts");
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -113,12 +113,27 @@ public class BankAccountQueryService extends QueryService<BankAccount> {
             if (criteria.getShortName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getShortName(), BankAccount_.shortName));
             }
+            if (criteria.getAccountType() != null) {
+                specification = specification.and(buildSpecification(criteria.getAccountType(), BankAccount_.accountType));
+            }
+            if (criteria.getAdjustmentAmount() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getAdjustmentAmount(), BankAccount_.adjustmentAmount));
+            }
             if (criteria.getAccountId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
                             criteria.getAccountId(),
                             root -> root.join(BankAccount_.account, JoinType.LEFT).get(ApplicationUser_.id)
+                        )
+                    );
+            }
+            if (criteria.getStockPortfolioItemId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getStockPortfolioItemId(),
+                            root -> root.join(BankAccount_.stockPortfolioItem, JoinType.LEFT).get(StockPortfolioItem_.id)
                         )
                     );
             }

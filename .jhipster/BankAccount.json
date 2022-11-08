@@ -30,6 +30,17 @@
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
       "fieldValidateRulesMaxlength": "40"
+    },
+    {
+      "fieldName": "accountType",
+      "fieldType": "BankAccountType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CURRENTACCOUNT,SAVINGSACCOUNT,STOCKPORTFOLIO"
+    },
+    {
+      "fieldName": "adjustmentAmount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
@@ -44,6 +55,12 @@
       "relationshipName": "account",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "stockSymbol",
+      "otherEntityName": "stockPortfolioItem",
+      "relationshipName": "stockPortfolioItem",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "elasticsearch",

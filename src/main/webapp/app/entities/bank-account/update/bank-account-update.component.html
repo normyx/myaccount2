@@ -121,6 +121,60 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.bankAccount.accountType" for="field_accountType">Account Type</label>
+          <select class="form-control" name="accountType" formControlName="accountType" id="field_accountType" data-cy="accountType">
+            <option [ngValue]="null">{{ 'myaccount21App.BankAccountType.null' | translate }}</option>
+            <option *ngFor="let bankAccountType of bankAccountTypeValues" [value]="bankAccountType">
+              {{ 'myaccount21App.BankAccountType.' + bankAccountType | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('accountType')!.invalid && (editForm.get('accountType')!.dirty || editForm.get('accountType')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('accountType')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.bankAccount.adjustmentAmount" for="field_adjustmentAmount"
+            >Adjustment Amount</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="adjustmentAmount"
+            id="field_adjustmentAmount"
+            data-cy="adjustmentAmount"
+            formControlName="adjustmentAmount"
+          />
+          <div
+            *ngIf="
+              editForm.get('adjustmentAmount')!.invalid &&
+              (editForm.get('adjustmentAmount')!.dirty || editForm.get('adjustmentAmount')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('adjustmentAmount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Ce champ est obligatoire.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('adjustmentAmount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              Ce champ doit être un nombre.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="myaccount21App.bankAccount.account" for="field_account">Account</label>
           <select
             class="form-control"
@@ -144,6 +198,25 @@
           >
             Ce champ est obligatoire.
           </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="myaccount21App.bankAccount.stockPortfolioItem" for="field_stockPortfolioItem"
+            >Stock Portfolio Item</label
+          >
+          <select
+            class="form-control"
+            id="field_stockPortfolioItem"
+            data-cy="stockPortfolioItem"
+            name="stockPortfolioItem"
+            formControlName="stockPortfolioItem"
+            [compareWith]="compareStockPortfolioItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="stockPortfolioItemOption" *ngFor="let stockPortfolioItemOption of stockPortfolioItemsSharedCollection">
+              {{ stockPortfolioItemOption.stockSymbol }}
+            </option>
+          </select>
         </div>
       </div>
 

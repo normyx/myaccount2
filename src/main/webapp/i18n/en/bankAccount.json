@@ -24,7 +24,10 @@
       "initialAmount": "Initial Amount",
       "archived": "Archived",
       "shortName": "Short Name",
-      "account": "Account"
+      "accountType": "Account Type",
+      "adjustmentAmount": "Adjustment Amount",
+      "account": "Account",
+      "stockPortfolioItem": "Stock Portfolio Item"
     }
   }
 }

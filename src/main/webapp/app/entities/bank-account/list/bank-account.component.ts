@@ -14,7 +14,7 @@ import { SortService } from 'app/shared/sort/sort.service';
   templateUrl: './bank-account.component.html',
 })
 export class BankAccountComponent implements OnInit {
-  private static readonly NOT_SORTABLE_FIELDS_AFTER_SEARCH = ['accountName', 'accountBank', 'shortName'];
+  private static readonly NOT_SORTABLE_FIELDS_AFTER_SEARCH = ['accountName', 'accountBank', 'shortName', 'accountType'];
 
   bankAccounts?: IBankAccount[];
   isLoading = false;

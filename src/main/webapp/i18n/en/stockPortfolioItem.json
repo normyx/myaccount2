@@ -1,0 +1,34 @@
+{
+  "myaccount21App": {
+    "stockPortfolioItem": {
+      "home": {
+        "title": "Stock Portfolio Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Stock Portfolio Item",
+        "createOrEditLabel": "Create or edit a Stock Portfolio Item",
+        "search": "Search for Stock Portfolio Item",
+        "notFound": "No Stock Portfolio Items found"
+      },
+      "created": "A new Stock Portfolio Item is created with identifier {{ param }}",
+      "updated": "A Stock Portfolio Item is updated with identifier {{ param }}",
+      "deleted": "A Stock Portfolio Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Stock Portfolio Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Stock Portfolio Item"
+      },
+      "id": "ID",
+      "stockSymbol": "Stock Symbol",
+      "stockCurrency": "Stock Currency",
+      "stockAcquisitionDate": "Stock Acquisition Date",
+      "stockSharesNumber": "Stock Shares Number",
+      "stockAcquisitionPrice": "Stock Acquisition Price",
+      "stockCurrentPrice": "Stock Current Price",
+      "stockCurrentDate": "Stock Current Date",
+      "stockAcquisitionCurrencyFactor": "Stock Acquisition Currency Factor",
+      "stockCurrentCurrencyFactor": "Stock Current Currency Factor",
+      "bankAccount": "Bank Account"
+    }
+  }
+}

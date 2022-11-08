@@ -23,7 +23,10 @@ type BankAccountFormGroupContent = {
   initialAmount: FormControl<IBankAccount['initialAmount']>;
   archived: FormControl<IBankAccount['archived']>;
   shortName: FormControl<IBankAccount['shortName']>;
+  accountType: FormControl<IBankAccount['accountType']>;
+  adjustmentAmount: FormControl<IBankAccount['adjustmentAmount']>;
   account: FormControl<IBankAccount['account']>;
+  stockPortfolioItem: FormControl<IBankAccount['stockPortfolioItem']>;
 };
 
 export type BankAccountFormGroup = FormGroup<BankAccountFormGroupContent>;
@@ -58,9 +61,16 @@ export class BankAccountFormService {
       shortName: new FormControl(bankAccountRawValue.shortName, {
         validators: [Validators.maxLength(40)],
       }),
+      accountType: new FormControl(bankAccountRawValue.accountType, {
+        validators: [Validators.required],
+      }),
+      adjustmentAmount: new FormControl(bankAccountRawValue.adjustmentAmount, {
+        validators: [Validators.required],
+      }),
       account: new FormControl(bankAccountRawValue.account, {
         validators: [Validators.required],
       }),
+      stockPortfolioItem: new FormControl(bankAccountRawValue.stockPortfolioItem),
     });
   }
 

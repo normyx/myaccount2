@@ -2,6 +2,7 @@ package org.mgoulene.service.criteria;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.mgoulene.domain.enumeration.BankAccountType;
 import org.springdoc.api.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
@@ -19,6 +20,23 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class BankAccountCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering BankAccountType
+     */
+    public static class BankAccountTypeFilter extends Filter<BankAccountType> {
+
+        public BankAccountTypeFilter() {}
+
+        public BankAccountTypeFilter(BankAccountTypeFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public BankAccountTypeFilter copy() {
+            return new BankAccountTypeFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
@@ -33,7 +51,13 @@ public class BankAccountCriteria implements Serializable, Criteria {
 
     private StringFilter shortName;
 
+    private BankAccountTypeFilter accountType;
+
+    private FloatFilter adjustmentAmount;
+
     private LongFilter accountId;
+
+    private LongFilter stockPortfolioItemId;
 
     private Boolean distinct;
 
@@ -46,7 +70,10 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.initialAmount = other.initialAmount == null ? null : other.initialAmount.copy();
         this.archived = other.archived == null ? null : other.archived.copy();
         this.shortName = other.shortName == null ? null : other.shortName.copy();
+        this.accountType = other.accountType == null ? null : other.accountType.copy();
+        this.adjustmentAmount = other.adjustmentAmount == null ? null : other.adjustmentAmount.copy();
         this.accountId = other.accountId == null ? null : other.accountId.copy();
+        this.stockPortfolioItemId = other.stockPortfolioItemId == null ? null : other.stockPortfolioItemId.copy();
         this.distinct = other.distinct;
     }
 
@@ -145,6 +172,36 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.shortName = shortName;
     }
 
+    public BankAccountTypeFilter getAccountType() {
+        return accountType;
+    }
+
+    public BankAccountTypeFilter accountType() {
+        if (accountType == null) {
+            accountType = new BankAccountTypeFilter();
+        }
+        return accountType;
+    }
+
+    public void setAccountType(BankAccountTypeFilter accountType) {
+        this.accountType = accountType;
+    }
+
+    public FloatFilter getAdjustmentAmount() {
+        return adjustmentAmount;
+    }
+
+    public FloatFilter adjustmentAmount() {
+        if (adjustmentAmount == null) {
+            adjustmentAmount = new FloatFilter();
+        }
+        return adjustmentAmount;
+    }
+
+    public void setAdjustmentAmount(FloatFilter adjustmentAmount) {
+        this.adjustmentAmount = adjustmentAmount;
+    }
+
     public LongFilter getAccountId() {
         return accountId;
     }
@@ -158,6 +215,21 @@ public class BankAccountCriteria implements Serializable, Criteria {
 
     public void setAccountId(LongFilter accountId) {
         this.accountId = accountId;
+    }
+
+    public LongFilter getStockPortfolioItemId() {
+        return stockPortfolioItemId;
+    }
+
+    public LongFilter stockPortfolioItemId() {
+        if (stockPortfolioItemId == null) {
+            stockPortfolioItemId = new LongFilter();
+        }
+        return stockPortfolioItemId;
+    }
+
+    public void setStockPortfolioItemId(LongFilter stockPortfolioItemId) {
+        this.stockPortfolioItemId = stockPortfolioItemId;
     }
 
     public Boolean getDistinct() {
@@ -184,14 +256,29 @@ public class BankAccountCriteria implements Serializable, Criteria {
             Objects.equals(initialAmount, that.initialAmount) &&
             Objects.equals(archived, that.archived) &&
             Objects.equals(shortName, that.shortName) &&
+            Objects.equals(accountType, that.accountType) &&
+            Objects.equals(adjustmentAmount, that.adjustmentAmount) &&
             Objects.equals(accountId, that.accountId) &&
+            Objects.equals(stockPortfolioItemId, that.stockPortfolioItemId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, accountName, accountBank, initialAmount, archived, shortName, accountId, distinct);
+        return Objects.hash(
+            id,
+            accountName,
+            accountBank,
+            initialAmount,
+            archived,
+            shortName,
+            accountType,
+            adjustmentAmount,
+            accountId,
+            stockPortfolioItemId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -204,7 +291,10 @@ public class BankAccountCriteria implements Serializable, Criteria {
             (initialAmount != null ? "initialAmount=" + initialAmount + ", " : "") +
             (archived != null ? "archived=" + archived + ", " : "") +
             (shortName != null ? "shortName=" + shortName + ", " : "") +
+            (accountType != null ? "accountType=" + accountType + ", " : "") +
+            (adjustmentAmount != null ? "adjustmentAmount=" + adjustmentAmount + ", " : "") +
             (accountId != null ? "accountId=" + accountId + ", " : "") +
+            (stockPortfolioItemId != null ? "stockPortfolioItemId=" + stockPortfolioItemId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

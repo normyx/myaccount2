@@ -63,7 +63,7 @@ public class Operation implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "account" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "account", "stockPortfolioItem" }, allowSetters = true)
     private BankAccount bankAccount;
 
     @JsonIgnoreProperties(value = { "operation", "budgetItem" }, allowSetters = true)

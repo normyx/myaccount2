@@ -19,6 +19,8 @@ logging:
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG
     org.mgoulene: DEBUG
+    jdk.internal.httpclient: WARN
+    okhttp3.internal: WARN
 
 management:
   health:

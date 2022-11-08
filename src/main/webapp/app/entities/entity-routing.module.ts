@@ -39,6 +39,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'myaccount21App.subCategory.home.title' },
         loadChildren: () => import('./sub-category/sub-category.module').then(m => m.SubCategoryModule),
       },
+      {
+        path: 'stock-portfolio-item',
+        data: { pageTitle: 'myaccount21App.stockPortfolioItem.home.title' },
+        loadChildren: () => import('./stock-portfolio-item/stock-portfolio-item.module').then(m => m.StockPortfolioItemModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

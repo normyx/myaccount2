@@ -1,0 +1,10 @@
+{
+  "myaccount21App": {
+    "BankAccountType": {
+      "null": "",
+      "CURRENTACCOUNT": "CURRENTACCOUNT",
+      "SAVINGSACCOUNT": "SAVINGSACCOUNT",
+      "STOCKPORTFOLIO": "STOCKPORTFOLIO"
+    }
+  }
+}

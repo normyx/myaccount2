@@ -1,3 +1,5 @@
+import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
+
 import { IBankAccount, NewBankAccount } from './bank-account.model';
 
 export const sampleWithRequiredData: IBankAccount = {
@@ -6,30 +8,39 @@ export const sampleWithRequiredData: IBankAccount = {
   accountBank: 'up syndicate',
   initialAmount: 83918,
   archived: true,
+  accountType: BankAccountType['CURRENTACCOUNT'],
+  adjustmentAmount: 63048,
 };
 
 export const sampleWithPartialData: IBankAccount = {
-  id: 63048,
-  accountName: 'Credit Card Account',
-  accountBank: 'programming',
-  initialAmount: 28895,
+  id: 14310,
+  accountName: 'Auto Loan Account',
+  accountBank: 'port b Configurable',
+  initialAmount: 75593,
   archived: false,
+  shortName: 'Fully-configurable channels Home',
+  accountType: BankAccountType['SAVINGSACCOUNT'],
+  adjustmentAmount: 41431,
 };
 
 export const sampleWithFullData: IBankAccount = {
-  id: 95324,
+  id: 13497,
   accountName: 'Home Loan Account',
-  accountBank: 'Configurable bypass Fully-configurable',
-  initialAmount: 43068,
-  archived: false,
-  shortName: 'Home technologies Aquitaine',
+  accountBank: 'compressing',
+  initialAmount: 35754,
+  archived: true,
+  shortName: 'FTP',
+  accountType: BankAccountType['SAVINGSACCOUNT'],
+  adjustmentAmount: 43392,
 };
 
 export const sampleWithNewData: NewBankAccount = {
-  accountName: 'Money Market Account',
-  accountBank: 'extensible FTP',
-  initialAmount: 57064,
+  accountName: 'Auto Loan Account',
+  accountBank: 'maroon b',
+  initialAmount: 34881,
   archived: false,
+  accountType: BankAccountType['CURRENTACCOUNT'],
+  adjustmentAmount: 47869,
   id: null,
 };
 

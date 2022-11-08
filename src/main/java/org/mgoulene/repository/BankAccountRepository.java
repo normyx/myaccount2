@@ -27,14 +27,18 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long>,
     }
 
     @Query(
-        value = "select distinct bankAccount from BankAccount bankAccount left join fetch bankAccount.account",
+        value = "select distinct bankAccount from BankAccount bankAccount left join fetch bankAccount.account left join fetch bankAccount.stockPortfolioItem",
         countQuery = "select count(distinct bankAccount) from BankAccount bankAccount"
     )
     Page<BankAccount> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select distinct bankAccount from BankAccount bankAccount left join fetch bankAccount.account")
+    @Query(
+        "select distinct bankAccount from BankAccount bankAccount left join fetch bankAccount.account left join fetch bankAccount.stockPortfolioItem"
+    )
     List<BankAccount> findAllWithToOneRelationships();
 
-    @Query("select bankAccount from BankAccount bankAccount left join fetch bankAccount.account where bankAccount.id =:id")
+    @Query(
+        "select bankAccount from BankAccount bankAccount left join fetch bankAccount.account left join fetch bankAccount.stockPortfolioItem where bankAccount.id =:id"
+    )
     Optional<BankAccount> findOneWithToOneRelationships(@Param("id") Long id);
 }

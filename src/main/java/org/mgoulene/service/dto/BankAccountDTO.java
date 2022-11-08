@@ -3,6 +3,7 @@ package org.mgoulene.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.*;
+import org.mgoulene.domain.enumeration.BankAccountType;
 
 /**
  * A DTO for the {@link org.mgoulene.domain.BankAccount} entity.
@@ -27,7 +28,15 @@ public class BankAccountDTO implements Serializable {
     @Size(max = 40)
     private String shortName;
 
+    @NotNull
+    private BankAccountType accountType;
+
+    @NotNull
+    private Float adjustmentAmount;
+
     private ApplicationUserDTO account;
+
+    private StockPortfolioItemDTO stockPortfolioItem;
 
     public Long getId() {
         return id;
@@ -77,12 +86,36 @@ public class BankAccountDTO implements Serializable {
         this.shortName = shortName;
     }
 
+    public BankAccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(BankAccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public Float getAdjustmentAmount() {
+        return adjustmentAmount;
+    }
+
+    public void setAdjustmentAmount(Float adjustmentAmount) {
+        this.adjustmentAmount = adjustmentAmount;
+    }
+
     public ApplicationUserDTO getAccount() {
         return account;
     }
 
     public void setAccount(ApplicationUserDTO account) {
         this.account = account;
+    }
+
+    public StockPortfolioItemDTO getStockPortfolioItem() {
+        return stockPortfolioItem;
+    }
+
+    public void setStockPortfolioItem(StockPortfolioItemDTO stockPortfolioItem) {
+        this.stockPortfolioItem = stockPortfolioItem;
     }
 
     @Override
@@ -116,7 +149,10 @@ public class BankAccountDTO implements Serializable {
             ", initialAmount=" + getInitialAmount() +
             ", archived='" + getArchived() + "'" +
             ", shortName='" + getShortName() + "'" +
+            ", accountType='" + getAccountType() + "'" +
+            ", adjustmentAmount=" + getAdjustmentAmount() +
             ", account=" + getAccount() +
+            ", stockPortfolioItem=" + getStockPortfolioItem() +
             "}";
     }
 }

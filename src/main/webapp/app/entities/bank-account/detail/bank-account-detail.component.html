@@ -34,10 +34,26 @@
         <dd>
           <span>{{ bankAccount.shortName }}</span>
         </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.accountType">Account Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'myaccount21App.BankAccountType.' + bankAccount.accountType }}">{{ bankAccount.accountType }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.adjustmentAmount">Adjustment Amount</span></dt>
+        <dd>
+          <span>{{ bankAccount.adjustmentAmount }}</span>
+        </dd>
         <dt><span jhiTranslate="myaccount21App.bankAccount.account">Account</span></dt>
         <dd>
           <div *ngIf="bankAccount.account">
             <a [routerLink]="['/application-user', bankAccount.account.id, 'view']">{{ bankAccount.account.nickName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.bankAccount.stockPortfolioItem">Stock Portfolio Item</span></dt>
+        <dd>
+          <div *ngIf="bankAccount.stockPortfolioItem">
+            <a [routerLink]="['/stock-portfolio-item', bankAccount.stockPortfolioItem.id, 'view']">{{
+              bankAccount.stockPortfolioItem.stockSymbol
+            }}</a>
           </div>
         </dd>
       </dl>

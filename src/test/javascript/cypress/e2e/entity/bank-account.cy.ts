@@ -15,7 +15,7 @@ describe('BankAccount e2e test', () => {
   const bankAccountPageUrlPattern = new RegExp('/bank-account(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  // const bankAccountSample = {"accountName":"Personal Loan Account","accountBank":"Chair","initialAmount":32444,"archived":true};
+  // const bankAccountSample = {"accountName":"Savings Account","accountBank":"Function-based","initialAmount":92761,"archived":true,"accountType":"STOCKPORTFOLIO","adjustmentAmount":45720};
 
   let bankAccount;
   // let applicationUser;
@@ -49,6 +49,11 @@ describe('BankAccount e2e test', () => {
     cy.intercept('GET', '/api/application-users', {
       statusCode: 200,
       body: [applicationUser],
+    });
+
+    cy.intercept('GET', '/api/stock-portfolio-items', {
+      statusCode: 200,
+      body: [],
     });
 
   });
@@ -220,6 +225,10 @@ describe('BankAccount e2e test', () => {
       cy.get(`[data-cy="archived"]`).click().should('be.checked');
 
       cy.get(`[data-cy="shortName"]`).type('dedicated deposit Handcrafted').should('have.value', 'dedicated deposit Handcrafted');
+
+      cy.get(`[data-cy="accountType"]`).select('STOCKPORTFOLIO');
+
+      cy.get(`[data-cy="adjustmentAmount"]`).type('17272').should('have.value', '17272');
 
       cy.get(`[data-cy="account"]`).select(1);
 

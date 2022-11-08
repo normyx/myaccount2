@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="stockPortfolioItem">
+      <h2 data-cy="stockPortfolioItemDetailsHeading">
+        <span jhiTranslate="myaccount21App.stockPortfolioItem.detail.title">Stock Portfolio Item</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockSymbol">Stock Symbol</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockSymbol }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrency">Stock Currency</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'myaccount21App.Currency.' + stockPortfolioItem.stockCurrency }}">{{
+            stockPortfolioItem.stockCurrency
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionDate">Stock Acquisition Date</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockAcquisitionDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockSharesNumber">Stock Shares Number</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockSharesNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionPrice">Stock Acquisition Price</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockAcquisitionPrice }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentPrice">Stock Current Price</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockCurrentPrice }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentDate">Stock Current Date</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockCurrentDate | formatMediumDate }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionCurrencyFactor">Stock Acquisition Currency Factor</span>
+        </dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockAcquisitionCurrencyFactor }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentCurrencyFactor">Stock Current Currency Factor</span></dt>
+        <dd>
+          <span>{{ stockPortfolioItem.stockCurrentCurrencyFactor }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/stock-portfolio-item', stockPortfolioItem.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

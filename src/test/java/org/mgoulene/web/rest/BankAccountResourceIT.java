@@ -24,6 +24,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mgoulene.IntegrationTest;
 import org.mgoulene.domain.ApplicationUser;
 import org.mgoulene.domain.BankAccount;
+import org.mgoulene.domain.StockPortfolioItem;
+import org.mgoulene.domain.enumeration.BankAccountType;
 import org.mgoulene.repository.BankAccountRepository;
 import org.mgoulene.repository.search.BankAccountSearchRepository;
 import org.mgoulene.service.BankAccountService;
@@ -67,6 +69,13 @@ class BankAccountResourceIT {
     private static final String DEFAULT_SHORT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_SHORT_NAME = "BBBBBBBBBB";
 
+    private static final BankAccountType DEFAULT_ACCOUNT_TYPE = BankAccountType.CURRENTACCOUNT;
+    private static final BankAccountType UPDATED_ACCOUNT_TYPE = BankAccountType.SAVINGSACCOUNT;
+
+    private static final Float DEFAULT_ADJUSTMENT_AMOUNT = 1F;
+    private static final Float UPDATED_ADJUSTMENT_AMOUNT = 2F;
+    private static final Float SMALLER_ADJUSTMENT_AMOUNT = 1F - 1F;
+
     private static final String ENTITY_API_URL = "/api/bank-accounts";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
     private static final String ENTITY_SEARCH_API_URL = "/api/_search/bank-accounts";
@@ -109,7 +118,9 @@ class BankAccountResourceIT {
             .accountBank(DEFAULT_ACCOUNT_BANK)
             .initialAmount(DEFAULT_INITIAL_AMOUNT)
             .archived(DEFAULT_ARCHIVED)
-            .shortName(DEFAULT_SHORT_NAME);
+            .shortName(DEFAULT_SHORT_NAME)
+            .accountType(DEFAULT_ACCOUNT_TYPE)
+            .adjustmentAmount(DEFAULT_ADJUSTMENT_AMOUNT);
         // Add required entity
         ApplicationUser applicationUser;
         if (TestUtil.findAll(em, ApplicationUser.class).isEmpty()) {
@@ -135,7 +146,9 @@ class BankAccountResourceIT {
             .accountBank(UPDATED_ACCOUNT_BANK)
             .initialAmount(UPDATED_INITIAL_AMOUNT)
             .archived(UPDATED_ARCHIVED)
-            .shortName(UPDATED_SHORT_NAME);
+            .shortName(UPDATED_SHORT_NAME)
+            .accountType(UPDATED_ACCOUNT_TYPE)
+            .adjustmentAmount(UPDATED_ADJUSTMENT_AMOUNT);
         // Add required entity
         ApplicationUser applicationUser;
         if (TestUtil.findAll(em, ApplicationUser.class).isEmpty()) {
@@ -188,6 +201,8 @@ class BankAccountResourceIT {
         assertThat(testBankAccount.getInitialAmount()).isEqualTo(DEFAULT_INITIAL_AMOUNT);
         assertThat(testBankAccount.getArchived()).isEqualTo(DEFAULT_ARCHIVED);
         assertThat(testBankAccount.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
+        assertThat(testBankAccount.getAccountType()).isEqualTo(DEFAULT_ACCOUNT_TYPE);
+        assertThat(testBankAccount.getAdjustmentAmount()).isEqualTo(DEFAULT_ADJUSTMENT_AMOUNT);
     }
 
     @Test
@@ -308,6 +323,52 @@ class BankAccountResourceIT {
 
     @Test
     @Transactional
+    void checkAccountTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = bankAccountRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(bankAccountSearchRepository.findAll());
+        // set the field null
+        bankAccount.setAccountType(null);
+
+        // Create the BankAccount, which fails.
+        BankAccountDTO bankAccountDTO = bankAccountMapper.toDto(bankAccount);
+
+        restBankAccountMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bankAccountDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<BankAccount> bankAccountList = bankAccountRepository.findAll();
+        assertThat(bankAccountList).hasSize(databaseSizeBeforeTest);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(bankAccountSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
+    void checkAdjustmentAmountIsRequired() throws Exception {
+        int databaseSizeBeforeTest = bankAccountRepository.findAll().size();
+        int searchDatabaseSizeBefore = IterableUtil.sizeOf(bankAccountSearchRepository.findAll());
+        // set the field null
+        bankAccount.setAdjustmentAmount(null);
+
+        // Create the BankAccount, which fails.
+        BankAccountDTO bankAccountDTO = bankAccountMapper.toDto(bankAccount);
+
+        restBankAccountMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bankAccountDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<BankAccount> bankAccountList = bankAccountRepository.findAll();
+        assertThat(bankAccountList).hasSize(databaseSizeBeforeTest);
+        int searchDatabaseSizeAfter = IterableUtil.sizeOf(bankAccountSearchRepository.findAll());
+        assertThat(searchDatabaseSizeAfter).isEqualTo(searchDatabaseSizeBefore);
+    }
+
+    @Test
+    @Transactional
     void getAllBankAccounts() throws Exception {
         // Initialize the database
         bankAccountRepository.saveAndFlush(bankAccount);
@@ -322,7 +383,9 @@ class BankAccountResourceIT {
             .andExpect(jsonPath("$.[*].accountBank").value(hasItem(DEFAULT_ACCOUNT_BANK)))
             .andExpect(jsonPath("$.[*].initialAmount").value(hasItem(DEFAULT_INITIAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].archived").value(hasItem(DEFAULT_ARCHIVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)));
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
+            .andExpect(jsonPath("$.[*].accountType").value(hasItem(DEFAULT_ACCOUNT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].adjustmentAmount").value(hasItem(DEFAULT_ADJUSTMENT_AMOUNT.doubleValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -358,7 +421,9 @@ class BankAccountResourceIT {
             .andExpect(jsonPath("$.accountBank").value(DEFAULT_ACCOUNT_BANK))
             .andExpect(jsonPath("$.initialAmount").value(DEFAULT_INITIAL_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.archived").value(DEFAULT_ARCHIVED.booleanValue()))
-            .andExpect(jsonPath("$.shortName").value(DEFAULT_SHORT_NAME));
+            .andExpect(jsonPath("$.shortName").value(DEFAULT_SHORT_NAME))
+            .andExpect(jsonPath("$.accountType").value(DEFAULT_ACCOUNT_TYPE.toString()))
+            .andExpect(jsonPath("$.adjustmentAmount").value(DEFAULT_ADJUSTMENT_AMOUNT.doubleValue()));
     }
 
     @Test
@@ -706,6 +771,136 @@ class BankAccountResourceIT {
 
     @Test
     @Transactional
+    void getAllBankAccountsByAccountTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where accountType equals to DEFAULT_ACCOUNT_TYPE
+        defaultBankAccountShouldBeFound("accountType.equals=" + DEFAULT_ACCOUNT_TYPE);
+
+        // Get all the bankAccountList where accountType equals to UPDATED_ACCOUNT_TYPE
+        defaultBankAccountShouldNotBeFound("accountType.equals=" + UPDATED_ACCOUNT_TYPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAccountTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where accountType in DEFAULT_ACCOUNT_TYPE or UPDATED_ACCOUNT_TYPE
+        defaultBankAccountShouldBeFound("accountType.in=" + DEFAULT_ACCOUNT_TYPE + "," + UPDATED_ACCOUNT_TYPE);
+
+        // Get all the bankAccountList where accountType equals to UPDATED_ACCOUNT_TYPE
+        defaultBankAccountShouldNotBeFound("accountType.in=" + UPDATED_ACCOUNT_TYPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAccountTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where accountType is not null
+        defaultBankAccountShouldBeFound("accountType.specified=true");
+
+        // Get all the bankAccountList where accountType is null
+        defaultBankAccountShouldNotBeFound("accountType.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsEqualToSomething() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount equals to DEFAULT_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldBeFound("adjustmentAmount.equals=" + DEFAULT_ADJUSTMENT_AMOUNT);
+
+        // Get all the bankAccountList where adjustmentAmount equals to UPDATED_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.equals=" + UPDATED_ADJUSTMENT_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsInShouldWork() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount in DEFAULT_ADJUSTMENT_AMOUNT or UPDATED_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldBeFound("adjustmentAmount.in=" + DEFAULT_ADJUSTMENT_AMOUNT + "," + UPDATED_ADJUSTMENT_AMOUNT);
+
+        // Get all the bankAccountList where adjustmentAmount equals to UPDATED_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.in=" + UPDATED_ADJUSTMENT_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount is not null
+        defaultBankAccountShouldBeFound("adjustmentAmount.specified=true");
+
+        // Get all the bankAccountList where adjustmentAmount is null
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount is greater than or equal to DEFAULT_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldBeFound("adjustmentAmount.greaterThanOrEqual=" + DEFAULT_ADJUSTMENT_AMOUNT);
+
+        // Get all the bankAccountList where adjustmentAmount is greater than or equal to UPDATED_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.greaterThanOrEqual=" + UPDATED_ADJUSTMENT_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount is less than or equal to DEFAULT_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldBeFound("adjustmentAmount.lessThanOrEqual=" + DEFAULT_ADJUSTMENT_AMOUNT);
+
+        // Get all the bankAccountList where adjustmentAmount is less than or equal to SMALLER_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.lessThanOrEqual=" + SMALLER_ADJUSTMENT_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsLessThanSomething() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount is less than DEFAULT_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.lessThan=" + DEFAULT_ADJUSTMENT_AMOUNT);
+
+        // Get all the bankAccountList where adjustmentAmount is less than UPDATED_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldBeFound("adjustmentAmount.lessThan=" + UPDATED_ADJUSTMENT_AMOUNT);
+    }
+
+    @Test
+    @Transactional
+    void getAllBankAccountsByAdjustmentAmountIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        bankAccountRepository.saveAndFlush(bankAccount);
+
+        // Get all the bankAccountList where adjustmentAmount is greater than DEFAULT_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldNotBeFound("adjustmentAmount.greaterThan=" + DEFAULT_ADJUSTMENT_AMOUNT);
+
+        // Get all the bankAccountList where adjustmentAmount is greater than SMALLER_ADJUSTMENT_AMOUNT
+        defaultBankAccountShouldBeFound("adjustmentAmount.greaterThan=" + SMALLER_ADJUSTMENT_AMOUNT);
+    }
+
+    @Test
+    @Transactional
     void getAllBankAccountsByAccountIsEqualToSomething() throws Exception {
         ApplicationUser account;
         if (TestUtil.findAll(em, ApplicationUser.class).isEmpty()) {
@@ -727,6 +922,29 @@ class BankAccountResourceIT {
         defaultBankAccountShouldNotBeFound("accountId.equals=" + (accountId + 1));
     }
 
+    @Test
+    @Transactional
+    void getAllBankAccountsByStockPortfolioItemIsEqualToSomething() throws Exception {
+        StockPortfolioItem stockPortfolioItem;
+        if (TestUtil.findAll(em, StockPortfolioItem.class).isEmpty()) {
+            bankAccountRepository.saveAndFlush(bankAccount);
+            stockPortfolioItem = StockPortfolioItemResourceIT.createEntity(em);
+        } else {
+            stockPortfolioItem = TestUtil.findAll(em, StockPortfolioItem.class).get(0);
+        }
+        em.persist(stockPortfolioItem);
+        em.flush();
+        bankAccount.setStockPortfolioItem(stockPortfolioItem);
+        bankAccountRepository.saveAndFlush(bankAccount);
+        Long stockPortfolioItemId = stockPortfolioItem.getId();
+
+        // Get all the bankAccountList where stockPortfolioItem equals to stockPortfolioItemId
+        defaultBankAccountShouldBeFound("stockPortfolioItemId.equals=" + stockPortfolioItemId);
+
+        // Get all the bankAccountList where stockPortfolioItem equals to (stockPortfolioItemId + 1)
+        defaultBankAccountShouldNotBeFound("stockPortfolioItemId.equals=" + (stockPortfolioItemId + 1));
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -740,7 +958,9 @@ class BankAccountResourceIT {
             .andExpect(jsonPath("$.[*].accountBank").value(hasItem(DEFAULT_ACCOUNT_BANK)))
             .andExpect(jsonPath("$.[*].initialAmount").value(hasItem(DEFAULT_INITIAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].archived").value(hasItem(DEFAULT_ARCHIVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)));
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
+            .andExpect(jsonPath("$.[*].accountType").value(hasItem(DEFAULT_ACCOUNT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].adjustmentAmount").value(hasItem(DEFAULT_ADJUSTMENT_AMOUNT.doubleValue())));
 
         // Check, that the count call also returns 1
         restBankAccountMockMvc
@@ -795,7 +1015,9 @@ class BankAccountResourceIT {
             .accountBank(UPDATED_ACCOUNT_BANK)
             .initialAmount(UPDATED_INITIAL_AMOUNT)
             .archived(UPDATED_ARCHIVED)
-            .shortName(UPDATED_SHORT_NAME);
+            .shortName(UPDATED_SHORT_NAME)
+            .accountType(UPDATED_ACCOUNT_TYPE)
+            .adjustmentAmount(UPDATED_ADJUSTMENT_AMOUNT);
         BankAccountDTO bankAccountDTO = bankAccountMapper.toDto(updatedBankAccount);
 
         restBankAccountMockMvc
@@ -815,6 +1037,8 @@ class BankAccountResourceIT {
         assertThat(testBankAccount.getInitialAmount()).isEqualTo(UPDATED_INITIAL_AMOUNT);
         assertThat(testBankAccount.getArchived()).isEqualTo(UPDATED_ARCHIVED);
         assertThat(testBankAccount.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
+        assertThat(testBankAccount.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
+        assertThat(testBankAccount.getAdjustmentAmount()).isEqualTo(UPDATED_ADJUSTMENT_AMOUNT);
         await()
             .atMost(5, TimeUnit.SECONDS)
             .untilAsserted(() -> {
@@ -827,6 +1051,8 @@ class BankAccountResourceIT {
                 assertThat(testBankAccountSearch.getInitialAmount()).isEqualTo(UPDATED_INITIAL_AMOUNT);
                 assertThat(testBankAccountSearch.getArchived()).isEqualTo(UPDATED_ARCHIVED);
                 assertThat(testBankAccountSearch.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
+                assertThat(testBankAccountSearch.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
+                assertThat(testBankAccountSearch.getAdjustmentAmount()).isEqualTo(UPDATED_ADJUSTMENT_AMOUNT);
             });
     }
 
@@ -916,7 +1142,11 @@ class BankAccountResourceIT {
         BankAccount partialUpdatedBankAccount = new BankAccount();
         partialUpdatedBankAccount.setId(bankAccount.getId());
 
-        partialUpdatedBankAccount.accountName(UPDATED_ACCOUNT_NAME).accountBank(UPDATED_ACCOUNT_BANK).archived(UPDATED_ARCHIVED);
+        partialUpdatedBankAccount
+            .accountName(UPDATED_ACCOUNT_NAME)
+            .accountBank(UPDATED_ACCOUNT_BANK)
+            .archived(UPDATED_ARCHIVED)
+            .accountType(UPDATED_ACCOUNT_TYPE);
 
         restBankAccountMockMvc
             .perform(
@@ -935,6 +1165,8 @@ class BankAccountResourceIT {
         assertThat(testBankAccount.getInitialAmount()).isEqualTo(DEFAULT_INITIAL_AMOUNT);
         assertThat(testBankAccount.getArchived()).isEqualTo(UPDATED_ARCHIVED);
         assertThat(testBankAccount.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
+        assertThat(testBankAccount.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
+        assertThat(testBankAccount.getAdjustmentAmount()).isEqualTo(DEFAULT_ADJUSTMENT_AMOUNT);
     }
 
     @Test
@@ -954,7 +1186,9 @@ class BankAccountResourceIT {
             .accountBank(UPDATED_ACCOUNT_BANK)
             .initialAmount(UPDATED_INITIAL_AMOUNT)
             .archived(UPDATED_ARCHIVED)
-            .shortName(UPDATED_SHORT_NAME);
+            .shortName(UPDATED_SHORT_NAME)
+            .accountType(UPDATED_ACCOUNT_TYPE)
+            .adjustmentAmount(UPDATED_ADJUSTMENT_AMOUNT);
 
         restBankAccountMockMvc
             .perform(
@@ -973,6 +1207,8 @@ class BankAccountResourceIT {
         assertThat(testBankAccount.getInitialAmount()).isEqualTo(UPDATED_INITIAL_AMOUNT);
         assertThat(testBankAccount.getArchived()).isEqualTo(UPDATED_ARCHIVED);
         assertThat(testBankAccount.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
+        assertThat(testBankAccount.getAccountType()).isEqualTo(UPDATED_ACCOUNT_TYPE);
+        assertThat(testBankAccount.getAdjustmentAmount()).isEqualTo(UPDATED_ADJUSTMENT_AMOUNT);
     }
 
     @Test
@@ -1092,6 +1328,8 @@ class BankAccountResourceIT {
             .andExpect(jsonPath("$.[*].accountBank").value(hasItem(DEFAULT_ACCOUNT_BANK)))
             .andExpect(jsonPath("$.[*].initialAmount").value(hasItem(DEFAULT_INITIAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].archived").value(hasItem(DEFAULT_ARCHIVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)));
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
+            .andExpect(jsonPath("$.[*].accountType").value(hasItem(DEFAULT_ACCOUNT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].adjustmentAmount").value(hasItem(DEFAULT_ADJUSTMENT_AMOUNT.doubleValue())));
     }
 }

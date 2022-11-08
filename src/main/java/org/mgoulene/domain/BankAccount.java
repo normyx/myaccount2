@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.mgoulene.domain.enumeration.BankAccountType;
 
 /**
  * A BankAccount.
@@ -44,10 +45,23 @@ public class BankAccount implements Serializable {
     @Column(name = "short_name", length = 40)
     private String shortName;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", nullable = false)
+    private BankAccountType accountType;
+
+    @NotNull
+    @Column(name = "adjustment_amount", nullable = false)
+    private Float adjustmentAmount;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private ApplicationUser account;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "bankAccounts" }, allowSetters = true)
+    private StockPortfolioItem stockPortfolioItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -129,6 +143,32 @@ public class BankAccount implements Serializable {
         this.shortName = shortName;
     }
 
+    public BankAccountType getAccountType() {
+        return this.accountType;
+    }
+
+    public BankAccount accountType(BankAccountType accountType) {
+        this.setAccountType(accountType);
+        return this;
+    }
+
+    public void setAccountType(BankAccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public Float getAdjustmentAmount() {
+        return this.adjustmentAmount;
+    }
+
+    public BankAccount adjustmentAmount(Float adjustmentAmount) {
+        this.setAdjustmentAmount(adjustmentAmount);
+        return this;
+    }
+
+    public void setAdjustmentAmount(Float adjustmentAmount) {
+        this.adjustmentAmount = adjustmentAmount;
+    }
+
     public ApplicationUser getAccount() {
         return this.account;
     }
@@ -139,6 +179,19 @@ public class BankAccount implements Serializable {
 
     public BankAccount account(ApplicationUser applicationUser) {
         this.setAccount(applicationUser);
+        return this;
+    }
+
+    public StockPortfolioItem getStockPortfolioItem() {
+        return this.stockPortfolioItem;
+    }
+
+    public void setStockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
+        this.stockPortfolioItem = stockPortfolioItem;
+    }
+
+    public BankAccount stockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
+        this.setStockPortfolioItem(stockPortfolioItem);
         return this;
     }
 
@@ -171,6 +224,8 @@ public class BankAccount implements Serializable {
             ", initialAmount=" + getInitialAmount() +
             ", archived='" + getArchived() + "'" +
             ", shortName='" + getShortName() + "'" +
+            ", accountType='" + getAccountType() + "'" +
+            ", adjustmentAmount=" + getAdjustmentAmount() +
             "}";
     }
 }

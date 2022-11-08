@@ -1,0 +1,10 @@
+{
+  "myaccount21App": {
+    "Currency": {
+      "null": "",
+      "EUR": "EUR",
+      "USD": "USD",
+      "GBP": "GBP"
+    }
+  }
+}

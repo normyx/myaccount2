@@ -1,0 +1,192 @@
+<div>
+  <h2 id="page-heading" data-cy="StockPortfolioItemHeading">
+    <span jhiTranslate="myaccount21App.stockPortfolioItem.home.title">StockPortfolioItems</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="myaccount21App.stockPortfolioItem.home.refreshListLabel">Actualiser la liste</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-stock-portfolio-item"
+        [routerLink]="['/stock-portfolio-item/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="myaccount21App.stockPortfolioItem.home.createLabel">
+          Créer un nouveau Stock Portfolio Item
+        </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <form name="searchForm" class="row row-cols-sm-auto align-items-center">
+    <div class="col-sm-12">
+      <div class="input-group w-100 mt-3">
+        <label class="visually-hidden" for="currentSearch" jhiTranslate="myaccount21App.stockPortfolioItem.home.search"
+          >Recherche pour Stock Portfolio Item</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="currentSearch"
+          id="currentSearch"
+          name="currentSearch"
+          placeholder="{{ 'myaccount21App.stockPortfolioItem.home.search' | translate }}"
+        />
+
+        <button class="btn btn-info" (click)="search(currentSearch)">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+
+        <button class="btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+          <fa-icon icon="trash-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="stockPortfolioItems?.length === 0">
+    <span jhiTranslate="myaccount21App.stockPortfolioItem.home.notFound">Aucun Stock Portfolio Item trouvé</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="stockPortfolioItems && stockPortfolioItems.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockSymbol">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockSymbol">Stock Symbol</span>
+              <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockCurrency">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrency">Stock Currency</span>
+              <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockAcquisitionDate">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionDate">Stock Acquisition Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockSharesNumber">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockSharesNumber">Stock Shares Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockAcquisitionPrice">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionPrice">Stock Acquisition Price</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockCurrentPrice">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentPrice">Stock Current Price</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockCurrentDate">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentDate">Stock Current Date</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockAcquisitionCurrencyFactor">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockAcquisitionCurrencyFactor">Stock Acquisition Currency Factor</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="stockCurrentCurrencyFactor">
+            <div class="d-flex">
+              <span jhiTranslate="myaccount21App.stockPortfolioItem.stockCurrentCurrencyFactor">Stock Current Currency Factor</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stockPortfolioItem of stockPortfolioItems; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/stock-portfolio-item', stockPortfolioItem.id, 'view']">{{ stockPortfolioItem.id }}</a>
+          </td>
+          <td>{{ stockPortfolioItem.stockSymbol }}</td>
+          <td jhiTranslate="{{ 'myaccount21App.Currency.' + stockPortfolioItem.stockCurrency }}">{{ stockPortfolioItem.stockCurrency }}</td>
+          <td>{{ stockPortfolioItem.stockAcquisitionDate | formatMediumDate }}</td>
+          <td>{{ stockPortfolioItem.stockSharesNumber }}</td>
+          <td>{{ stockPortfolioItem.stockAcquisitionPrice }}</td>
+          <td>{{ stockPortfolioItem.stockCurrentPrice }}</td>
+          <td>{{ stockPortfolioItem.stockCurrentDate | formatMediumDate }}</td>
+          <td>{{ stockPortfolioItem.stockAcquisitionCurrencyFactor }}</td>
+          <td>{{ stockPortfolioItem.stockCurrentCurrencyFactor }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/stock-portfolio-item', stockPortfolioItem.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/stock-portfolio-item', stockPortfolioItem.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+              </button>
+
+              <button type="submit" (click)="delete(stockPortfolioItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="stockPortfolioItems && stockPortfolioItems.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
