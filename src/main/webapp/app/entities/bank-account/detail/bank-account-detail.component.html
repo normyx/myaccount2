@@ -48,14 +48,6 @@
             <a [routerLink]="['/application-user', bankAccount.account.id, 'view']">{{ bankAccount.account.nickName }}</a>
           </div>
         </dd>
-        <dt><span jhiTranslate="myaccount21App.bankAccount.stockPortfolioItem">Stock Portfolio Item</span></dt>
-        <dd>
-          <div *ngIf="bankAccount.stockPortfolioItem">
-            <a [routerLink]="['/stock-portfolio-item', bankAccount.stockPortfolioItem.id, 'view']">{{
-              bankAccount.stockPortfolioItem.stockSymbol
-            }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

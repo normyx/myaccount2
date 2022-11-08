@@ -27,8 +27,7 @@
       "stockCurrentPrice": "Stock Current Price",
       "stockCurrentDate": "Stock Current Date",
       "stockAcquisitionCurrencyFactor": "Stock Acquisition Currency Factor",
-      "stockCurrentCurrencyFactor": "Stock Current Currency Factor",
-      "bankAccount": "Bank Account"
+      "stockCurrentCurrencyFactor": "Stock Current Currency Factor"
     }
   }
 }

@@ -59,8 +59,6 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
 
     private FloatFilter stockCurrentCurrencyFactor;
 
-    private LongFilter bankAccountId;
-
     private Boolean distinct;
 
     public StockPortfolioItemCriteria() {}
@@ -77,7 +75,6 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
         this.stockAcquisitionCurrencyFactor =
             other.stockAcquisitionCurrencyFactor == null ? null : other.stockAcquisitionCurrencyFactor.copy();
         this.stockCurrentCurrencyFactor = other.stockCurrentCurrencyFactor == null ? null : other.stockCurrentCurrencyFactor.copy();
-        this.bankAccountId = other.bankAccountId == null ? null : other.bankAccountId.copy();
         this.distinct = other.distinct;
     }
 
@@ -236,21 +233,6 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
         this.stockCurrentCurrencyFactor = stockCurrentCurrencyFactor;
     }
 
-    public LongFilter getBankAccountId() {
-        return bankAccountId;
-    }
-
-    public LongFilter bankAccountId() {
-        if (bankAccountId == null) {
-            bankAccountId = new LongFilter();
-        }
-        return bankAccountId;
-    }
-
-    public void setBankAccountId(LongFilter bankAccountId) {
-        this.bankAccountId = bankAccountId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -279,7 +261,6 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             Objects.equals(stockCurrentDate, that.stockCurrentDate) &&
             Objects.equals(stockAcquisitionCurrencyFactor, that.stockAcquisitionCurrencyFactor) &&
             Objects.equals(stockCurrentCurrencyFactor, that.stockCurrentCurrencyFactor) &&
-            Objects.equals(bankAccountId, that.bankAccountId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -297,7 +278,6 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             stockCurrentDate,
             stockAcquisitionCurrencyFactor,
             stockCurrentCurrencyFactor,
-            bankAccountId,
             distinct
         );
     }
@@ -316,7 +296,6 @@ public class StockPortfolioItemCriteria implements Serializable, Criteria {
             (stockCurrentDate != null ? "stockCurrentDate=" + stockCurrentDate + ", " : "") +
             (stockAcquisitionCurrencyFactor != null ? "stockAcquisitionCurrencyFactor=" + stockAcquisitionCurrencyFactor + ", " : "") +
             (stockCurrentCurrencyFactor != null ? "stockCurrentCurrencyFactor=" + stockCurrentCurrencyFactor + ", " : "") +
-            (bankAccountId != null ? "bankAccountId=" + bankAccountId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

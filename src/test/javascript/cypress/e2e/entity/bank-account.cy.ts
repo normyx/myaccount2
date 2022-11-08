@@ -51,11 +51,6 @@ describe('BankAccount e2e test', () => {
       body: [applicationUser],
     });
 
-    cy.intercept('GET', '/api/stock-portfolio-items', {
-      statusCode: 200,
-      body: [],
-    });
-
   });
    */
 

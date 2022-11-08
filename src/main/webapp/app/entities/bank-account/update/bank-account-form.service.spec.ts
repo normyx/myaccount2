@@ -28,7 +28,6 @@ describe('BankAccount Form Service', () => {
             accountType: expect.any(Object),
             adjustmentAmount: expect.any(Object),
             account: expect.any(Object),
-            stockPortfolioItem: expect.any(Object),
           })
         );
       });
@@ -47,7 +46,6 @@ describe('BankAccount Form Service', () => {
             accountType: expect.any(Object),
             adjustmentAmount: expect.any(Object),
             account: expect.any(Object),
-            stockPortfolioItem: expect.any(Object),
           })
         );
       });

@@ -9,8 +9,6 @@ import { IBankAccount } from '../bank-account.model';
 import { BankAccountService } from '../service/bank-account.service';
 import { IApplicationUser } from 'app/entities/application-user/application-user.model';
 import { ApplicationUserService } from 'app/entities/application-user/service/application-user.service';
-import { IStockPortfolioItem } from 'app/entities/stock-portfolio-item/stock-portfolio-item.model';
-import { StockPortfolioItemService } from 'app/entities/stock-portfolio-item/service/stock-portfolio-item.service';
 import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
 
 @Component({
@@ -23,7 +21,6 @@ export class BankAccountUpdateComponent implements OnInit {
   bankAccountTypeValues = Object.keys(BankAccountType);
 
   applicationUsersSharedCollection: IApplicationUser[] = [];
-  stockPortfolioItemsSharedCollection: IStockPortfolioItem[] = [];
 
   editForm: BankAccountFormGroup = this.bankAccountFormService.createBankAccountFormGroup();
 
@@ -31,15 +28,11 @@ export class BankAccountUpdateComponent implements OnInit {
     protected bankAccountService: BankAccountService,
     protected bankAccountFormService: BankAccountFormService,
     protected applicationUserService: ApplicationUserService,
-    protected stockPortfolioItemService: StockPortfolioItemService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
   compareApplicationUser = (o1: IApplicationUser | null, o2: IApplicationUser | null): boolean =>
     this.applicationUserService.compareApplicationUser(o1, o2);
-
-  compareStockPortfolioItem = (o1: IStockPortfolioItem | null, o2: IStockPortfolioItem | null): boolean =>
-    this.stockPortfolioItemService.compareStockPortfolioItem(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ bankAccount }) => {
@@ -93,11 +86,6 @@ export class BankAccountUpdateComponent implements OnInit {
       this.applicationUsersSharedCollection,
       bankAccount.account
     );
-    this.stockPortfolioItemsSharedCollection =
-      this.stockPortfolioItemService.addStockPortfolioItemToCollectionIfMissing<IStockPortfolioItem>(
-        this.stockPortfolioItemsSharedCollection,
-        bankAccount.stockPortfolioItem
-      );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -110,18 +98,5 @@ export class BankAccountUpdateComponent implements OnInit {
         )
       )
       .subscribe((applicationUsers: IApplicationUser[]) => (this.applicationUsersSharedCollection = applicationUsers));
-
-    this.stockPortfolioItemService
-      .query()
-      .pipe(map((res: HttpResponse<IStockPortfolioItem[]>) => res.body ?? []))
-      .pipe(
-        map((stockPortfolioItems: IStockPortfolioItem[]) =>
-          this.stockPortfolioItemService.addStockPortfolioItemToCollectionIfMissing<IStockPortfolioItem>(
-            stockPortfolioItems,
-            this.bankAccount?.stockPortfolioItem
-          )
-        )
-      )
-      .subscribe((stockPortfolioItems: IStockPortfolioItem[]) => (this.stockPortfolioItemsSharedCollection = stockPortfolioItems));
   }
 }

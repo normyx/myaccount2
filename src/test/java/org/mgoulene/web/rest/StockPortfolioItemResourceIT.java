@@ -21,7 +21,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mgoulene.IntegrationTest;
-import org.mgoulene.domain.BankAccount;
 import org.mgoulene.domain.StockPortfolioItem;
 import org.mgoulene.domain.enumeration.Currency;
 import org.mgoulene.repository.StockPortfolioItemRepository;
@@ -1269,29 +1268,6 @@ class StockPortfolioItemResourceIT {
 
         // Get all the stockPortfolioItemList where stockCurrentCurrencyFactor is greater than SMALLER_STOCK_CURRENT_CURRENCY_FACTOR
         defaultStockPortfolioItemShouldBeFound("stockCurrentCurrencyFactor.greaterThan=" + SMALLER_STOCK_CURRENT_CURRENCY_FACTOR);
-    }
-
-    @Test
-    @Transactional
-    void getAllStockPortfolioItemsByBankAccountIsEqualToSomething() throws Exception {
-        BankAccount bankAccount;
-        if (TestUtil.findAll(em, BankAccount.class).isEmpty()) {
-            stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
-            bankAccount = BankAccountResourceIT.createEntity(em);
-        } else {
-            bankAccount = TestUtil.findAll(em, BankAccount.class).get(0);
-        }
-        em.persist(bankAccount);
-        em.flush();
-        stockPortfolioItem.addBankAccount(bankAccount);
-        stockPortfolioItemRepository.saveAndFlush(stockPortfolioItem);
-        Long bankAccountId = bankAccount.getId();
-
-        // Get all the stockPortfolioItemList where bankAccount equals to bankAccountId
-        defaultStockPortfolioItemShouldBeFound("bankAccountId.equals=" + bankAccountId);
-
-        // Get all the stockPortfolioItemList where bankAccount equals to (bankAccountId + 1)
-        defaultStockPortfolioItemShouldNotBeFound("bankAccountId.equals=" + (bankAccountId + 1));
     }
 
     /**

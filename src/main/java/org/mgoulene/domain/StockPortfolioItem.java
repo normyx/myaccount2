@@ -1,10 +1,7 @@
 package org.mgoulene.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -70,12 +67,6 @@ public class StockPortfolioItem implements Serializable {
     @DecimalMin(value = "0")
     @Column(name = "stock_current_currency_factor", nullable = false)
     private Float stockCurrentCurrencyFactor;
-
-    @OneToMany(mappedBy = "stockPortfolioItem")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @org.springframework.data.annotation.Transient
-    @JsonIgnoreProperties(value = { "account", "stockPortfolioItem" }, allowSetters = true)
-    private Set<BankAccount> bankAccounts = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -207,37 +198,6 @@ public class StockPortfolioItem implements Serializable {
 
     public void setStockCurrentCurrencyFactor(Float stockCurrentCurrencyFactor) {
         this.stockCurrentCurrencyFactor = stockCurrentCurrencyFactor;
-    }
-
-    public Set<BankAccount> getBankAccounts() {
-        return this.bankAccounts;
-    }
-
-    public void setBankAccounts(Set<BankAccount> bankAccounts) {
-        if (this.bankAccounts != null) {
-            this.bankAccounts.forEach(i -> i.setStockPortfolioItem(null));
-        }
-        if (bankAccounts != null) {
-            bankAccounts.forEach(i -> i.setStockPortfolioItem(this));
-        }
-        this.bankAccounts = bankAccounts;
-    }
-
-    public StockPortfolioItem bankAccounts(Set<BankAccount> bankAccounts) {
-        this.setBankAccounts(bankAccounts);
-        return this;
-    }
-
-    public StockPortfolioItem addBankAccount(BankAccount bankAccount) {
-        this.bankAccounts.add(bankAccount);
-        bankAccount.setStockPortfolioItem(this);
-        return this;
-    }
-
-    public StockPortfolioItem removeBankAccount(BankAccount bankAccount) {
-        this.bankAccounts.remove(bankAccount);
-        bankAccount.setStockPortfolioItem(null);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -26,7 +26,6 @@ type BankAccountFormGroupContent = {
   accountType: FormControl<IBankAccount['accountType']>;
   adjustmentAmount: FormControl<IBankAccount['adjustmentAmount']>;
   account: FormControl<IBankAccount['account']>;
-  stockPortfolioItem: FormControl<IBankAccount['stockPortfolioItem']>;
 };
 
 export type BankAccountFormGroup = FormGroup<BankAccountFormGroupContent>;
@@ -70,7 +69,6 @@ export class BankAccountFormService {
       account: new FormControl(bankAccountRawValue.account, {
         validators: [Validators.required],
       }),
-      stockPortfolioItem: new FormControl(bankAccountRawValue.stockPortfolioItem),
     });
   }
 

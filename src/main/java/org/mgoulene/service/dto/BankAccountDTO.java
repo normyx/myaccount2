@@ -36,8 +36,6 @@ public class BankAccountDTO implements Serializable {
 
     private ApplicationUserDTO account;
 
-    private StockPortfolioItemDTO stockPortfolioItem;
-
     public Long getId() {
         return id;
     }
@@ -110,14 +108,6 @@ public class BankAccountDTO implements Serializable {
         this.account = account;
     }
 
-    public StockPortfolioItemDTO getStockPortfolioItem() {
-        return stockPortfolioItem;
-    }
-
-    public void setStockPortfolioItem(StockPortfolioItemDTO stockPortfolioItem) {
-        this.stockPortfolioItem = stockPortfolioItem;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -152,7 +142,6 @@ public class BankAccountDTO implements Serializable {
             ", accountType='" + getAccountType() + "'" +
             ", adjustmentAmount=" + getAdjustmentAmount() +
             ", account=" + getAccount() +
-            ", stockPortfolioItem=" + getStockPortfolioItem() +
             "}";
     }
 }

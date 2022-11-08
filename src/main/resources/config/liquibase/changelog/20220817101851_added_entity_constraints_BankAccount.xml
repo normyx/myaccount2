@@ -13,11 +13,5 @@
                                  constraintName="fk_bank_account__account_id"
                                  referencedColumnNames="id"
                                  referencedTableName="application_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="stock_portfolio_item_id"
-                                 baseTableName="bank_account"
-                                 constraintName="fk_bank_account__stock_portfolio_item_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="stock_portfolio_item"/>
     </changeSet>
 </databaseChangeLog>

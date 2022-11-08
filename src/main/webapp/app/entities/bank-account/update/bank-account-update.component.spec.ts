@@ -11,8 +11,6 @@ import { BankAccountService } from '../service/bank-account.service';
 import { IBankAccount } from '../bank-account.model';
 import { IApplicationUser } from 'app/entities/application-user/application-user.model';
 import { ApplicationUserService } from 'app/entities/application-user/service/application-user.service';
-import { IStockPortfolioItem } from 'app/entities/stock-portfolio-item/stock-portfolio-item.model';
-import { StockPortfolioItemService } from 'app/entities/stock-portfolio-item/service/stock-portfolio-item.service';
 
 import { BankAccountUpdateComponent } from './bank-account-update.component';
 
@@ -23,7 +21,6 @@ describe('BankAccount Management Update Component', () => {
   let bankAccountFormService: BankAccountFormService;
   let bankAccountService: BankAccountService;
   let applicationUserService: ApplicationUserService;
-  let stockPortfolioItemService: StockPortfolioItemService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,7 +44,6 @@ describe('BankAccount Management Update Component', () => {
     bankAccountFormService = TestBed.inject(BankAccountFormService);
     bankAccountService = TestBed.inject(BankAccountService);
     applicationUserService = TestBed.inject(ApplicationUserService);
-    stockPortfolioItemService = TestBed.inject(StockPortfolioItemService);
 
     comp = fixture.componentInstance;
   });
@@ -75,40 +71,15 @@ describe('BankAccount Management Update Component', () => {
       expect(comp.applicationUsersSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call StockPortfolioItem query and add missing value', () => {
-      const bankAccount: IBankAccount = { id: 456 };
-      const stockPortfolioItem: IStockPortfolioItem = { id: 10948 };
-      bankAccount.stockPortfolioItem = stockPortfolioItem;
-
-      const stockPortfolioItemCollection: IStockPortfolioItem[] = [{ id: 64079 }];
-      jest.spyOn(stockPortfolioItemService, 'query').mockReturnValue(of(new HttpResponse({ body: stockPortfolioItemCollection })));
-      const additionalStockPortfolioItems = [stockPortfolioItem];
-      const expectedCollection: IStockPortfolioItem[] = [...additionalStockPortfolioItems, ...stockPortfolioItemCollection];
-      jest.spyOn(stockPortfolioItemService, 'addStockPortfolioItemToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ bankAccount });
-      comp.ngOnInit();
-
-      expect(stockPortfolioItemService.query).toHaveBeenCalled();
-      expect(stockPortfolioItemService.addStockPortfolioItemToCollectionIfMissing).toHaveBeenCalledWith(
-        stockPortfolioItemCollection,
-        ...additionalStockPortfolioItems.map(expect.objectContaining)
-      );
-      expect(comp.stockPortfolioItemsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const bankAccount: IBankAccount = { id: 456 };
       const account: IApplicationUser = { id: 99405 };
       bankAccount.account = account;
-      const stockPortfolioItem: IStockPortfolioItem = { id: 36350 };
-      bankAccount.stockPortfolioItem = stockPortfolioItem;
 
       activatedRoute.data = of({ bankAccount });
       comp.ngOnInit();
 
       expect(comp.applicationUsersSharedCollection).toContain(account);
-      expect(comp.stockPortfolioItemsSharedCollection).toContain(stockPortfolioItem);
       expect(comp.bankAccount).toEqual(bankAccount);
     });
   });
@@ -189,16 +160,6 @@ describe('BankAccount Management Update Component', () => {
         jest.spyOn(applicationUserService, 'compareApplicationUser');
         comp.compareApplicationUser(entity, entity2);
         expect(applicationUserService.compareApplicationUser).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareStockPortfolioItem', () => {
-      it('Should forward to stockPortfolioItemService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(stockPortfolioItemService, 'compareStockPortfolioItem');
-        comp.compareStockPortfolioItem(entity, entity2);
-        expect(stockPortfolioItemService.compareStockPortfolioItem).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

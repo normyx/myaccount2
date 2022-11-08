@@ -57,8 +57,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
 
     private LongFilter accountId;
 
-    private LongFilter stockPortfolioItemId;
-
     private Boolean distinct;
 
     public BankAccountCriteria() {}
@@ -73,7 +71,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.accountType = other.accountType == null ? null : other.accountType.copy();
         this.adjustmentAmount = other.adjustmentAmount == null ? null : other.adjustmentAmount.copy();
         this.accountId = other.accountId == null ? null : other.accountId.copy();
-        this.stockPortfolioItemId = other.stockPortfolioItemId == null ? null : other.stockPortfolioItemId.copy();
         this.distinct = other.distinct;
     }
 
@@ -217,21 +214,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.accountId = accountId;
     }
 
-    public LongFilter getStockPortfolioItemId() {
-        return stockPortfolioItemId;
-    }
-
-    public LongFilter stockPortfolioItemId() {
-        if (stockPortfolioItemId == null) {
-            stockPortfolioItemId = new LongFilter();
-        }
-        return stockPortfolioItemId;
-    }
-
-    public void setStockPortfolioItemId(LongFilter stockPortfolioItemId) {
-        this.stockPortfolioItemId = stockPortfolioItemId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -259,7 +241,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
             Objects.equals(accountType, that.accountType) &&
             Objects.equals(adjustmentAmount, that.adjustmentAmount) &&
             Objects.equals(accountId, that.accountId) &&
-            Objects.equals(stockPortfolioItemId, that.stockPortfolioItemId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -276,7 +257,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
             accountType,
             adjustmentAmount,
             accountId,
-            stockPortfolioItemId,
             distinct
         );
     }
@@ -294,7 +274,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
             (accountType != null ? "accountType=" + accountType + ", " : "") +
             (adjustmentAmount != null ? "adjustmentAmount=" + adjustmentAmount + ", " : "") +
             (accountId != null ? "accountId=" + accountId + ", " : "") +
-            (stockPortfolioItemId != null ? "stockPortfolioItemId=" + stockPortfolioItemId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

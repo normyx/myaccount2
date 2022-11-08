@@ -59,10 +59,6 @@ public class BankAccount implements Serializable {
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private ApplicationUser account;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "bankAccounts" }, allowSetters = true)
-    private StockPortfolioItem stockPortfolioItem;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -179,19 +175,6 @@ public class BankAccount implements Serializable {
 
     public BankAccount account(ApplicationUser applicationUser) {
         this.setAccount(applicationUser);
-        return this;
-    }
-
-    public StockPortfolioItem getStockPortfolioItem() {
-        return this.stockPortfolioItem;
-    }
-
-    public void setStockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
-        this.stockPortfolioItem = stockPortfolioItem;
-    }
-
-    public BankAccount stockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
-        this.setStockPortfolioItem(stockPortfolioItem);
         return this;
     }
 

@@ -143,15 +143,6 @@ public class StockPortfolioItemQueryService extends QueryService<StockPortfolioI
                         buildRangeSpecification(criteria.getStockCurrentCurrencyFactor(), StockPortfolioItem_.stockCurrentCurrencyFactor)
                     );
             }
-            if (criteria.getBankAccountId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getBankAccountId(),
-                            root -> root.join(StockPortfolioItem_.bankAccounts, JoinType.LEFT).get(BankAccount_.id)
-                        )
-                    );
-            }
         }
         return specification;
     }

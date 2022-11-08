@@ -60,13 +60,6 @@
   "name": "StockPortfolioItem",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityName": "bankAccount",
-      "otherEntityRelationshipName": "stockPortfolioItem",
-      "relationshipName": "bankAccount",
-      "relationshipType": "one-to-many"
-    }
-  ],
+  "relationships": [],
   "service": "serviceClass"
 }
