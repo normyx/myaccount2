@@ -67,6 +67,13 @@ export class MyaOperationService extends OperationService {
       }
     );
   }
+
+  sumOfAmountForBankAccount(bankAccountId: number): Observable<HttpResponse<number>> {
+    return this.http.get<number>(`${this.myaResourceUrl}/bank-account/amount/${bankAccountId}`, {
+      observe: 'response',
+    });
+  }
+
   findOperationsCloseToBudgetItemPeriod(amount: number, categoryId: number, date: Dayjs): Observable<EntityArrayResponseType> {
     const dateStr: string = this.dateUtils.convertToString(date);
     return this.http

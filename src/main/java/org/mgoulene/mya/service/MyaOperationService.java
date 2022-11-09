@@ -180,6 +180,12 @@ public class MyaOperationService extends OperationService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public Float getSumOfOperationForBankAccount(Long bankAccountId) {
+        log.debug("Request to getSomeOfOperationForBankAccount with bankAccountId: {}", bankAccountId);
+        return myaOperationRepository.getSumOfOperationForBankAccount(bankAccountId);
+    }
+
     /*
      * public OperationDTO importOperation(OperationDTO operationDTO) {
      * List<OperationDTO> results =

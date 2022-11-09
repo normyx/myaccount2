@@ -32,6 +32,9 @@ public class MyaAlphaVantageActivityStackService {
     @Value("${alphavantage.loop.every}")
     private int loopEvery;
 
+    @Value("${alphavantage.loop.iteration}")
+    private int iteration;
+
     private final MyaStockPortfolioItemService stockPortfolioItemService;
 
     public MyaAlphaVantageActivityStackService(MyaStockPortfolioItemService stockPortfolioItemService) {
@@ -40,8 +43,7 @@ public class MyaAlphaVantageActivityStackService {
 
     @PostConstruct
     private void init() {
-        System.out.println("LOOP EVERY : " + loopEvery);
-        activityTimer = new ActivityTimerTask(stockPortfolioItemService);
+        activityTimer = new ActivityTimerTask(stockPortfolioItemService, iteration);
         timer = new Timer(true);
         timer.scheduleAtFixedRate(activityTimer, 0, loopEvery * 1000);
     }
@@ -56,7 +58,6 @@ public class MyaAlphaVantageActivityStackService {
         UPDATE_CRYPTO,
     }
 
-    @Service
     private class ActivityTimerTask extends TimerTask {
 
         private final Logger log = LoggerFactory.getLogger(ActivityTimerTask.class);
@@ -66,13 +67,15 @@ public class MyaAlphaVantageActivityStackService {
         @Value("${alphavantage.key}")
         private String key;
 
-        public ActivityTimerTask(MyaStockPortfolioItemService stockPortfolioItemService) {
+        private int iter;
+
+        public ActivityTimerTask(MyaStockPortfolioItemService stockPortfolioItemService, int iteration) {
             this.stockPortfolioItemService = stockPortfolioItemService;
+            this.iter = iteration;
         }
 
         @PostConstruct
         private void init() {
-            System.out.println("KEY : " + key);
             Config cfg = Config.builder().key(key).timeOut(10).build();
             AlphaVantage.api().init(cfg);
         }
@@ -182,7 +185,7 @@ public class MyaAlphaVantageActivityStackService {
 
         @Override
         public void run() {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < iter; i++) {
                 if (!activities.empty()) {
                     Activity activity = activities.pop();
                     StockPortfolioItemDTO stockPortfolioItemDTO = activity.getStockPortfolioItemDTO();

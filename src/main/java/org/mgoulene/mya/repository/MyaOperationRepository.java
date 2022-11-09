@@ -66,4 +66,7 @@ public interface MyaOperationRepository extends JpaRepository<Operation, Long>, 
         "order by operation.date desc"
     )
     List<Operation> findAllByAccount(@Param("accountId") Long accountId);
+
+    @Query("SELECT SUM(operation.amount) FROM Operation operation " + "where operation.bankAccount.id = :bankAccountId ")
+    Float getSumOfOperationForBankAccount(@Param("bankAccountId") Long bankAccountId);
 }

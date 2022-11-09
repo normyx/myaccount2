@@ -112,6 +112,12 @@ public class MyaOperationResource {
         return null;
     }
 
+    @GetMapping("/mya-operations/bank-account/amount/{bankAccountId}")
+    public ResponseEntity<Float> getSumOfAmountForBankAccount(@PathVariable Long bankAccountId) {
+        log.debug("REST request to getSomeOfAmountForBankAccount for bakAccount: {}", bankAccountId);
+        return ResponseEntity.ok().body(operationService.getSumOfOperationForBankAccount(bankAccountId));
+    }
+
     /**
      * {@code SEARCH  /_search/operations?query=:query} : search for the operation
      * corresponding

@@ -15,6 +15,20 @@
       "bankAccount": {
         "summary": {
           "operationListTitle": "Opération pour le compte {{ accountName }}"
+        },
+        "list": {
+          "currentBankAccountHeader": "Comptes Courants : {{ amount }}",
+          "savingsBankAccountHeader": "Comptes d'épargne : {{ amount }}",
+          "portfolioBankAccountHeader": "Portfeuille : {{ amount }}",
+          "total": "Total des avoirs : {{ amount }}",
+          "table": {
+            "accountName": "Nom du compte",
+            "accountBank": "Banque",
+            "initialAmount": "Valeur Initiale",
+            "adjustmentAmount": "Ajustement",
+            "operationTotal": "Total des opération",
+            "balance": "Solde"
+          }
         }
       },
       "budgetItemPeriod": {

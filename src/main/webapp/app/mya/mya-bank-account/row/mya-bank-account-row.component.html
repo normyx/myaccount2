@@ -1,0 +1,20 @@
+<td *ngIf="bankAccount!.shortName" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+  <a [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'detail']">
+    <span class="fw-bold">{{ bankAccount!.shortName }}</span> <span class="fst-italic">({{ bankAccount!.accountName }})</span>
+  </a>
+</td>
+<td *ngIf="!bankAccount!.shortName" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+  <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+</td>
+<td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">{{ bankAccount!.accountBank }} ({{ bankAccount!.archived }})</td>
+
+<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+  {{ bankAccount!.initialAmount | currency: 'EUR' }}
+</td>
+<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+  {{ bankAccount!.adjustmentAmount | currency: 'EUR' }}
+</td>
+<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">{{ sumOfOperationAmount | currency: 'EUR' }}</td>
+<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''" [class]="totalAmount < 0 ? 'text-danger' : ''">
+  {{ totalAmount | currency: 'EUR' }}
+</td>
