@@ -1,11 +1,18 @@
-<td *ngIf="bankAccount!.shortName" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
-  <a [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'detail']">
-    <span class="fw-bold">{{ bankAccount!.shortName }}</span> <span class="fst-italic">({{ bankAccount!.accountName }})</span>
+<td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+  <a *ngIf="bankAccount!.accountType === 'CURRENTACCOUNT'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'current-detail']">
+    <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+    <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
+  </a>
+  <a *ngIf="bankAccount!.accountType === 'SAVINGSACCOUNT'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'savings-detail']">
+    <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+    <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
+  </a>
+  <a *ngIf="bankAccount!.accountType === 'STOCKPORTFOLIO'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'portfolio-detail']">
+    <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+    <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
   </a>
 </td>
-<td *ngIf="!bankAccount!.shortName" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
-  <span class="fw-bold">{{ bankAccount!.accountName }}</span>
-</td>
+
 <td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">{{ bankAccount!.accountBank }} ({{ bankAccount!.archived }})</td>
 
 <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">

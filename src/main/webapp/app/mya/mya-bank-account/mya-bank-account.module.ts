@@ -7,11 +7,19 @@ import { MyaOperationModule } from '../mya-operation/mya-operation.module';
 import { MyaBankAccountListComponent } from './list/mya-bank-account-list.component';
 import { MyaBankAccountRoutingModule } from './route/mya-bank-account-routing.module';
 import { MyaBankAccountRowComponent } from './row/mya-bank-account-row.component';
-import { MyaBankAccountSummaryComponent } from './summary/mya-bank-account-summary.component';
+import { MyaCurrentBankAccountSummaryComponent } from './summary/mya-current-bank-account-summary.component';
+import { MyaPortfolioBankAccountSummaryComponent } from './summary/mya-portfolio-bank-account-summary.component';
+import { MyaSavingsBankAccountSummaryComponent } from './summary/mya-savings-bank-account-summary.component';
 
 @NgModule({
   imports: [SharedModule, MyaBankAccountRoutingModule, MyaCategoryIconModule, MyaDashboardModule, MyaOperationModule],
-  declarations: [MyaBankAccountSummaryComponent, MyaBankAccountListComponent, MyaBankAccountRowComponent],
+  declarations: [
+    MyaCurrentBankAccountSummaryComponent,
+    MyaSavingsBankAccountSummaryComponent,
+    MyaPortfolioBankAccountSummaryComponent,
+    MyaBankAccountListComponent,
+    MyaBankAccountRowComponent,
+  ],
   exports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

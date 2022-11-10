@@ -29,7 +29,30 @@
             "operationTotal": "Total des opération",
             "balance": "Solde"
           }
+        },
+        "detail": {
+          "currentBankAccountHeader": "Détail du compte courant",
+          "savingsBankAccountHeader": "Détail du compte d'épargne",
+          "portfolioBankAccountHeader": "Détail du portefeuille"
+        },
+        "portfolio": {
+          "stockSymbol": "Symbole",
+          "stockCurrency": "Devise",
+          "stockAcquisitionDate": "Date acquisition",
+          "stockSharesNumber": "Nombre",
+          "stockAcquisitionPrice": "Prix acquisition",
+          "stockPriceAtAcquisitionDate": "Prix à date acquisition",
+          "stockCurrentPrice": "Prix actuel",
+          "totalInCurrency": "Valeur (devise)",
+          "totalInEuro": "Valeur (€)",
+          "earningsInCurrency": "Gain (devise)",
+          "earningsInEuro": "Gain (€)"
         }
+      },
+      "currencyType": {
+        "EUR": "€",
+        "USD": "$",
+        "GBP": "£"
       },
       "budgetItemPeriod": {
         "dialog": {

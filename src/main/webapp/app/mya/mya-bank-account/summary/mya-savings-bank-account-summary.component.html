@@ -1,0 +1,113 @@
+<div class="col">
+  <span class="form-label" jhiTranslate="mya.entity.operation.list.filter.bankAccount" for="field_bankAccount"
+    >Choix du Compte en Banque</span
+  >
+  <select
+    class="form-control form-select"
+    id="field_bankAccount"
+    name="bankAccount"
+    [(ngModel)]="selectedBankAccount"
+    (ngModelChange)="onChange($event)"
+  >
+    <option [ngValue]="bankAccount" *ngFor="let bankAccount of bankAccounts">
+      {{ bankAccount.accountName }} ({{ bankAccount.accountBank }})
+    </option>
+  </select>
+</div>
+
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2 jhiTranslate="mya.entity.bankAccount.detail.savingsBankAccountHeader"></h2>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive table-entities" id="entities" *ngIf="selectedBankAccount">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col">
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.accountName">Account Name</span>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.accountBank">Account Bank</span>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.initialAmount">Initial Amount</span>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.adjustmentAmount">Adjustment Amount</span>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.operationTotal">Sum</span>
+              </div>
+            </th>
+            <th>
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.balance">Total</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td *ngIf="selectedBankAccount.shortName" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
+              <span class="fw-bold">{{ selectedBankAccount.shortName }}</span>
+              <span class="fst-italic">({{ selectedBankAccount.accountName }})</span>
+            </td>
+            <td *ngIf="!selectedBankAccount.shortName" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
+              <span class="fw-bold">{{ selectedBankAccount.accountName }}</span>
+            </td>
+            <td [class]="selectedBankAccount!.archived ? 'text-decoration-line-through' : ''">
+              {{ selectedBankAccount.accountBank }} ({{ selectedBankAccount.archived }})
+            </td>
+
+            <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
+              {{ selectedBankAccount.initialAmount | currency: 'EUR' }}
+            </td>
+            <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
+              {{ selectedBankAccount.adjustmentAmount | currency: 'EUR' }}
+            </td>
+            <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
+              {{ sumOfOperationAmount | currency: 'EUR' }}
+            </td>
+            <td
+              class="text-end"
+              [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''"
+              [class]="totalAmount < 0 ? 'text-danger' : ''"
+            >
+              {{ totalAmount | currency: 'EUR' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <jhi-mya-evolution-between-dates
+      [dateFrom]="dateFrom"
+      [dateTo]="dateTo"
+      height="100"
+      [bankAccountId]="selectedBankAccount ? selectedBankAccount.id : null"
+    >
+    </jhi-mya-evolution-between-dates>
+  </div>
+</div>
+<div class="card border-primary mb-3">
+  <div class="card-header">
+    <h2
+      jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
+      [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
+    >
+      Budgets
+    </h2>
+  </div>
+  <div class="card-body">
+    <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+  </div>
+</div>

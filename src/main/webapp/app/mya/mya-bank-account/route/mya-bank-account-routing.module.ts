@@ -3,9 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from '../../../core/auth/user-route-access.service';
 
-import { DESC, ASC } from '../../../config/navigation.constants';
-import { MyaBankAccountSummaryComponent } from '../summary/mya-bank-account-summary.component';
+import { BankAccountRoutingResolveService } from 'app/entities/bank-account/route/bank-account-routing-resolve.service';
+import { DESC } from '../../../config/navigation.constants';
 import { MyaBankAccountListComponent } from '../list/mya-bank-account-list.component';
+import { MyaCurrentBankAccountSummaryComponent } from '../summary/mya-current-bank-account-summary.component';
+import { MyaSavingsBankAccountSummaryComponent } from '../summary/mya-savings-bank-account-summary.component';
+import { MyaPortfolioBankAccountSummaryComponent } from '../summary/mya-portfolio-bank-account-summary.component';
 
 const myaBankAccountRoute: Routes = [
   {
@@ -14,8 +17,33 @@ const myaBankAccountRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'detail',
-    component: MyaBankAccountSummaryComponent,
+    path: ':id/current-detail',
+    component: MyaCurrentBankAccountSummaryComponent,
+    resolve: {
+      bankAccount: BankAccountRoutingResolveService,
+    },
+    data: {
+      defaultSort: 'date,' + DESC,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/savings-detail',
+    component: MyaSavingsBankAccountSummaryComponent,
+    resolve: {
+      bankAccount: BankAccountRoutingResolveService,
+    },
+    data: {
+      defaultSort: 'date,' + DESC,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/portfolio-detail',
+    component: MyaPortfolioBankAccountSummaryComponent,
+    resolve: {
+      bankAccount: BankAccountRoutingResolveService,
+    },
     data: {
       defaultSort: 'date,' + DESC,
     },

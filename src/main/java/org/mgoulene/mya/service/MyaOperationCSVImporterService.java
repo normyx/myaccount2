@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import org.mgoulene.config.ApplicationProperties;
+import org.mgoulene.domain.enumeration.BankAccountType;
 import org.mgoulene.mya.service.dto.MyaImportOperationActions;
 import org.mgoulene.mya.service.dto.MyaOperationKey;
 import org.mgoulene.mya.service.dto.OperationCSVDTO;
@@ -117,6 +118,8 @@ public class MyaOperationCSVImporterService {
                 bankAccountDTO.setAccount(account);
                 bankAccountDTO.setInitialAmount(0f);
                 bankAccountDTO.setArchived(false);
+                bankAccountDTO.setAdjustmentAmount(0f);
+                bankAccountDTO.setAccountType(BankAccountType.CURRENTACCOUNT);
                 bankAccountDTO = bankAccountService.save(bankAccountDTO);
                 log.warn("Creating BankAccount : {}", bankAccountDTO);
                 bankAccountNameMap.put(bankAccountDTO.getAccountName(), bankAccountDTO);
