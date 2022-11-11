@@ -1,0 +1,27 @@
+{
+  "myaccount21App": {
+    "stockMarketData": {
+      "home": {
+        "title": "Stock Market Data",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Stock Market Data",
+        "createOrEditLabel": "Create or edit a Stock Market Data",
+        "search": "Search for Stock Market Data",
+        "notFound": "No Stock Market Data found"
+      },
+      "created": "A new Stock Market Data is created with identifier {{ param }}",
+      "updated": "A Stock Market Data is updated with identifier {{ param }}",
+      "deleted": "A Stock Market Data is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Stock Market Data {{ id }}?"
+      },
+      "detail": {
+        "title": "Stock Market Data"
+      },
+      "id": "ID",
+      "symbol": "Symbol",
+      "dataDate": "Data Date",
+      "closeValue": "Close Value"
+    }
+  }
+}

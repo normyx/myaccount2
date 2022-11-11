@@ -15,6 +15,7 @@
         "operation": "Operation",
         "subCategory": "Sub Category",
         "stockPortfolioItem": "Stock Portfolio Item",
+        "stockMarketData": "Stock Market Data",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

@@ -28,7 +28,8 @@
       "Category",
       "Operation",
       "SubCategory",
-      "StockPortfolioItem"
+      "StockPortfolioItem",
+      "StockMarketData"
     ],
     "entitySuffix": "",
     "gradleEnterpriseHost": "",
@@ -36,7 +37,7 @@
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "NjY5NGQzMTQ3MTNjNTVhMjBhNGVmYjg2MzFlZTMzY2E1ZmU0ZTUzYWJkMTEyNTI4YjNiYjAwOTU1YWVjYzVlZjBkODk3MTkyMTYyNjM0ZmNkYTg1MWVlNDcwODRiNDU1ZTI2MmYwMzNmYjM3MmQ4MzNlMjI2NGNhOWNmOGQ1MjY=",
     "languages": ["fr", "en"],
-    "lastLiquibaseTimestamp": 1667768702000,
+    "lastLiquibaseTimestamp": 1668153770000,
     "messageBroker": false,
     "microfrontend": false,
     "microfrontends": [],
