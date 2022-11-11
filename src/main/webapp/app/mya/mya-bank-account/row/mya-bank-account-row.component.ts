@@ -47,8 +47,11 @@ export class MyaBankAccountRowComponent implements OnInit {
         this.stockPortfolioItems = response.body;
         this.operationService.sumOfAmountForBankAccount(this.bankAccount!.id).subscribe((res: HttpResponse<number>) => {
           this.sumOfOperationAmount = res.body;
-          if (this.bankAccount && this.sumOfOperationAmount) {
-            this.totalAmount += this.bankAccount.initialAmount! + this.bankAccount.adjustmentAmount! + this.sumOfOperationAmount;
+          if (!this.sumOfOperationAmount) {
+            this.sumOfOperationAmount = 0;
+          }
+          if (this.bankAccount) {
+            this.totalAmount = this.bankAccount.initialAmount! + this.bankAccount.adjustmentAmount! + this.sumOfOperationAmount;
             if (this.bankAccount.accountType === BankAccountType.STOCKPORTFOLIO) {
               if (this.stockPortfolioItems) {
                 this.stockPortfolioItems.forEach(spi => {

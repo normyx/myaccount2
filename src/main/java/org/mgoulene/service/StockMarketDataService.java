@@ -26,7 +26,7 @@ public class StockMarketDataService {
 
     private final StockMarketDataRepository stockMarketDataRepository;
 
-    private final StockMarketDataMapper stockMarketDataMapper;
+    protected final StockMarketDataMapper stockMarketDataMapper;
 
     private final StockMarketDataSearchRepository stockMarketDataSearchRepository;
 

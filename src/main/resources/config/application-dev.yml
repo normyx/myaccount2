@@ -42,6 +42,9 @@ spring:
     url: jdbc:mysql://localhost:3306/myaccount21?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
     username: root
     password:
+    #url: jdbc:mysql://192.168.0.73:3306/myaccount?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    #username: myaccount
+    #password: myaccount
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -119,3 +122,6 @@ jhipster:
 
 # application:
 
+alphavantage:
+  update-scheduled-fixe-rate: 600000
+  update-stock-portfolio-item-fixe-rate: 600000
