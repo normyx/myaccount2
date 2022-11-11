@@ -1,6 +1,14 @@
 {
   "mya": {
     "global": {
+      "action": {
+        "validate": "Valider",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "edit": "Modifier",
+        "add": "Ajouter",
+        "delete": "Supprimer"
+      },
       "menu": {
         "dashboard": "Tableau de board",
         "operation": "Mes Opérations",
@@ -21,6 +29,7 @@
           "savingsBankAccountHeader": "Comptes d'épargne : {{ amount }}",
           "portfolioBankAccountHeader": "Portfeuille : {{ amount }}",
           "total": "Total des avoirs : {{ amount }}",
+          "archivedSwitch": "Achivés ?",
           "table": {
             "accountName": "Nom du compte",
             "accountBank": "Banque",
@@ -29,6 +38,11 @@
             "operationTotal": "Total des opération",
             "balance": "Solde"
           }
+        },
+        "balanceUpdate": {
+          "title": "Modification des balances du compte {{ bankAccountName }}, en date du {{ date }}",
+          "initialAmount": "Solde initial",
+          "adjustedAmount": "Solde ajusté"
         },
         "detail": {
           "currentBankAccountHeader": "Détail du compte courant",

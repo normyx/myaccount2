@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
 import { StockPortfolioItemService } from 'app/entities/stock-portfolio-item/service/stock-portfolio-item.service';
 import { IStockPortfolioItem } from 'app/entities/stock-portfolio-item/stock-portfolio-item.model';
@@ -7,6 +8,7 @@ import { MyaOperationService } from 'app/mya/mya-operation/service/mya-operation
 import { FilterOptions, IFilterOptions } from 'app/shared/filter/filter.model';
 
 import { IBankAccount } from '../../../entities/bank-account/bank-account.model';
+import { MyaBankAccountBalanceUpdateDialogComponent } from '../balanceupdate/mya-bank-account-balanceupdate-dialog.component';
 import { MyaBankAccountService } from '../service/mya-bank-account.service';
 import { IBankAccountTotal } from './mya-bank-account-total.model';
 
@@ -16,6 +18,7 @@ import { IBankAccountTotal } from './mya-bank-account-total.model';
 })
 export class MyaBankAccountRowComponent implements OnInit {
   @Input() bankAccount: IBankAccount | null = null;
+  @Input() withArchived: boolean | null = null;
 
   sumOfOperationAmount: number | null = null;
   totalAmount = 0;
@@ -27,7 +30,8 @@ export class MyaBankAccountRowComponent implements OnInit {
   constructor(
     protected bankAccountService: MyaBankAccountService,
     protected stockPortfolioItemService: StockPortfolioItemService,
-    protected operationService: MyaOperationService
+    protected operationService: MyaOperationService,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +60,10 @@ export class MyaBankAccountRowComponent implements OnInit {
           }
         });
       });
+  }
+
+  balanceupdate(): void {
+    const modalRef = this.modalService.open(MyaBankAccountBalanceUpdateDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.setBankAccount(this.bankAccount);
   }
 }

@@ -1,6 +1,7 @@
 package org.mgoulene.mya.service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -184,6 +185,12 @@ public class MyaOperationService extends OperationService {
     public Float getSumOfOperationForBankAccount(Long bankAccountId) {
         log.debug("Request to getSomeOfOperationForBankAccount with bankAccountId: {}", bankAccountId);
         return myaOperationRepository.getSumOfOperationForBankAccount(bankAccountId);
+    }
+
+    @Transactional(readOnly = true)
+    public LocalDate getLastOperationDateForBankAccount(Long bankAccountId) {
+        log.debug("Request to getLastOperationDateForBankAccount with bankAccountId: {}", bankAccountId);
+        return myaOperationRepository.getLastOperationDateForBankAccount(bankAccountId);
     }
 
     /*

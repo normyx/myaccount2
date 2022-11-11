@@ -49,19 +49,19 @@
           <li>
             <a class="dropdown-item" (click)="edit()">
               <fa-icon icon="pen" [fixedWidth]="true"></fa-icon>
-              <span jhiTranslate="entity.action.edit">Modifier</span>
+              <span jhiTranslate="mya.global.action.edit">Modifier</span>
             </a>
           </li>
           <li *ngIf="budgetItemPeriod!.isRecurrent">
             <a class="dropdown-item" (click)="new()">
               <fa-icon icon="circle-plus" [fixedWidth]="true" class="text-info"></fa-icon>
-              <span jhiTranslate="entity.action.add">Ajouter</span>
+              <span jhiTranslate="mya.global.action.add">Ajouter</span>
             </a>
           </li>
           <li>
             <a class="dropdown-item" (click)="delete()" routerLinkActive="active">
               <fa-icon icon="trash-can" [fixedWidth]="true" class="text-danger"></fa-icon>
-              <span jhiTranslate="entity.action.delete">Supprimer</span>
+              <span jhiTranslate="mya.global.action.delete">Supprimer</span>
             </a>
           </li>
 

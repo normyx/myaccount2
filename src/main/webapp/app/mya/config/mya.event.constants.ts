@@ -2,6 +2,7 @@ export const EVENT_UPDATE_BUDGET_ITEM_ROW = 'myaBudgetItemRowModification';
 export const EVENT_LOAD_BUDGET_ITEMS = 'myaBudgetItemsLoad';
 export const EVENT_REORDER_BUDGET_ITEM = 'myaReorderBudgetItem';
 export const EVENT_LOAD_OPERATIONS = 'myaOperationsLoad';
+export const EVENT_LOAD_BANK_ACCOUNTS = 'myaBankAccountLoad';
 
 export class MyaReorderBudgetItem {
   id: number;

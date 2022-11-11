@@ -6,7 +6,7 @@
           class="modal-title"
           jhiTranslate="mya.entity.budgetItemPeriod.dialog.update.title"
           *ngIf="budgetItemPeriod!.id"
-          [translateValues]="{ name: budgetItemPeriod!.budgetItem!.name, month: budgetItemPeriod!.month!.toDate() | date: 'MMM-YY' }"
+          [translateValues]="{ name: budgetItem!.name, month: budgetItemPeriod!.month!.toDate() | date: 'MMM-YY' }"
         >
           Modification
         </h2>
@@ -187,7 +187,7 @@
 
         <div>
           <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="dismiss()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="mya.global.action.cancel">Annuler</span>
           </button>
 
           <button
@@ -197,7 +197,7 @@
             [disabled]="editForm.invalid || isSaving"
             class="btn btn-primary"
           >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="mya.global.action.save">Sauvegarder</span>
           </button>
         </div>
       </div>

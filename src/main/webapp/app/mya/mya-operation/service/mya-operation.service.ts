@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Dayjs } from 'dayjs/esm';
+import dayjs from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApplicationConfigService } from '../../../core/config/application-config.service';
@@ -72,6 +73,14 @@ export class MyaOperationService extends OperationService {
     return this.http.get<number>(`${this.myaResourceUrl}/bank-account/amount/${bankAccountId}`, {
       observe: 'response',
     });
+  }
+
+  lastOperationDateForBankAccount(bankAccountId: number): Observable<HttpResponse<Dayjs>> {
+    return this.http
+      .get<string>(`${this.myaResourceUrl}/bank-account/lastOperationDate/${bankAccountId}`, {
+        observe: 'response',
+      })
+      .pipe(map(res => res.clone({ body: dayjs(res.body) })));
   }
 
   findOperationsCloseToBudgetItemPeriod(amount: number, categoryId: number, date: Dayjs): Observable<EntityArrayResponseType> {

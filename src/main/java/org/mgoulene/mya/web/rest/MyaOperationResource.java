@@ -2,6 +2,7 @@ package org.mgoulene.mya.web.rest;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -116,6 +117,12 @@ public class MyaOperationResource {
     public ResponseEntity<Float> getSumOfAmountForBankAccount(@PathVariable Long bankAccountId) {
         log.debug("REST request to getSomeOfAmountForBankAccount for bakAccount: {}", bankAccountId);
         return ResponseEntity.ok().body(operationService.getSumOfOperationForBankAccount(bankAccountId));
+    }
+
+    @GetMapping("/mya-operations/bank-account/lastOperationDate/{bankAccountId}")
+    public ResponseEntity<LocalDate> getLastOperationDateForBankAccount(@PathVariable Long bankAccountId) {
+        log.debug("REST request to getLastOperationDateForBankAccount for bakAccount: {}", bankAccountId);
+        return ResponseEntity.ok().body(operationService.getLastOperationDateForBankAccount(bankAccountId));
     }
 
     /**

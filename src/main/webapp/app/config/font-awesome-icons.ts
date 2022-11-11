@@ -65,6 +65,7 @@ import {
   faSpinner,
   faChevronDown,
   faChevronUp,
+  faScaleUnbalancedFlip,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -135,5 +136,6 @@ export const fontAwesomeIcons = [
   faSpinner,
   faChevronDown,
   faChevronUp,
+  faScaleUnbalancedFlip,
   // jhipster-needle-add-icon-import
 ];

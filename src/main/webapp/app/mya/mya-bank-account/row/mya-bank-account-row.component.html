@@ -1,27 +1,49 @@
-<td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
-  <a *ngIf="bankAccount!.accountType === 'CURRENTACCOUNT'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'current-detail']">
-    <span class="fw-bold">{{ bankAccount!.accountName }}</span>
-    <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
-  </a>
-  <a *ngIf="bankAccount!.accountType === 'SAVINGSACCOUNT'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'savings-detail']">
-    <span class="fw-bold">{{ bankAccount!.accountName }}</span>
-    <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
-  </a>
-  <a *ngIf="bankAccount!.accountType === 'STOCKPORTFOLIO'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'portfolio-detail']">
-    <span class="fw-bold">{{ bankAccount!.accountName }}</span>
-    <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
-  </a>
-</td>
+<ng-container *ngIf="withArchived || !bankAccount!.archived">
+  <td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+    <a *ngIf="bankAccount!.accountType === 'CURRENTACCOUNT'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'current-detail']">
+      <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+      <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
+    </a>
+    <a *ngIf="bankAccount!.accountType === 'SAVINGSACCOUNT'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'savings-detail']">
+      <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+      <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
+    </a>
+    <a *ngIf="bankAccount!.accountType === 'STOCKPORTFOLIO'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'portfolio-detail']">
+      <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+      <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
+    </a>
+  </td>
 
-<td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">{{ bankAccount!.accountBank }} ({{ bankAccount!.archived }})</td>
+  <td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+    {{ bankAccount!.accountBank }} ({{ bankAccount!.archived }})
+  </td>
 
-<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
-  {{ bankAccount!.initialAmount | currency: 'EUR' }}
-</td>
-<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
-  {{ bankAccount!.adjustmentAmount | currency: 'EUR' }}
-</td>
-<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">{{ sumOfOperationAmount | currency: 'EUR' }}</td>
-<td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''" [class]="totalAmount < 0 ? 'text-danger' : ''">
-  {{ totalAmount | currency: 'EUR' }}
-</td>
+  <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+    {{ bankAccount!.initialAmount | currency: 'EUR' }}
+  </td>
+  <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+    {{ bankAccount!.adjustmentAmount | currency: 'EUR' }}
+  </td>
+  <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
+    {{ sumOfOperationAmount | currency: 'EUR' }}
+  </td>
+  <td
+    class="text-end"
+    [class]="
+      totalAmount < 0
+        ? bankAccount!.archived
+          ? 'text-decoration-line-through text-danger'
+          : 'text-danger'
+        : bankAccount!.archived
+        ? 'text-decoration-line-through'
+        : ''
+    "
+  >
+    {{ totalAmount | currency: 'EUR' }}
+  </td>
+  <td>
+    <button *ngIf="bankAccount!.accountType !== 'STOCKPORTFOLIO'" type="submit" (click)="balanceupdate()" class="btn btn-info btn-sm">
+      <fa-icon icon="scale-unbalanced-flip"></fa-icon>
+    </button>
+  </td>
+</ng-container>

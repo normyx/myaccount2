@@ -1,16 +1,13 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { EventManager } from 'app/core/util/event-manager.service';
 
-import { ASC, DEFAULT_SORT_DATA, DESC, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
-import { SortService } from 'app/shared/sort/sort.service';
-import { IBankAccount } from '../../../entities/bank-account/bank-account.model';
-import { BankAccountDeleteDialogComponent } from '../../../entities/bank-account/delete/bank-account-delete-dialog.component';
-import { EntityArrayResponseType } from '../../../entities/bank-account/service/bank-account.service';
-import { MyaBankAccountService } from '../service/mya-bank-account.service';
-import { IBankAccountTotal } from '../row/mya-bank-account-total.model';
 import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
+import { EVENT_LOAD_BANK_ACCOUNTS } from 'app/mya/config/mya.event.constants';
+import { Subscription } from 'rxjs';
+import { IBankAccount } from '../../../entities/bank-account/bank-account.model';
+import { EntityArrayResponseType } from '../../../entities/bank-account/service/bank-account.service';
+import { IBankAccountTotal } from '../row/mya-bank-account-total.model';
+import { MyaBankAccountService } from '../service/mya-bank-account.service';
 
 @Component({
   selector: 'jhi-mya-bank-account-list',
@@ -23,13 +20,16 @@ export class MyaBankAccountListComponent implements OnInit {
   savingsAccountTotal = 0;
   portfolioTotal = 0;
   total = 0;
+  withArchived = false;
 
   bankAccounts: IBankAccount[] | null = null;
   currentBankAccounts: IBankAccount[] | null = null;
   savingsBankAccounts: IBankAccount[] | null = null;
   portfolioBankAccounts: IBankAccount[] | null = null;
 
-  constructor(protected bankAccountService: MyaBankAccountService) {}
+  eventSubscriber: Subscription | null = null;
+
+  constructor(protected bankAccountService: MyaBankAccountService, private eventManager: EventManager) {}
 
   addToTotalEvent(total: IBankAccountTotal): void {
     switch (total.bankAccount.accountType) {
@@ -47,10 +47,15 @@ export class MyaBankAccountListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.eventSubscriber = this.eventManager.subscribe(EVENT_LOAD_BANK_ACCOUNTS, () => this.load());
     this.load();
   }
 
   load(): void {
+    this.currentAccountTotal = 0;
+    this.savingsAccountTotal = 0;
+    this.portfolioTotal = 0;
+    this.total = 0;
     this.bankAccountService.queryWithSignedInUser().subscribe((res: EntityArrayResponseType) => {
       this.bankAccounts = res.body;
       if (this.bankAccounts) {

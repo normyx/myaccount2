@@ -1,6 +1,7 @@
 package org.mgoulene.mya.repository;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import org.mgoulene.domain.Operation;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -69,4 +70,7 @@ public interface MyaOperationRepository extends JpaRepository<Operation, Long>, 
 
     @Query("SELECT SUM(operation.amount) FROM Operation operation " + "where operation.bankAccount.id = :bankAccountId ")
     Float getSumOfOperationForBankAccount(@Param("bankAccountId") Long bankAccountId);
+
+    @Query("SELECT MAX(operation.date) FROM Operation operation " + "where operation.bankAccount.id = :bankAccountId ")
+    LocalDate getLastOperationDateForBankAccount(@Param("bankAccountId") Long bankAccountId);
 }
