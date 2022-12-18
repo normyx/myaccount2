@@ -4,5 +4,7 @@
         "src/main/webapp/i18n",
         "src/main/webapp/app/shared/language"
     ],
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "maven.view": "flat",
+    "java.debug.settings.onBuildFailureProceed": true
 }

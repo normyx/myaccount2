@@ -89,4 +89,24 @@ public class MyaReportDataService {
         log.debug("Request to get all findAmountsBetweenDates bankAccountId {}", bankAccountId);
         return reportDataRepository.findAmountsBetweenDatesForBankAccount(bankAccountId);
     }
+
+    public List<MyaReportAmountsByDates> findUserBankAccountDateDataPoints(Long applicationUserId) {
+        log.debug("Request to get all findUserBankAccountDateDataPoints applicationUserId {}", applicationUserId);
+        return reportDataRepository.findUserBankAccountDateDataPoints(applicationUserId);
+    }
+
+    public List<MyaReportAmountsByDates> findUserCurrentBankAccountDateDataPoints(Long applicationUserId) {
+        log.debug("Request to get all findUserCurrentBankAccountDateDataPoints applicationUserId {}", applicationUserId);
+        return reportDataRepository.findUserCurrentBankAccountDateDataPoints(applicationUserId);
+    }
+
+    public List<MyaReportAmountsByDates> findUserSavingsBankAccountDateDataPoints(Long applicationUserId) {
+        log.debug("Request to get all findUserSavingsBankAccountDateDataPoints applicationUserId {}", applicationUserId);
+        return reportDataRepository.findUserSavingsBankAccountDateDataPoints(applicationUserId);
+    }
+
+    public List<MyaReportAmountsByDates> findBankAccountDateDataPoints(Long bankAccountId) {
+        log.debug("Request to get all findBankAccountDateDataPoints bankAccountId {}", bankAccountId);
+        return reportDataRepository.findBankAccountDateDataPoints(bankAccountId);
+    }
 }

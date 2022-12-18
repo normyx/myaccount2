@@ -198,3 +198,20 @@
     </div>
   </div>
 </div>
+
+<button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('all')">
+  <span class="hidden-sm-down"> Tous </span>
+</button>
+<button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('current')">
+  <span class="hidden-sm-down"> Courant </span>
+</button>
+<button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('savings')">
+  <span class="hidden-sm-down"> Epagne </span>
+</button>
+<button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('currentsavings')">
+  <span class="hidden-sm-down"> Courant + Epargne </span>
+</button>
+<button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('portfolio')">
+  <span class="hidden-sm-down"> Actions </span>
+</button>
+<jhi-mya-account-evolution [type]="dashboardType"></jhi-mya-account-evolution>

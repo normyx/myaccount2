@@ -27,14 +27,18 @@ public class MyaStockMarketDataService extends StockMarketDataService {
 
     private final MyaStockMarketDataRepository myaStockMarketDataRepository;
 
+    private final MyaStockPortfolioItemService myaStockPortfolioItemService;
+
     public MyaStockMarketDataService(
         StockMarketDataRepository stockMarketDataRepository,
         StockMarketDataMapper stockMarketDataMapper,
         StockMarketDataSearchRepository stockMarketDataSearchRepository,
-        MyaStockMarketDataRepository myaStockMarketDataRepository
+        MyaStockMarketDataRepository myaStockMarketDataRepository,
+        MyaStockPortfolioItemService myaStockPortfolioItemService
     ) {
         super(stockMarketDataRepository, stockMarketDataMapper, stockMarketDataSearchRepository);
         this.myaStockMarketDataRepository = myaStockMarketDataRepository;
+        this.myaStockPortfolioItemService = myaStockPortfolioItemService;
     }
 
     @Transactional(readOnly = true)

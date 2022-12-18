@@ -9,6 +9,15 @@ import 'chartjs-adapter-moment';
 import { IBankAccount } from '../../../entities/bank-account/bank-account.model';
 import { MyaBankAccountService } from '../service/mya-bank-account.service';
 
+class MyaPortfolioSymbol {
+  symbol: string;
+  stockPortfolioItems: IStockPortfolioItem[];
+  constructor(symbol: string) {
+    this.stockPortfolioItems = new Array<IStockPortfolioItem>();
+    this.symbol = symbol;
+  }
+}
+
 @Component({
   selector: 'jhi-mya-portfolio-bank-account-summary',
   templateUrl: './mya-portfolio-bank-account-summary.component.html',
@@ -22,6 +31,7 @@ export class MyaPortfolioBankAccountSummaryComponent implements OnInit {
   sumOfOperationAmount: number | null = null;
   stockPortfolioItems: IStockPortfolioItem[] | null = null;
   totalAmount = 0;
+  portfolioSymbols: MyaPortfolioSymbol[] = new Array<MyaPortfolioSymbol>();
 
   constructor(
     protected bankAccountService: MyaBankAccountService,
@@ -46,10 +56,20 @@ export class MyaPortfolioBankAccountSummaryComponent implements OnInit {
       .query(`{bankAccountId.equals: ${this.selectedBankAccount!.id.toString()}}`)
       .subscribe((response: HttpResponse<IStockPortfolioItem[]>) => {
         this.stockPortfolioItems = response.body;
+        this.stockPortfolioItems?.forEach(stockPortfolioItem => {
+          let portfolioSymbol = this.portfolioSymbols.find(e => e.symbol === stockPortfolioItem.stockSymbol);
+          if (!portfolioSymbol) {
+            portfolioSymbol = new MyaPortfolioSymbol(stockPortfolioItem.stockSymbol!);
+            this.portfolioSymbols.push(portfolioSymbol);
+          }
+          portfolioSymbol.stockPortfolioItems.push(stockPortfolioItem);
+        });
       });
 
     this.bankAccountService.queryWithSignedInUser().subscribe((bankAccounts: HttpResponse<IBankAccount[]>) => {
-      this.bankAccounts = bankAccounts.body!.filter(ba => ba.accountType === BankAccountType.STOCKPORTFOLIO);
+      this.bankAccounts = bankAccounts.body!.filter(
+        ba => ba.accountType === BankAccountType.STOCKPORTFOLIO && ba.id === this.selectedBankAccount!.id
+      );
 
       this.selectedBankAccount = this.bankAccounts[0];
       this.operationService.sumOfAmountForBankAccount(this.selectedBankAccount.id).subscribe((res: HttpResponse<number>) => {

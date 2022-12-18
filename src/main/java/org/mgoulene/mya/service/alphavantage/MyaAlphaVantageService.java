@@ -102,7 +102,7 @@ public class MyaAlphaVantageService {
         stockPortfolioItemService.save(dto);
     }
 
-    @Scheduled(fixedRateString = "${alphavantage.update-stock-portfolio-item-fixe-rate}")
+    //@Scheduled(fixedRateString = "${alphavantage.update-stock-portfolio-item-fixe-rate}")
     public void updateAllStockData() {
         log.debug("Service updateAllStockData");
         List<StockPortfolioItemDTO> stockPortfolioItemDTOs = stockPortfolioItemService.findAll();

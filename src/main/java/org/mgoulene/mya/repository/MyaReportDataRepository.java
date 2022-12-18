@@ -33,4 +33,12 @@ public interface MyaReportDataRepository {
     public List<MyaReportAmountsByDates> findAmountsBetweenDates(Long accountId, LocalDate dateFrom, LocalDate dateTo);
 
     public List<MyaReportAmountsByDates> findAmountsBetweenDatesForBankAccount(Long bankAccountId);
+
+    public List<MyaReportAmountsByDates> findUserBankAccountDateDataPoints(Long applicationUserId);
+
+    public List<MyaReportAmountsByDates> findUserCurrentBankAccountDateDataPoints(Long applicationUserId);
+
+    public List<MyaReportAmountsByDates> findUserSavingsBankAccountDateDataPoints(Long applicationUserId);
+
+    public List<MyaReportAmountsByDates> findBankAccountDateDataPoints(Long bankAccountId);
 }

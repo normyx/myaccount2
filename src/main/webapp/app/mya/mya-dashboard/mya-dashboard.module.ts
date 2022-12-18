@@ -17,6 +17,7 @@ import { MyaEvolutionByMonthsComponent } from './components/mya-evolution-by-mon
 import { MyaEvolutionInMonthReportComponent } from './components/mya-evolution-in-month/mya-evolution-in-month.component';
 import { MyaDashboardRoutingModule } from './route/mya-dashboard-routing.module';
 import { NgChartsModule } from 'ng2-charts';
+import { MyaAccountEvolutionComponent } from './components/mya-account-evolution/mya-account-evolution';
 
 @NgModule({
   imports: [
@@ -39,8 +40,9 @@ import { NgChartsModule } from 'ng2-charts';
     MyaDashboardCategoryComponent,
     MyaDashboardCategoryDetailsComponent,
     MyaEvolutionBetweenDatesForBankAccountComponent,
+    MyaAccountEvolutionComponent,
   ],
-  exports: [MyaEvolutionBetweenDatesComponent],
+  exports: [MyaEvolutionBetweenDatesComponent, MyaAccountEvolutionComponent],
   entryComponents: [MyaEvolutionBetweenDatesComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

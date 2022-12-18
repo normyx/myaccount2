@@ -1,6 +1,7 @@
 package org.mgoulene.mya.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import org.mgoulene.domain.StockMarketData;
 import org.springframework.data.jpa.repository.*;
@@ -18,4 +19,9 @@ public interface MyaStockMarketDataRepository extends JpaRepository<StockMarketD
         "SELECT stockMarketData FROM StockMarketData stockMarketData WHERE stockMarketData.dataDate = :dataDate AND stockMarketData.symbol = :symbol"
     )
     Optional<StockMarketData> findStockMarketDataForDate(@Param("symbol") String symbol, @Param("dataDate") LocalDate dataDate);
+
+    @Query(
+        "SELECT stockMarketData FROM StockMarketData stockMarketData WHERE stockMarketData.symbol = :symbol ORDER BY stockMarketData.dataDate ASC"
+    )
+    List<StockMarketData> findStockMarketData(@Param("symbol") String symbol);
 }

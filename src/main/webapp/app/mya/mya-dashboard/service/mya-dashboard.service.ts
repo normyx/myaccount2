@@ -57,4 +57,54 @@ export class MyaDashboardService {
       }
     );
   }
+
+  /*getStockEvolutionSymbol(symbol: string): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-stock-portfolio-items/evolution-data-points-for-symbol');
+    return this.http.get<any>(
+      `${resourceUrl}/${symbol}`,
+      {
+        observe: 'response',
+      }
+    );
+  }*/
+  getAllAccountEvolution(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/all-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
+
+  getAllCurrentAccountEvolution(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/current-bank-account-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
+
+  getAllSavingsAccountEvolution(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/savings-bank-account-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
+  getAllCurrentAndSavingsAccountEvolution(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/bank-account-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
+
+  getBankAccountEvolution(id: string): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/bank-account-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}/${id}`, {
+      observe: 'response',
+    });
+  }
+
+  getAllStockAccountEvolution(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/stock-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
 }

@@ -44,6 +44,14 @@ public class MyaReportDataRepositoryImpl implements MyaReportDataRepository {
 
     private String selectAmountsBetweenDatesForBankAccountQuery;
 
+    private String selectAmountsForBankAccountQuery;
+
+    private String selectAmountsForCurrentBankAccountQuery;
+
+    private String selectAmountsForSavingsBankAccountQuery;
+
+    private String selectAmountsForBankAccountUserQuery;
+
     private String loadQuery(String queryName) {
         try {
             InputStream is;
@@ -112,6 +120,34 @@ public class MyaReportDataRepositoryImpl implements MyaReportDataRepository {
             selectAmountsBetweenDatesForBankAccountQuery = loadQuery("select_amounts_between_dates_for_bank_account");
         }
         return selectAmountsBetweenDatesForBankAccountQuery;
+    }
+
+    private synchronized String getSelectAmountsForApplicationUserQuery() {
+        if (selectAmountsForBankAccountUserQuery == null) {
+            selectAmountsForBankAccountUserQuery = loadQuery("select_amounts_for_user");
+        }
+        return selectAmountsForBankAccountUserQuery;
+    }
+
+    private synchronized String getSelectCurrentAmountsForApplicationUserQuery() {
+        if (selectAmountsForCurrentBankAccountQuery == null) {
+            selectAmountsForCurrentBankAccountQuery = loadQuery("select_current_amounts_for_user");
+        }
+        return selectAmountsForCurrentBankAccountQuery;
+    }
+
+    private synchronized String getSelectSavingsAmountsForApplicationUserQuery() {
+        if (selectAmountsForSavingsBankAccountQuery == null) {
+            selectAmountsForSavingsBankAccountQuery = loadQuery("select_savings_amounts_for_user");
+        }
+        return selectAmountsForSavingsBankAccountQuery;
+    }
+
+    private synchronized String getSelectAmountsForBankAccountQuery() {
+        if (selectAmountsForBankAccountQuery == null) {
+            selectAmountsForBankAccountQuery = loadQuery("select_amounts_for_bank_account");
+        }
+        return selectAmountsForBankAccountQuery;
     }
 
     private MyaReportDateEvolutionData convertDailyResultsToReportDateEvolutionData(Object[] res) {
@@ -242,6 +278,54 @@ public class MyaReportDataRepositoryImpl implements MyaReportDataRepository {
 
     public List<MyaReportAmountsByDates> findAmountsBetweenDatesForBankAccount(Long bankAccountId) {
         Query querySelect = entityManager.createNativeQuery(getSelectAmountsBetweenDatesForBankAccountQuery());
+
+        querySelect.setParameter("bankAccountId", bankAccountId);
+        List<Object[]> results = querySelect.getResultList();
+        List<MyaReportAmountsByDates> returns = new ArrayList<>();
+        for (Object[] res : results) {
+            returns.add(new MyaReportAmountsByDates().date(res[0]).amount(res[1]).predictiveAmount(res[2]));
+        }
+        return returns;
+    }
+
+    public List<MyaReportAmountsByDates> findUserBankAccountDateDataPoints(Long applicationUserId) {
+        Query querySelect = entityManager.createNativeQuery(getSelectAmountsForApplicationUserQuery());
+
+        querySelect.setParameter("accountId", applicationUserId);
+        List<Object[]> results = querySelect.getResultList();
+        List<MyaReportAmountsByDates> returns = new ArrayList<>();
+        for (Object[] res : results) {
+            returns.add(new MyaReportAmountsByDates().date(res[0]).amount(res[1]).predictiveAmount(res[2]));
+        }
+        return returns;
+    }
+
+    public List<MyaReportAmountsByDates> findUserCurrentBankAccountDateDataPoints(Long applicationUserId) {
+        Query querySelect = entityManager.createNativeQuery(getSelectCurrentAmountsForApplicationUserQuery());
+
+        querySelect.setParameter("accountId", applicationUserId);
+        List<Object[]> results = querySelect.getResultList();
+        List<MyaReportAmountsByDates> returns = new ArrayList<>();
+        for (Object[] res : results) {
+            returns.add(new MyaReportAmountsByDates().date(res[0]).amount(res[1]).predictiveAmount(res[2]));
+        }
+        return returns;
+    }
+
+    public List<MyaReportAmountsByDates> findUserSavingsBankAccountDateDataPoints(Long applicationUserId) {
+        Query querySelect = entityManager.createNativeQuery(getSelectSavingsAmountsForApplicationUserQuery());
+
+        querySelect.setParameter("accountId", applicationUserId);
+        List<Object[]> results = querySelect.getResultList();
+        List<MyaReportAmountsByDates> returns = new ArrayList<>();
+        for (Object[] res : results) {
+            returns.add(new MyaReportAmountsByDates().date(res[0]).amount(res[1]).predictiveAmount(res[2]));
+        }
+        return returns;
+    }
+
+    public List<MyaReportAmountsByDates> findBankAccountDateDataPoints(Long bankAccountId) {
+        Query querySelect = entityManager.createNativeQuery(getSelectAmountsForBankAccountQuery());
 
         querySelect.setParameter("bankAccountId", bankAccountId);
         List<Object[]> results = querySelect.getResultList();

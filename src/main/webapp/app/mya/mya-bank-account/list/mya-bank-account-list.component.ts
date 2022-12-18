@@ -21,6 +21,7 @@ export class MyaBankAccountListComponent implements OnInit {
   portfolioTotal = 0;
   total = 0;
   withArchived = false;
+  dashboardType = 'all';
 
   bankAccounts: IBankAccount[] | null = null;
   currentBankAccounts: IBankAccount[] | null = null;
@@ -44,6 +45,10 @@ export class MyaBankAccountListComponent implements OnInit {
         break;
     }
     this.total += total.total;
+  }
+
+  changeDashboardType(type: string): void {
+    this.dashboardType = type;
   }
 
   ngOnInit(): void {

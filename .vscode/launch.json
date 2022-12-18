@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Spring Boot-Myaccount21App<myaccount-21>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "org.mgoulene.Myaccount21App",
+            "projectName": "myaccount-21",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

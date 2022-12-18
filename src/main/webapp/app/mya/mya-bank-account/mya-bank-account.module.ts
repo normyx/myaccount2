@@ -10,6 +10,7 @@ import { MyaBankAccountRoutingModule } from './route/mya-bank-account-routing.mo
 import { MyaBankAccountRowComponent } from './row/mya-bank-account-row.component';
 import { MyaCurrentBankAccountSummaryComponent } from './summary/mya-current-bank-account-summary.component';
 import { MyaPortfolioBankAccountSummaryComponent } from './summary/mya-portfolio-bank-account-summary.component';
+import { MyaPortfolioBankAccountSymbolSummaryComponent } from './summary/mya-portfolio-bank-account-symbol-summary.component';
 import { MyaSavingsBankAccountSummaryComponent } from './summary/mya-savings-bank-account-summary.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MyaSavingsBankAccountSummaryComponent } from './summary/mya-savings-ban
     MyaCurrentBankAccountSummaryComponent,
     MyaSavingsBankAccountSummaryComponent,
     MyaPortfolioBankAccountSummaryComponent,
+    MyaPortfolioBankAccountSymbolSummaryComponent,
     MyaBankAccountListComponent,
     MyaBankAccountRowComponent,
     MyaBankAccountBalanceUpdateDialogComponent,

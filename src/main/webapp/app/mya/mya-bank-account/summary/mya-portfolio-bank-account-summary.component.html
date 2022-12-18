@@ -83,135 +83,33 @@
       </table>
     </div>
 
-    <div class="table-responsive table-entities" *ngIf="stockPortfolioItems && stockPortfolioItems.length > 0">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockSymbol">Stock Symbol</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="myaccount21App.stockPortfolioItem.stockType">Stock Type</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockCurrency">Stock Currency</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockAcquisitionDate">Stock Acquisition Date</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockSharesNumber">Stock Shares Number</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockAcquisitionPrice">Stock Acquisition Price</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockPriceAtAcquisitionDate">Stock Price At Acquisition Date</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.stockCurrentPrice">Stock Current Price</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.totalInCurrency"></span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.totalInEuro"></span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.earningsInCurrency"></span>
-              </div>
-            </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.portfolio.earningsInEuro"></span>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let stockPortfolioItem of stockPortfolioItems" data-cy="entityTable">
-            <td>{{ stockPortfolioItem.stockSymbol }}</td>
-            <td jhiTranslate="{{ 'myaccount21App.StockType.' + stockPortfolioItem.stockType }}">{{ stockPortfolioItem.stockType }}</td>
-            <td jhiTranslate="{{ 'mya.entity.currencyType.' + stockPortfolioItem.stockCurrency }}">
-              {{ stockPortfolioItem.stockCurrency }}
-            </td>
-            <td>{{ stockPortfolioItem.stockAcquisitionDate | formatMediumDate }}</td>
-            <td>{{ stockPortfolioItem.stockSharesNumber }}</td>
-            <td>{{ stockPortfolioItem.stockAcquisitionPrice | currency: stockPortfolioItem.stockCurrency! }}</td>
-            <td>{{ stockPortfolioItem.stockPriceAtAcquisitionDate | currency: stockPortfolioItem.stockCurrency! }}</td>
-            <td>{{ stockPortfolioItem.stockCurrentPrice | currency: stockPortfolioItem.stockCurrency! }}</td>
-            <td>
-              {{
-                stockPortfolioItem.stockCurrentPrice! * stockPortfolioItem.stockSharesNumber! | currency: stockPortfolioItem.stockCurrency!
-              }}
-            </td>
-            <td>
-              {{
-                stockPortfolioItem.stockCurrentPrice! *
-                  stockPortfolioItem.stockSharesNumber! *
-                  stockPortfolioItem.stockCurrentCurrencyFactor! | currency: 'EUR'
-              }}
-            </td>
-            <td>
-              {{
-                (stockPortfolioItem.stockCurrentPrice! - stockPortfolioItem.stockAcquisitionPrice!) * stockPortfolioItem.stockSharesNumber!
-                  | currency: stockPortfolioItem.stockCurrency!
-              }}
-              ({{
-                (stockPortfolioItem.stockCurrentPrice! - stockPortfolioItem.stockAcquisitionPrice!) /
-                  stockPortfolioItem.stockAcquisitionPrice! | percent: '1.1-1'
-              }})
-            </td>
-            <td>
-              {{
-                (stockPortfolioItem.stockCurrentPrice! * stockPortfolioItem.stockCurrentCurrencyFactor! -
-                  stockPortfolioItem.stockAcquisitionPrice! * stockPortfolioItem.stockAcquisitionCurrencyFactor!) *
-                  stockPortfolioItem.stockSharesNumber! | currency: 'EUR'
-              }}
-              ({{
-                (stockPortfolioItem.stockCurrentPrice! * stockPortfolioItem.stockCurrentCurrencyFactor! -
-                  stockPortfolioItem.stockAcquisitionPrice! * stockPortfolioItem.stockAcquisitionCurrencyFactor!) /
-                  (stockPortfolioItem.stockAcquisitionPrice! * stockPortfolioItem.stockAcquisitionCurrencyFactor!) | percent: '1.1-1'
-              }})
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="card border-primary mb-3" *ngFor="let portfolioSymbol of portfolioSymbols">
+      <div class="card-header">
+        <h2>{{ portfolioSymbol.symbol }}</h2>
+      </div>
+      <div class="card-body">
+        <jhi-mya-portfolio-bank-account-symbol-summary
+          [symbol]="portfolioSymbol.symbol"
+          [stockPortfolioItems]="portfolioSymbol.stockPortfolioItems"
+        >
+        </jhi-mya-portfolio-bank-account-symbol-summary>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="card border-primary mb-3">
-  <div class="card-header">
-    <h2
-      jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
-      [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
-    >
-      Budgets
-    </h2>
-  </div>
-  <div class="card-body">
-    <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+  <jhi-mya-account-evolution type="portfolio"></jhi-mya-account-evolution>
+
+  <div class="card border-primary mb-3">
+    <div class="card-header">
+      <h2
+        jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
+        [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
+      >
+        Budgets
+      </h2>
+    </div>
+    <div class="card-body">
+      <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+    </div>
   </div>
 </div>
