@@ -27,21 +27,27 @@ export class MyaSavingsBankAccountSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ bankAccount }) => {
+      this.selectedBankAccount = bankAccount;
+    });
+    this.loadDependencies();
     this.load();
   }
 
   onChange(newValue: IBankAccount): void {
     this.selectedBankAccount = newValue;
+    this.load();
   }
 
-  load(): void {
-    this.activatedRoute.data.subscribe(({ bankAccount }) => {
-      this.selectedBankAccount = bankAccount;
-    });
+  loadDependencies(): void {
     this.bankAccountService.queryWithSignedInUser().subscribe((bankAccounts: HttpResponse<IBankAccount[]>) => {
       this.bankAccounts = bankAccounts.body!.filter(ba => ba.accountType === BankAccountType.SAVINGSACCOUNT);
-
-      this.selectedBankAccount = this.bankAccounts[0];
+    });
+  }
+  load(): void {
+    this.sumOfOperationAmount = 0;
+    this.totalAmount = 0;
+    if (this.selectedBankAccount) {
       this.operationService.sumOfAmountForBankAccount(this.selectedBankAccount.id).subscribe((res: HttpResponse<number>) => {
         this.sumOfOperationAmount = res.body;
         if (this.selectedBankAccount && this.sumOfOperationAmount) {
@@ -49,6 +55,6 @@ export class MyaSavingsBankAccountSummaryComponent implements OnInit {
             this.selectedBankAccount.initialAmount! + this.selectedBankAccount.adjustmentAmount! + this.sumOfOperationAmount;
         }
       });
-    });
+    }
   }
 }

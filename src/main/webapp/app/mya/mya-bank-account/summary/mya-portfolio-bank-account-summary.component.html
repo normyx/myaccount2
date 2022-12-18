@@ -95,21 +95,34 @@
         </jhi-mya-portfolio-bank-account-symbol-summary>
       </div>
     </div>
-  </div>
 
-  <jhi-mya-account-evolution type="portfolio"></jhi-mya-account-evolution>
-
-  <div class="card border-primary mb-3">
-    <div class="card-header">
-      <h2
-        jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
-        [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
-      >
-        Budgets
-      </h2>
+    <div class="card border-primary mb-3">
+      <div class="card-body">
+        <button class="btn btn-outline-primary btn-sm" (click)="changeChartSymbol('all')">
+          <span class="hidden-sm-down"> all </span>
+        </button>
+        <button
+          class="btn btn-outline-primary btn-sm"
+          *ngFor="let portfolioSymbol of portfolioSymbols"
+          (click)="changeChartSymbol(portfolioSymbol.symbol)"
+        >
+          <span class="hidden-sm-down"> {{ portfolioSymbol.symbol }} </span>
+        </button>
+        <jhi-mya-account-evolution [type]="chartType" [data]="chartSymbol"></jhi-mya-account-evolution>
+      </div>
     </div>
-    <div class="card-body">
-      <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+    <div class="card border-primary mb-3">
+      <div class="card-header">
+        <h2
+          jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
+          [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
+        >
+          Budgets
+        </h2>
+      </div>
+      <div class="card-body">
+        <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+      </div>
     </div>
   </div>
 </div>

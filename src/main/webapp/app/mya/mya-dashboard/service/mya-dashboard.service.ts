@@ -107,4 +107,11 @@ export class MyaDashboardService {
       observe: 'response',
     });
   }
+
+  getStockSymbolAccountEvolution(symbol: string): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/stock-symbol-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}/${symbol}`, {
+      observe: 'response',
+    });
+  }
 }

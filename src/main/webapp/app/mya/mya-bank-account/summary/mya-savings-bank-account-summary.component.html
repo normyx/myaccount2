@@ -14,7 +14,7 @@
     </option>
   </select>
 </div>
-
+<br />
 <div class="card border-primary mb-3">
   <div class="card-header">
     <h2 jhiTranslate="mya.entity.bankAccount.detail.savingsBankAccountHeader"></h2>
@@ -89,25 +89,22 @@
         </tbody>
       </table>
     </div>
-    <jhi-mya-evolution-between-dates
-      [dateFrom]="dateFrom"
-      [dateTo]="dateTo"
-      height="100"
-      [bankAccountId]="selectedBankAccount ? selectedBankAccount.id : null"
-    >
-    </jhi-mya-evolution-between-dates>
-  </div>
-</div>
-<div class="card border-primary mb-3">
-  <div class="card-header">
-    <h2
-      jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
-      [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
-    >
-      Budgets
-    </h2>
-  </div>
-  <div class="card-body">
-    <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+    <div>
+      <jhi-mya-evolution-between-dates
+        [dateFrom]="dateFrom"
+        [dateTo]="dateTo"
+        height="100"
+        [bankAccountId]="selectedBankAccount ? selectedBankAccount.id : null"
+      >
+      </jhi-mya-evolution-between-dates>
+      <h2
+        jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
+        [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
+      >
+        Budgets
+      </h2>
+
+      <jhi-mya-operation-list [selectedBankAccount]="selectedBankAccount"> </jhi-mya-operation-list>
+    </div>
   </div>
 </div>

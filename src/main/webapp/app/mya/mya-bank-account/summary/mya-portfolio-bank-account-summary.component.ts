@@ -32,6 +32,8 @@ export class MyaPortfolioBankAccountSummaryComponent implements OnInit {
   stockPortfolioItems: IStockPortfolioItem[] | null = null;
   totalAmount = 0;
   portfolioSymbols: MyaPortfolioSymbol[] = new Array<MyaPortfolioSymbol>();
+  chartType = 'portfolio';
+  chartSymbol = '';
 
   constructor(
     protected bankAccountService: MyaBankAccountService,
@@ -42,6 +44,15 @@ export class MyaPortfolioBankAccountSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  changeChartSymbol(symbol: string): void {
+    if (symbol === 'all') {
+      this.chartType = 'portfolio';
+    } else {
+      this.chartType = 'stock';
+      this.chartSymbol = symbol;
+    }
   }
 
   onChange(newValue: IBankAccount): void {

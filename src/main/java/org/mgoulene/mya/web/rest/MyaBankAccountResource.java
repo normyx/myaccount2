@@ -171,7 +171,10 @@ public class MyaBankAccountResource {
         log.debug("REST request to getUserStockSymbolEvolutionDataPoints: {}", symbol);
         Optional<ApplicationUserDTO> applicationUserOptional = myaApplicationUserService.findSignedInApplicationUser();
         if (applicationUserOptional.isPresent()) {
-            MyaDateDataStockPoints dataPoints = myaStockPortfolioItemService.findDateDataPoints(applicationUserOptional.get().getId());
+            MyaDateDataStockPoints dataPoints = myaStockPortfolioItemService.findSymbolDateDataPoints(
+                applicationUserOptional.get().getId(),
+                symbol
+            );
 
             return ResponseEntity.ok().body(dataPoints);
         }

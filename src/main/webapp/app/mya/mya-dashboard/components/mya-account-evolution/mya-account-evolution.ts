@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { Chart, Tick } from 'chart.js';
 import 'chartjs-adapter-moment';
@@ -10,7 +10,7 @@ import { MyaDashboardService } from '../../service/mya-dashboard.service';
   selector: 'jhi-mya-account-evolution',
   templateUrl: './mya-account-evolution.html',
 })
-export class MyaAccountEvolutionComponent implements OnChanges {
+export class MyaAccountEvolutionComponent implements OnChanges, OnDestroy {
   @Input() data: string | null = null;
   @Input() type: string | null = null;
   chart: Chart | null = null;
@@ -18,6 +18,10 @@ export class MyaAccountEvolutionComponent implements OnChanges {
   //options: ChartOptions<'line'> | null = null;
 
   constructor(private dashboardService: MyaDashboardService) {}
+  ngOnDestroy(): void {
+    this.chart?.destroy();
+    //throw new Error('Method not implemented.');
+  }
 
   changeRange(range: string): void {
     switch (range) {
@@ -67,6 +71,10 @@ export class MyaAccountEvolutionComponent implements OnChanges {
       });
     } else if (this.type && this.type === 'portfolio') {
       this.dashboardService.getAllStockAccountEvolution().subscribe((res: HttpResponse<any>) => {
+        this.buildStockChart(res.body.points);
+      });
+    } else if (this.type && this.type === 'stock') {
+      this.dashboardService.getStockSymbolAccountEvolution(this.data!).subscribe((res: HttpResponse<any>) => {
         this.buildStockChart(res.body.points);
       });
     }
@@ -167,7 +175,7 @@ export class MyaAccountEvolutionComponent implements OnChanges {
     if (this.chart) {
       this.chart.destroy();
     }
-    if (this.type && this.type === 'portfolio') {
+    if (this.type) {
       const dates: string[] = new Array<string>();
       const valuesInCurrency: number[] = new Array<number>();
       const valuesInEuro: number[] = new Array<number>();
