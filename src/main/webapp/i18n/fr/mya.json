@@ -40,9 +40,12 @@
           }
         },
         "balanceUpdate": {
-          "title": "Modification des balances du compte {{ bankAccountName }}, en date du {{ date }}",
+          "title": "Modification des balances du compte {{ bankAccountName }} dont le solde est {{ atDateAmount }}",
           "initialAmount": "Solde initial",
-          "adjustedAmount": "Solde ajusté"
+          "adjustedAmount": "Solde ajusté",
+          "adjustmentDate": "Date de l'opération d'ajustement",
+          "category": "Categorie",
+          "subCategory": "Sous Categorie"
         },
         "detail": {
           "currentBankAccountHeader": "Détail du compte courant",

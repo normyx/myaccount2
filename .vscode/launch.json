@@ -9,7 +9,8 @@
             "mainClass": "org.mgoulene.Myaccount21App",
             "projectName": "myaccount-21",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dspring.profiles.active=dev"
         }
     ]
 }
