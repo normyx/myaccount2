@@ -21,6 +21,7 @@
     },
     "entity": {
       "bankAccount": {
+        "title": "Mes Comptes",
         "summary": {
           "operationListTitle": "Opération pour le compte {{ accountName }}"
         },
@@ -64,6 +65,13 @@
           "totalInEuro": "Valeur (€)",
           "earningsInCurrency": "Gain (devise)",
           "earningsInEuro": "Gain (€)"
+        },
+        "type": {
+          "all": "Tous types",
+          "current": "Courant",
+          "savings": "Epargne",
+          "currentandsavings": "Courant + Epargne",
+          "portfolio": "Actions"
         }
       },
       "currencyType": {
@@ -96,7 +104,9 @@
         }
       },
       "budgetItem": {
+        "title": "Mes Postes Budgétaires",
         "list": {
+          "title": "Mes postes budgétaires",
           "chooseMonth": "Sélectionner le mois :",
           "createLabel": "Créer un nouveau poste budgétaire",
           "name": "Nom"
@@ -117,10 +127,14 @@
               "budget": "Définition du budget",
               "category": "Choix de la catégorie"
             }
+          },
+          "update": {
+            "title": "Mise à jour d'un poste budgétaire"
           }
         }
       },
       "operation": {
+        "title": "Mes Opérations",
         "list": {
           "title": "Liste des opérations",
           "import": "Importer un fichier",
@@ -168,6 +182,7 @@
       }
     },
     "dashboard": {
+      "title": "Mes Tableaux de bord",
       "category": {
         "detail": {
           "displayDetails": "Afficher le détail des budgets & opération",
@@ -200,6 +215,14 @@
             "summary": "Au {{ date }}, le solde du compte est à {{ amount}}"
           }
         }
+      },
+      "timescale": {
+        "5y": "5 ans",
+        "2y": "2 ans",
+        "1y": "1 an",
+        "6m": "6 mois",
+        "1m": "1 mois",
+        "all": "Tout"
       }
     }
   }

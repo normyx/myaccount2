@@ -39,6 +39,7 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
                 tension: 0.4,
+                borderWidth: 2,
               },
               {
                 label: 'Budget',
@@ -51,6 +52,7 @@ export class MyaEvolutionByMonthsComponent implements OnChanges {
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
                 tension: 0.4,
+                borderWidth: 2,
               },
               {
                 label: 'Montant Moy. 3 mois',

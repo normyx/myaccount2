@@ -49,6 +49,7 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
           pointBackgroundColor: '#0099ff',
           fill: false,
           pointRadius: 0,
+          borderWidth: 2,
         },
         {
           label: 'Projections',
@@ -59,6 +60,7 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
           pointBackgroundColor: '#ff0000',
           fill: false,
           pointRadius: 0,
+          borderWidth: 2,
         },
       ],
     };

@@ -102,40 +102,43 @@
             </small>
           </div>
         </div>
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="mya.entity.bankAccount.balanceUpdate.category" for="field_category">Category</label>
-          <select
-            class="form-control"
-            id="field_category"
-            data-cy="category"
-            name="category"
-            formControlName="category"
-            [compareWith]="compareCategory"
-            [(ngModel)]="selectedCategory"
-            (change)="setSubCategoriesEvent()"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="categoryOption" *ngFor="let categoryOption of categories">
-              {{ categoryOption.categoryName }}
-            </option>
-          </select>
-        </div>
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="mya.entity.bankAccount.balanceUpdate.subCategory" for="field_subCategory"
-            >subCategory</label
-          >
-          <select
-            class="form-control"
-            id="field_category"
-            data-cy="subCategory"
-            name="subCategory"
-            formControlName="subCategory"
-            [compareWith]="compareSubCategory"
-          >
-            <option [ngValue]="subCategoryOption" *ngFor="let subCategoryOption of subCategoriesOptions">
-              {{ subCategoryOption.subCategoryName }}
-            </option>
-          </select>
+        <div class="row mb-3 d-flex">
+          <div class="col-sm-6">
+            <label class="form-label" jhiTranslate="mya.entity.bankAccount.balanceUpdate.category" for="field_category">Category</label>
+            <select
+              class="form-control"
+              id="field_category"
+              data-cy="category"
+              name="category"
+              formControlName="category"
+              [compareWith]="compareCategory"
+              [(ngModel)]="selectedCategory"
+              (change)="setSubCategoriesEvent()"
+            >
+              <option [ngValue]="null"></option>
+              <option [ngValue]="categoryOption" *ngFor="let categoryOption of categories">
+                {{ categoryOption.categoryName }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-sm-6">
+            <label class="form-label" jhiTranslate="mya.entity.bankAccount.balanceUpdate.subCategory" for="field_subCategory"
+              >subCategory</label
+            >
+            <select
+              class="form-control"
+              id="field_category"
+              data-cy="subCategory"
+              name="subCategory"
+              formControlName="subCategory"
+              [compareWith]="compareSubCategory"
+            >
+              <option [ngValue]="subCategoryOption" *ngFor="let subCategoryOption of subCategoriesOptions">
+                {{ subCategoryOption.subCategoryName }}
+              </option>
+            </select>
+          </div>
         </div>
         <div class="row mb-3 d-flex">
           <div class="col-sm-6">

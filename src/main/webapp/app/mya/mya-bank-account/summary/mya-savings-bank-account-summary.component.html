@@ -8,6 +8,7 @@
     name="bankAccount"
     [(ngModel)]="selectedBankAccount"
     (ngModelChange)="onChange($event)"
+    [compareWith]="compareBankAccount"
   >
     <option [ngValue]="bankAccount" *ngFor="let bankAccount of bankAccounts">
       {{ bankAccount.accountName }} ({{ bankAccount.accountBank }})

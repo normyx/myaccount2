@@ -35,6 +35,7 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           pointRadius: 0,
           cubicInterpolationMode: 'monotone',
           tension: 0.4,
+          borderWidth: 2,
         },
         {
           label: 'Budget',
@@ -60,6 +61,7 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           pointRadius: 0,
           cubicInterpolationMode: 'monotone',
           tension: 0.4,
+          borderWidth: 2,
         },
       ],
     };

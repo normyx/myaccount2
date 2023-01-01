@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
 import { MyaOperationService } from 'app/mya/mya-operation/service/mya-operation.service';
@@ -25,6 +25,7 @@ export class MyaSavingsBankAccountSummaryComponent implements OnInit {
     protected operationService: MyaOperationService,
     protected activatedRoute: ActivatedRoute
   ) {}
+  compareBankAccount = (o1: IBankAccount | null, o2: IBankAccount | null): boolean => this.bankAccountService.compareBankAccount(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ bankAccount }) => {

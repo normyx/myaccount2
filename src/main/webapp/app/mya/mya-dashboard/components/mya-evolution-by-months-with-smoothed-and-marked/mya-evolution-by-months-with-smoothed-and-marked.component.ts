@@ -38,6 +38,7 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
                 tension: 0.4,
+                borderWidth: 2,
               },
               {
                 label: 'Budget non lissé pointé',
@@ -50,6 +51,7 @@ export class MyaEvolutionByMonthsWithSmoothedAndMarkedComponent implements OnCha
                 pointRadius: 0,
                 cubicInterpolationMode: 'monotone',
                 tension: 0.4,
+                borderWidth: 2,
               },
               {
                 label: 'Montant non lissé non pointé',

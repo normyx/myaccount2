@@ -114,6 +114,7 @@ export class MyaAccountEvolutionComponent implements OnChanges, OnDestroy {
               pointRadius: 0,
               cubicInterpolationMode: 'monotone',
               tension: 0.4,
+              borderWidth: 2,
             },
           ],
         },
@@ -205,6 +206,7 @@ export class MyaAccountEvolutionComponent implements OnChanges, OnDestroy {
               pointRadius: 0,
               cubicInterpolationMode: 'monotone',
               tension: 0.4,
+              borderWidth: 2,
             },
             {
               label: 'Value in Euro',
@@ -217,6 +219,7 @@ export class MyaAccountEvolutionComponent implements OnChanges, OnDestroy {
               pointRadius: 0,
               cubicInterpolationMode: 'monotone',
               tension: 0.4,
+              borderWidth: 2,
             },
           ],
         },

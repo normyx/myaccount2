@@ -200,18 +200,18 @@
 </div>
 
 <button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('all')">
-  <span class="hidden-sm-down"> Tous </span>
+  <span class="hidden-sm-down" jhiTranslate="mya.entity.bankAccount.type.all"> Tous </span>
 </button>
 <button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('current')">
-  <span class="hidden-sm-down"> Courant </span>
+  <span class="hidden-sm-down" jhiTranslate="mya.entity.bankAccount.type.current"> Courant </span>
 </button>
 <button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('savings')">
-  <span class="hidden-sm-down"> Epagne </span>
+  <span class="hidden-sm-down" jhiTranslate="mya.entity.bankAccount.type.savings"> Epagne </span>
 </button>
 <button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('currentsavings')">
-  <span class="hidden-sm-down"> Courant + Epargne </span>
+  <span class="hidden-sm-down" jhiTranslate="mya.entity.bankAccount.type.currentandsavings"> Courant + Epargne </span>
 </button>
 <button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('portfolio')">
-  <span class="hidden-sm-down"> Actions </span>
+  <span class="hidden-sm-down" jhiTranslate="mya.entity.bankAccount.type.portfolio"> Actions </span>
 </button>
 <jhi-mya-account-evolution [type]="dashboardType"></jhi-mya-account-evolution>
