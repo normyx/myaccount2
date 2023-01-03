@@ -53,8 +53,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
 
     private BankAccountTypeFilter accountType;
 
-    private FloatFilter adjustmentAmount;
-
     private LongFilter accountId;
 
     private LongFilter stockPortfolioItemId;
@@ -71,7 +69,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.archived = other.archived == null ? null : other.archived.copy();
         this.shortName = other.shortName == null ? null : other.shortName.copy();
         this.accountType = other.accountType == null ? null : other.accountType.copy();
-        this.adjustmentAmount = other.adjustmentAmount == null ? null : other.adjustmentAmount.copy();
         this.accountId = other.accountId == null ? null : other.accountId.copy();
         this.stockPortfolioItemId = other.stockPortfolioItemId == null ? null : other.stockPortfolioItemId.copy();
         this.distinct = other.distinct;
@@ -187,21 +184,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.accountType = accountType;
     }
 
-    public FloatFilter getAdjustmentAmount() {
-        return adjustmentAmount;
-    }
-
-    public FloatFilter adjustmentAmount() {
-        if (adjustmentAmount == null) {
-            adjustmentAmount = new FloatFilter();
-        }
-        return adjustmentAmount;
-    }
-
-    public void setAdjustmentAmount(FloatFilter adjustmentAmount) {
-        this.adjustmentAmount = adjustmentAmount;
-    }
-
     public LongFilter getAccountId() {
         return accountId;
     }
@@ -257,7 +239,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
             Objects.equals(archived, that.archived) &&
             Objects.equals(shortName, that.shortName) &&
             Objects.equals(accountType, that.accountType) &&
-            Objects.equals(adjustmentAmount, that.adjustmentAmount) &&
             Objects.equals(accountId, that.accountId) &&
             Objects.equals(stockPortfolioItemId, that.stockPortfolioItemId) &&
             Objects.equals(distinct, that.distinct)
@@ -274,7 +255,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
             archived,
             shortName,
             accountType,
-            adjustmentAmount,
             accountId,
             stockPortfolioItemId,
             distinct
@@ -292,7 +272,6 @@ public class BankAccountCriteria implements Serializable, Criteria {
             (archived != null ? "archived=" + archived + ", " : "") +
             (shortName != null ? "shortName=" + shortName + ", " : "") +
             (accountType != null ? "accountType=" + accountType + ", " : "") +
-            (adjustmentAmount != null ? "adjustmentAmount=" + adjustmentAmount + ", " : "") +
             (accountId != null ? "accountId=" + accountId + ", " : "") +
             (stockPortfolioItemId != null ? "stockPortfolioItemId=" + stockPortfolioItemId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

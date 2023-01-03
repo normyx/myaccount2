@@ -36,11 +36,6 @@
       "fieldType": "BankAccountType",
       "fieldValidateRules": ["required"],
       "fieldValues": "CURRENTACCOUNT,SAVINGSACCOUNT,STOCKPORTFOLIO"
-    },
-    {
-      "fieldName": "adjustmentAmount",
-      "fieldType": "Float",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

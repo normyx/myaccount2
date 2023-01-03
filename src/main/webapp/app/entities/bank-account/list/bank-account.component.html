@@ -100,12 +100,6 @@
               <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="adjustmentAmount">
-            <div class="d-flex">
-              <span jhiTranslate="myaccount21App.bankAccount.adjustmentAmount">Adjustment Amount</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="account.nickName">
             <div class="d-flex">
               <span jhiTranslate="myaccount21App.bankAccount.account">Account</span>
@@ -126,7 +120,6 @@
           <td>{{ bankAccount.archived }}</td>
           <td>{{ bankAccount.shortName }}</td>
           <td jhiTranslate="{{ 'myaccount21App.BankAccountType.' + bankAccount.accountType }}">{{ bankAccount.accountType }}</td>
-          <td>{{ bankAccount.adjustmentAmount }}</td>
           <td>
             <div *ngIf="bankAccount.account">
               <a [routerLink]="['/application-user', bankAccount.account.id, 'view']">{{ bankAccount.account.nickName }}</a>

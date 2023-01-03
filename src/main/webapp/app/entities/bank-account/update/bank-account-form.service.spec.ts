@@ -26,7 +26,6 @@ describe('BankAccount Form Service', () => {
             archived: expect.any(Object),
             shortName: expect.any(Object),
             accountType: expect.any(Object),
-            adjustmentAmount: expect.any(Object),
             account: expect.any(Object),
           })
         );
@@ -44,7 +43,6 @@ describe('BankAccount Form Service', () => {
             archived: expect.any(Object),
             shortName: expect.any(Object),
             accountType: expect.any(Object),
-            adjustmentAmount: expect.any(Object),
             account: expect.any(Object),
           })
         );

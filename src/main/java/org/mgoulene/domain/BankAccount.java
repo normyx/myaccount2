@@ -52,10 +52,6 @@ public class BankAccount implements Serializable {
     @Column(name = "account_type", nullable = false)
     private BankAccountType accountType;
 
-    @NotNull
-    @Column(name = "adjustment_amount", nullable = false)
-    private Float adjustmentAmount;
-
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
@@ -160,19 +156,6 @@ public class BankAccount implements Serializable {
         this.accountType = accountType;
     }
 
-    public Float getAdjustmentAmount() {
-        return this.adjustmentAmount;
-    }
-
-    public BankAccount adjustmentAmount(Float adjustmentAmount) {
-        this.setAdjustmentAmount(adjustmentAmount);
-        return this;
-    }
-
-    public void setAdjustmentAmount(Float adjustmentAmount) {
-        this.adjustmentAmount = adjustmentAmount;
-    }
-
     public ApplicationUser getAccount() {
         return this.account;
     }
@@ -247,7 +230,6 @@ public class BankAccount implements Serializable {
             ", archived='" + getArchived() + "'" +
             ", shortName='" + getShortName() + "'" +
             ", accountType='" + getAccountType() + "'" +
-            ", adjustmentAmount=" + getAdjustmentAmount() +
             "}";
     }
 }

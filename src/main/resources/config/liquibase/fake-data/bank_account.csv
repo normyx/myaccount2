@@ -1,11 +1,11 @@
-id;account_name;account_bank;initial_amount;archived;short_name;account_type;adjustment_amount;account_id
-1;Savings Account;sensor Steel incentivize;70546;true;Steel Fantastic;SAVINGSACCOUNT;55016;1
-2;Investment Account;Picardie;12768;false;methodologies;SAVINGSACCOUNT;21844;2
-3;Checking Account;facilitate;67291;false;a;SAVINGSACCOUNT;68034;1
-4;Savings Account;monitor;59149;true;Pound Avon;SAVINGSACCOUNT;62386;2
-5;Money Market Account;a b;71679;true;Fresh;CURRENTACCOUNT;3173;2
-6;Savings Account;index Refined;53796;false;Namibie Toys;SAVINGSACCOUNT;15199;1
-7;Investment Account;Basse-Normandie analyzing Soap;43258;false;feed;CURRENTACCOUNT;17093;2
-8;Investment Account;Technicien;59851;true;la;SAVINGSACCOUNT;94647;2
-9;Personal Loan Account;deposit;47143;true;capacitor Languedoc-Roussillon;CURRENTACCOUNT;10329;1
-10;Personal Loan Account;navigate;78035;false;deposit bypass;CURRENTACCOUNT;94669;1
+id;account_name;account_bank;initial_amount;archived;short_name;account_type;account_id
+1;Savings Account;sensor Steel incentivize;70546;true;Steel Fantastic;SAVINGSACCOUNT;1
+2;Home Loan Account;Towels Auvergne;6074;false;Home Cotton Aruban;STOCKPORTFOLIO;2
+3;Checking Account;cross-platform;27631;true;distributed infomediaries online;SAVINGSACCOUNT;2
+4;Home Loan Account;interface Fully-configurable;58586;true;withdrawal HTTP Electronics;STOCKPORTFOLIO;2
+5;Investment Account;Refined;53796;false;Namibie Toys;SAVINGSACCOUNT;2
+6;Savings Account;pixel de;19412;false;Franche-Comté Handmade;CURRENTACCOUNT;1
+7;Investment Account;Technicien;59851;true;la;SAVINGSACCOUNT;2
+8;Personal Loan Account;Generic b repurpose;36494;true;du a;SAVINGSACCOUNT;2
+9;Investment Account;e-markets Small Handmade;94669;true;Ameliorated functionalities;CURRENTACCOUNT;1
+10;Money Market Account;Rubber Maurice neural;36066;false;sky program;SAVINGSACCOUNT;1

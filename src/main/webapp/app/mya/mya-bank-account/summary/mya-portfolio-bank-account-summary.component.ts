@@ -86,8 +86,7 @@ export class MyaPortfolioBankAccountSummaryComponent implements OnInit {
       this.operationService.sumOfAmountForBankAccount(this.selectedBankAccount.id).subscribe((res: HttpResponse<number>) => {
         this.sumOfOperationAmount = res.body;
         if (this.selectedBankAccount && this.sumOfOperationAmount) {
-          this.totalAmount =
-            this.selectedBankAccount.initialAmount! + this.selectedBankAccount.adjustmentAmount! + this.sumOfOperationAmount;
+          this.totalAmount = this.selectedBankAccount.initialAmount! + this.sumOfOperationAmount;
           if (this.stockPortfolioItems) {
             this.stockPortfolioItems.forEach(spi => {
               this.totalAmount += spi.stockCurrentPrice! * spi.stockCurrentCurrencyFactor! * spi.stockSharesNumber!;

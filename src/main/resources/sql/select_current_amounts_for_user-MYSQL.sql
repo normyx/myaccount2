@@ -21,7 +21,7 @@ from
 		select
 			ba.id as ba_id, 
 			min(jhi_date) as op_date2,
-			ba.initial_amount + ba.adjustment_amount as initial_amount
+			ba.initial_amount  as initial_amount
 		from
 			operation op
 		inner join bank_account ba on

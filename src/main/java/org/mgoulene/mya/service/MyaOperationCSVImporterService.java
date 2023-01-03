@@ -118,7 +118,6 @@ public class MyaOperationCSVImporterService {
                 bankAccountDTO.setAccount(account);
                 bankAccountDTO.setInitialAmount(0f);
                 bankAccountDTO.setArchived(false);
-                bankAccountDTO.setAdjustmentAmount(0f);
                 bankAccountDTO.setAccountType(BankAccountType.CURRENTACCOUNT);
                 bankAccountDTO = bankAccountService.save(bankAccountDTO);
                 log.warn("Creating BankAccount : {}", bankAccountDTO);

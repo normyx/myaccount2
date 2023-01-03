@@ -35,11 +35,7 @@
                 <span jhiTranslate="mya.entity.bankAccount.list.table.initialAmount">Initial Amount</span>
               </div>
             </th>
-            <th scope="col">
-              <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.list.table.adjustmentAmount">Adjustment Amount</span>
-              </div>
-            </th>
+
             <th scope="col">
               <div class="d-flex">
                 <span jhiTranslate="mya.entity.bankAccount.list.table.operationTotal">Sum</span>
@@ -65,9 +61,7 @@
             <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
               {{ selectedBankAccount.initialAmount | currency: 'EUR' }}
             </td>
-            <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
-              {{ selectedBankAccount.adjustmentAmount | currency: 'EUR' }}
-            </td>
+
             <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
               {{ sumOfOperationAmount | currency: 'EUR' }}
             </td>

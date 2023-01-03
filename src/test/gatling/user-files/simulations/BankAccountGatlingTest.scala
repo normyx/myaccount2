@@ -77,7 +77,6 @@ class BankAccountGatlingTest extends Simulation {
                 , "archived":null
                 , "shortName":"SAMPLE_TEXT"
                 , "accountType":"CURRENTACCOUNT"
-                , "adjustmentAmount":"0"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_bankAccount_url"))).exitHereIfFailed

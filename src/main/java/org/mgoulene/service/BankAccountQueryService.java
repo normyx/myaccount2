@@ -116,9 +116,6 @@ public class BankAccountQueryService extends QueryService<BankAccount> {
             if (criteria.getAccountType() != null) {
                 specification = specification.and(buildSpecification(criteria.getAccountType(), BankAccount_.accountType));
             }
-            if (criteria.getAdjustmentAmount() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getAdjustmentAmount(), BankAccount_.adjustmentAmount));
-            }
             if (criteria.getAccountId() != null) {
                 specification =
                     specification.and(

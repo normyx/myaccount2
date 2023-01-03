@@ -21,9 +21,7 @@
   <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
     {{ bankAccount!.initialAmount | currency: 'EUR' }}
   </td>
-  <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
-    {{ bankAccount!.adjustmentAmount | currency: 'EUR' }}
-  </td>
+
   <td class="text-end" [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">
     {{ sumOfOperationAmount | currency: 'EUR' }}
   </td>

@@ -30,7 +30,7 @@ describe('Operation e2e test', () => {
     cy.authenticatedRequest({
       method: 'POST',
       url: '/api/bank-accounts',
-      body: {"accountName":"Money Market Account","accountBank":"even-keeled implement","initialAmount":51761,"archived":true,"shortName":"Pizza","accountType":"CURRENTACCOUNT","adjustmentAmount":17498},
+      body: {"accountName":"Money Market Account","accountBank":"even-keeled implement","initialAmount":51761,"archived":true,"shortName":"Pizza","accountType":"CURRENTACCOUNT"},
     }).then(({ body }) => {
       bankAccount = body;
     });

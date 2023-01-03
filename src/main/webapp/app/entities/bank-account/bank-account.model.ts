@@ -9,7 +9,6 @@ export interface IBankAccount {
   archived?: boolean | null;
   shortName?: string | null;
   accountType?: BankAccountType | null;
-  adjustmentAmount?: number | null;
   account?: Pick<IApplicationUser, 'id' | 'nickName'> | null;
 }
 

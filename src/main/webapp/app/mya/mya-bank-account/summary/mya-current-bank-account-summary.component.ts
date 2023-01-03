@@ -53,8 +53,7 @@ export class MyaCurrentBankAccountSummaryComponent implements OnInit {
       this.operationService.sumOfAmountForBankAccount(this.selectedBankAccount.id).subscribe((res: HttpResponse<number>) => {
         this.sumOfOperationAmount = res.body;
         if (this.selectedBankAccount && this.sumOfOperationAmount) {
-          this.totalAmount +=
-            this.selectedBankAccount.initialAmount! + this.selectedBankAccount.adjustmentAmount! + this.sumOfOperationAmount;
+          this.totalAmount += this.selectedBankAccount.initialAmount! + this.sumOfOperationAmount;
         }
       });
     }

@@ -31,9 +31,6 @@ public class BankAccountDTO implements Serializable {
     @NotNull
     private BankAccountType accountType;
 
-    @NotNull
-    private Float adjustmentAmount;
-
     private ApplicationUserDTO account;
 
     public Long getId() {
@@ -92,14 +89,6 @@ public class BankAccountDTO implements Serializable {
         this.accountType = accountType;
     }
 
-    public Float getAdjustmentAmount() {
-        return adjustmentAmount;
-    }
-
-    public void setAdjustmentAmount(Float adjustmentAmount) {
-        this.adjustmentAmount = adjustmentAmount;
-    }
-
     public ApplicationUserDTO getAccount() {
         return account;
     }
@@ -140,7 +129,6 @@ public class BankAccountDTO implements Serializable {
             ", archived='" + getArchived() + "'" +
             ", shortName='" + getShortName() + "'" +
             ", accountType='" + getAccountType() + "'" +
-            ", adjustmentAmount=" + getAdjustmentAmount() +
             ", account=" + getAccount() +
             "}";
     }

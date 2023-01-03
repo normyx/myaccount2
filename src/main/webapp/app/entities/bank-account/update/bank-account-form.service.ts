@@ -24,7 +24,6 @@ type BankAccountFormGroupContent = {
   archived: FormControl<IBankAccount['archived']>;
   shortName: FormControl<IBankAccount['shortName']>;
   accountType: FormControl<IBankAccount['accountType']>;
-  adjustmentAmount: FormControl<IBankAccount['adjustmentAmount']>;
   account: FormControl<IBankAccount['account']>;
 };
 
@@ -61,9 +60,6 @@ export class BankAccountFormService {
         validators: [Validators.maxLength(40)],
       }),
       accountType: new FormControl(bankAccountRawValue.accountType, {
-        validators: [Validators.required],
-      }),
-      adjustmentAmount: new FormControl(bankAccountRawValue.adjustmentAmount, {
         validators: [Validators.required],
       }),
       account: new FormControl(bankAccountRawValue.account, {

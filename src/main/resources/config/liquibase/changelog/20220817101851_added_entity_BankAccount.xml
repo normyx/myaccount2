@@ -32,9 +32,6 @@
             <column name="account_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="adjustment_amount" type="${floatType}">
-                <constraints nullable="false" />
-            </column>
             <column name="account_id" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -65,7 +62,6 @@
             <column name="archived" type="boolean"/>
             <column name="short_name" type="string"/>
             <column name="account_type" type="string"/>
-            <column name="adjustment_amount" type="numeric"/>
             <column name="account_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

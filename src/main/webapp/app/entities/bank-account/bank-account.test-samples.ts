@@ -9,29 +9,26 @@ export const sampleWithRequiredData: IBankAccount = {
   initialAmount: 83918,
   archived: true,
   accountType: BankAccountType['CURRENTACCOUNT'],
-  adjustmentAmount: 63048,
 };
 
 export const sampleWithPartialData: IBankAccount = {
-  id: 14310,
-  accountName: 'Auto Loan Account',
-  accountBank: 'port b Configurable',
-  initialAmount: 75593,
-  archived: false,
-  shortName: 'Fully-configurable channels Home',
-  accountType: BankAccountType['SAVINGSACCOUNT'],
-  adjustmentAmount: 41431,
+  id: 72807,
+  accountName: 'Savings Account',
+  accountBank: 'c collaborative Dominican',
+  initialAmount: 55528,
+  archived: true,
+  shortName: 'open-source',
+  accountType: BankAccountType['STOCKPORTFOLIO'],
 };
 
 export const sampleWithFullData: IBankAccount = {
-  id: 13497,
-  accountName: 'Home Loan Account',
-  accountBank: 'compressing',
-  initialAmount: 35754,
-  archived: true,
-  shortName: 'FTP',
+  id: 43068,
+  accountName: 'Savings Account',
+  accountBank: 'Home technologies Aquitaine',
+  initialAmount: 28005,
+  archived: false,
+  shortName: 'Account algorithm',
   accountType: BankAccountType['SAVINGSACCOUNT'],
-  adjustmentAmount: 43392,
 };
 
 export const sampleWithNewData: NewBankAccount = {
@@ -40,7 +37,6 @@ export const sampleWithNewData: NewBankAccount = {
   initialAmount: 34881,
   archived: false,
   accountType: BankAccountType['CURRENTACCOUNT'],
-  adjustmentAmount: 47869,
   id: null,
 };
 

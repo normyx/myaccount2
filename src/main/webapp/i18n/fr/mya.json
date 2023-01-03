@@ -35,7 +35,6 @@
             "accountName": "Nom du compte",
             "accountBank": "Banque",
             "initialAmount": "Valeur Initiale",
-            "adjustmentAmount": "Ajustement",
             "operationTotal": "Total des opération",
             "balance": "Solde"
           }
