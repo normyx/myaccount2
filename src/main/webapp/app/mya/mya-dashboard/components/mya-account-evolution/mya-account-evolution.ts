@@ -65,6 +65,10 @@ export class MyaAccountEvolutionComponent implements OnChanges, OnDestroy {
       this.dashboardService.getAllSavingsAccountEvolution().subscribe((res: HttpResponse<any>) => {
         this.buildSingleChart(res.body.points);
       });
+    } else if (this.type && this.type === 'realestate') {
+      this.dashboardService.getAllRealEstateAccountEvolution().subscribe((res: HttpResponse<any>) => {
+        this.buildSingleChart(res.body.points);
+      });
     } else if (this.type && this.type === 'bankaccount') {
       this.dashboardService.getBankAccountEvolution(this.data!).subscribe((res: HttpResponse<any>) => {
         this.buildSingleChart(res.body.points);

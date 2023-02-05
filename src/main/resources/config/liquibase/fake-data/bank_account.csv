@@ -1,11 +1,11 @@
 id;account_name;account_bank;initial_amount;archived;short_name;account_type;account_id
-1;Savings Account;sensor Steel incentivize;70546;true;Steel Fantastic;SAVINGSACCOUNT;1
-2;Home Loan Account;Towels Auvergne;6074;false;Home Cotton Aruban;STOCKPORTFOLIO;2
-3;Checking Account;cross-platform;27631;true;distributed infomediaries online;SAVINGSACCOUNT;2
-4;Home Loan Account;interface Fully-configurable;58586;true;withdrawal HTTP Electronics;STOCKPORTFOLIO;2
+1;Savings Account;sensor Steel incentivize;70546;true;Steel Fantastic;STOCKPORTFOLIO;1
+2;Home Loan Account;Towels Auvergne;6074;false;Home Cotton Aruban;REAL_ESTATE;2
+3;Checking Account;cross-platform;27631;true;distributed infomediaries online;STOCKPORTFOLIO;1
+4;Home Loan Account;interface Fully-configurable;58586;true;withdrawal HTTP Electronics;REAL_ESTATE;1
 5;Investment Account;Refined;53796;false;Namibie Toys;SAVINGSACCOUNT;2
-6;Savings Account;pixel de;19412;false;Franche-Comté Handmade;CURRENTACCOUNT;1
+6;Savings Account;pixel de;19412;false;Franche-Comté Handmade;CURRENTACCOUNT;2
 7;Investment Account;Technicien;59851;true;la;SAVINGSACCOUNT;2
 8;Personal Loan Account;Generic b repurpose;36494;true;du a;SAVINGSACCOUNT;2
-9;Investment Account;e-markets Small Handmade;94669;true;Ameliorated functionalities;CURRENTACCOUNT;1
-10;Money Market Account;Rubber Maurice neural;36066;false;sky program;SAVINGSACCOUNT;1
+9;Investment Account;e-markets Small Handmade;94669;true;Ameliorated functionalities;CURRENTACCOUNT;2
+10;Money Market Account;Rubber Maurice neural;36066;false;sky program;STOCKPORTFOLIO;1

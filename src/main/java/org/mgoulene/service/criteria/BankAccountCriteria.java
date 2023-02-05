@@ -57,6 +57,8 @@ public class BankAccountCriteria implements Serializable, Criteria {
 
     private LongFilter stockPortfolioItemId;
 
+    private LongFilter realEstateItemId;
+
     private Boolean distinct;
 
     public BankAccountCriteria() {}
@@ -71,6 +73,7 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.accountType = other.accountType == null ? null : other.accountType.copy();
         this.accountId = other.accountId == null ? null : other.accountId.copy();
         this.stockPortfolioItemId = other.stockPortfolioItemId == null ? null : other.stockPortfolioItemId.copy();
+        this.realEstateItemId = other.realEstateItemId == null ? null : other.realEstateItemId.copy();
         this.distinct = other.distinct;
     }
 
@@ -214,6 +217,21 @@ public class BankAccountCriteria implements Serializable, Criteria {
         this.stockPortfolioItemId = stockPortfolioItemId;
     }
 
+    public LongFilter getRealEstateItemId() {
+        return realEstateItemId;
+    }
+
+    public LongFilter realEstateItemId() {
+        if (realEstateItemId == null) {
+            realEstateItemId = new LongFilter();
+        }
+        return realEstateItemId;
+    }
+
+    public void setRealEstateItemId(LongFilter realEstateItemId) {
+        this.realEstateItemId = realEstateItemId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -241,6 +259,7 @@ public class BankAccountCriteria implements Serializable, Criteria {
             Objects.equals(accountType, that.accountType) &&
             Objects.equals(accountId, that.accountId) &&
             Objects.equals(stockPortfolioItemId, that.stockPortfolioItemId) &&
+            Objects.equals(realEstateItemId, that.realEstateItemId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -257,6 +276,7 @@ public class BankAccountCriteria implements Serializable, Criteria {
             accountType,
             accountId,
             stockPortfolioItemId,
+            realEstateItemId,
             distinct
         );
     }
@@ -274,6 +294,7 @@ public class BankAccountCriteria implements Serializable, Criteria {
             (accountType != null ? "accountType=" + accountType + ", " : "") +
             (accountId != null ? "accountId=" + accountId + ", " : "") +
             (stockPortfolioItemId != null ? "stockPortfolioItemId=" + stockPortfolioItemId + ", " : "") +
+            (realEstateItemId != null ? "realEstateItemId=" + realEstateItemId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

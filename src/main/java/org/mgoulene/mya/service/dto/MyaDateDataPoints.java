@@ -1,5 +1,6 @@
 package org.mgoulene.mya.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,15 @@ public class MyaDateDataPoints<V extends MyaDateDataPointsProperties, D extends 
 
     public List<MyaDateDataPoint<D>> getPoints() {
         return points;
+    }
+
+    @JsonIgnore
+    public List<LocalDate> getDates() {
+        ArrayList<LocalDate> dates = new ArrayList<>();
+        for (MyaDateDataPoint<D> p : this.getPoints()) {
+            dates.add(p.getDate());
+        }
+        return dates;
     }
 
     public MyaDateDataPoint<D> getDateDataPointCloseToDate(MyaDateDataPoint<D> other) {
@@ -74,7 +84,7 @@ public class MyaDateDataPoints<V extends MyaDateDataPointsProperties, D extends 
             dateKeys.put(p.getDate(), null);
         }
         ArrayList<LocalDate> dates = new ArrayList<>(dateKeys.keySet());
-        Collections.sort(dates, new LocalDateComparator());
+        Collections.sort(dates, new MyaLocalDateComparator());
         return dates;
     }
 
@@ -114,13 +124,5 @@ public class MyaDateDataPoints<V extends MyaDateDataPointsProperties, D extends 
     @Override
     public String toString() {
         return "MyaDateDataPoints [properties=" + properties + ", points=" + points + "]";
-    }
-
-    private class LocalDateComparator implements Comparator<LocalDate> {
-
-        @Override
-        public int compare(LocalDate o1, LocalDate o2) {
-            return o1.compareTo(o2);
-        }
     }
 }

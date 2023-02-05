@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="realEstateItem">
+      <h2 data-cy="realEstateItemDetailsHeading">
+        <span jhiTranslate="myaccount21App.realEstateItem.detail.title">Real Estate Item</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ realEstateItem.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.realEstateItem.loanValue">Loan Value</span></dt>
+        <dd>
+          <span>{{ realEstateItem.loanValue }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.realEstateItem.totalValue">Total Value</span></dt>
+        <dd>
+          <span>{{ realEstateItem.totalValue }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.realEstateItem.percentOwned">Percent Owned</span></dt>
+        <dd>
+          <span>{{ realEstateItem.percentOwned }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.realEstateItem.itemDate">Item Date</span></dt>
+        <dd>
+          <span>{{ realEstateItem.itemDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="myaccount21App.realEstateItem.bankAccount">Bank Account</span></dt>
+        <dd>
+          <div *ngIf="realEstateItem.bankAccount">
+            <a [routerLink]="['/bank-account', realEstateItem.bankAccount.id, 'view']">{{ realEstateItem.bankAccount.accountName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+      </button>
+
+      <button type="button" [routerLink]="['/real-estate-item', realEstateItem.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+      </button>
+    </div>
+  </div>
+</div>

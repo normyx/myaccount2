@@ -7,4 +7,5 @@ public enum BankAccountType {
     CURRENTACCOUNT,
     SAVINGSACCOUNT,
     STOCKPORTFOLIO,
+    REAL_ESTATE,
 }

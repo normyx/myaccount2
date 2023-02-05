@@ -49,6 +49,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'myaccount21App.stockMarketData.home.title' },
         loadChildren: () => import('./stock-market-data/stock-market-data.module').then(m => m.StockMarketDataModule),
       },
+      {
+        path: 'real-estate-item',
+        data: { pageTitle: 'myaccount21App.realEstateItem.home.title' },
+        loadChildren: () => import('./real-estate-item/real-estate-item.module').then(m => m.RealEstateItemModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

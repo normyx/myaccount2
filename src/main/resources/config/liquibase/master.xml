@@ -20,6 +20,7 @@
     <include file="config/liquibase/changelog/20220817102351_added_entity_SubCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221106210502_added_entity_StockPortfolioItem.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221111080250_added_entity_StockMarketData.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230103190218_added_entity_RealEstateItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20220817101751_added_entity_constraints_ApplicationUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220817101851_added_entity_constraints_BankAccount.xml" relativeToChangelogFile="false"/>
@@ -28,6 +29,7 @@
     <include file="config/liquibase/changelog/20220817102251_added_entity_constraints_Operation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220817102351_added_entity_constraints_SubCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221106210502_added_entity_constraints_StockPortfolioItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230103190218_added_entity_constraints_RealEstateItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
     <include file="config/liquibase/changelog/00000000000000_create_add_tables.xml" relativeToChangelogFile="false"/>

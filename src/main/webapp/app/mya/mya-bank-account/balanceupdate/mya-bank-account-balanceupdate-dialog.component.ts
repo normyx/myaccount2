@@ -114,6 +114,7 @@ export class MyaBankAccountBalanceUpdateDialogComponent {
   setSubCategories(category: ICategory | null): void {
     if (category) {
       this.subCategoriesOptions = this.subCategories!.filter(sc => sc.category?.id === category.id);
+      this.editForm.patchValue({ subCategory: this.subCategoriesOptions[0] });
     } else {
       this.subCategoriesOptions = new Array<ISubCategory>();
     }
@@ -178,7 +179,7 @@ export class MyaBankAccountBalanceUpdateDialogComponent {
 
         isUpToDate: true,
         deletingHardLock: true,
-        subCategory: this.defaultSubCategory,
+        subCategory: bankAccountBalanceUpdate.subCategory,
         account: this.bankAccount!.account,
         bankAccount: this.bankAccount,
         budgetItemPeriod: null,

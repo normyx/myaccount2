@@ -88,7 +88,7 @@ public class StockPortfolioItem implements Serializable {
     private Instant lastCurrencyUpdate;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "account", "stockPortfolioItems" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "account", "stockPortfolioItems", "realEstateItems" }, allowSetters = true)
     private BankAccount bankAccount;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -74,6 +74,13 @@ export class MyaDashboardService {
     });
   }
 
+  getAllAccountEvolutionByType(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/all-evolution-data-points-by-type');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
+
   getAllCurrentAccountEvolution(): Observable<HttpResponse<any>> {
     const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/current-bank-account-evolution-data-points');
     return this.http.get<any>(`${resourceUrl}`, {
@@ -83,6 +90,13 @@ export class MyaDashboardService {
 
   getAllSavingsAccountEvolution(): Observable<HttpResponse<any>> {
     const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/savings-bank-account-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}`, {
+      observe: 'response',
+    });
+  }
+
+  getAllRealEstateAccountEvolution(): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/real-estate-evolution-data-points');
     return this.http.get<any>(`${resourceUrl}`, {
       observe: 'response',
     });

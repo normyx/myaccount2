@@ -134,6 +134,15 @@ public class BankAccountQueryService extends QueryService<BankAccount> {
                         )
                     );
             }
+            if (criteria.getRealEstateItemId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getRealEstateItemId(),
+                            root -> root.join(BankAccount_.realEstateItems, JoinType.LEFT).get(RealEstateItem_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

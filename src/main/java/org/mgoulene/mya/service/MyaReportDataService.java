@@ -109,4 +109,9 @@ public class MyaReportDataService {
         log.debug("Request to get all findBankAccountDateDataPoints bankAccountId {}", bankAccountId);
         return reportDataRepository.findBankAccountDateDataPoints(bankAccountId);
     }
+
+    public List<MyaReportAmountsByDates> findRealEstateBankAccountDateDataPoints(Long bankAccountId) {
+        log.debug("Request to get all findRealEstateBankAccountDateDataPoints bankAccountId {}", bankAccountId);
+        return reportDataRepository.findRealEstateBankAccountDateDataPoints(bankAccountId);
+    }
 }

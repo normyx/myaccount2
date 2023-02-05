@@ -3,9 +3,12 @@ package org.mgoulene.mya.web.rest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.mgoulene.domain.BankAccount;
+import org.mgoulene.domain.enumeration.BankAccountType;
 import org.mgoulene.mya.service.MyaApplicationUserService;
 import org.mgoulene.mya.service.MyaBankAccountService;
 import org.mgoulene.mya.service.MyaStockPortfolioItemService;
+import org.mgoulene.mya.service.dto.MyaAllBankDataPoints;
 import org.mgoulene.mya.service.dto.MyaDateDataSinglePoints;
 import org.mgoulene.mya.service.dto.MyaDateDataStockPoints;
 import org.mgoulene.service.BankAccountQueryService;
@@ -157,6 +160,28 @@ public class MyaBankAccountResource {
         return null;
     }
 
+    @GetMapping("/mya-bank-accounts/real-estate-evolution-data-points")
+    public ResponseEntity<MyaDateDataSinglePoints> getRealEstateEvolutionDataPoints() {
+        log.debug("REST request to getRealEstateEvolutionDataPoints");
+        Optional<ApplicationUserDTO> applicationUserOptional = myaApplicationUserService.findSignedInApplicationUser();
+        if (applicationUserOptional.isPresent()) {
+            List<BankAccountDTO> realEstateBankAccounts = myaBankAccountService.findByAccountIdAndType(
+                applicationUserOptional.get().getId(),
+                BankAccountType.REAL_ESTATE
+            );
+            MyaDateDataSinglePoints bankDataPoints = null;
+            for (BankAccountDTO bankAccountDTO : realEstateBankAccounts) {
+                if (bankDataPoints == null) {
+                    bankDataPoints = myaBankAccountService.findRealEstateBankAccountDateDataPoints(bankAccountDTO.getId());
+                } else {
+                    bankDataPoints.merge(myaBankAccountService.findRealEstateBankAccountDateDataPoints(bankAccountDTO.getId()));
+                }
+            }
+            return ResponseEntity.ok().body(bankDataPoints);
+        }
+        return null;
+    }
+
     @GetMapping("/mya-bank-accounts/bank-account-evolution-data-points/{bankAccountId}")
     public ResponseEntity<MyaDateDataSinglePoints> getBankAccountEvolutionDataPoints(@PathVariable Long bankAccountId) {
         log.debug("REST request to getBankAccountEvolutionDataPoints: {}", bankAccountId);
@@ -177,6 +202,18 @@ public class MyaBankAccountResource {
             );
 
             return ResponseEntity.ok().body(dataPoints);
+        }
+        return null;
+    }
+
+    @GetMapping("/mya-bank-accounts/all-evolution-data-points-by-type")
+    public ResponseEntity<MyaAllBankDataPoints> getAllEvolutionDataPointsByType() {
+        log.debug("REST request to getRealEstateEvolutionDataPoints");
+        Optional<ApplicationUserDTO> applicationUserOptional = myaApplicationUserService.findSignedInApplicationUser();
+        if (applicationUserOptional.isPresent()) {
+            MyaAllBankDataPoints points = myaBankAccountService.findAllBankAccountDateDataPoints(applicationUserOptional.get().getId());
+
+            return ResponseEntity.ok().body(points);
         }
         return null;
     }

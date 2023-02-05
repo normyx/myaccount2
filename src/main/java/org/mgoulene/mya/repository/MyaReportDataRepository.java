@@ -41,4 +41,6 @@ public interface MyaReportDataRepository {
     public List<MyaReportAmountsByDates> findUserSavingsBankAccountDateDataPoints(Long applicationUserId);
 
     public List<MyaReportAmountsByDates> findBankAccountDateDataPoints(Long bankAccountId);
+
+    public List<MyaReportAmountsByDates> findRealEstateBankAccountDateDataPoints(Long bankAccountId);
 }

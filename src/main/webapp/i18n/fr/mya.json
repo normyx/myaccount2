@@ -70,7 +70,8 @@
           "current": "Courant",
           "savings": "Epargne",
           "currentandsavings": "Courant + Epargne",
-          "portfolio": "Actions"
+          "portfolio": "Actions",
+          "realEstate": "Immobilier"
         }
       },
       "currencyType": {

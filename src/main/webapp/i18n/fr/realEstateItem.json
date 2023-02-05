@@ -1,0 +1,29 @@
+{
+  "myaccount21App": {
+    "realEstateItem": {
+      "home": {
+        "title": "RealEstateItems",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Real Estate Item",
+        "createOrEditLabel": "Créer ou éditer un Real Estate Item",
+        "search": "Recherche pour Real Estate Item",
+        "notFound": "Aucun Real Estate Item trouvé"
+      },
+      "created": "Un nouveau Real Estate Item a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Real Estate Item avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Real Estate Item avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Real Estate Item {{ id }} ?"
+      },
+      "detail": {
+        "title": "Real Estate Item"
+      },
+      "id": "ID",
+      "loanValue": "Loan Value",
+      "totalValue": "Total Value",
+      "percentOwned": "Percent Owned",
+      "itemDate": "Item Date",
+      "bankAccount": "Bank Account"
+    }
+  }
+}

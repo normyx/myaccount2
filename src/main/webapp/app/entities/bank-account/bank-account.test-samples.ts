@@ -18,7 +18,7 @@ export const sampleWithPartialData: IBankAccount = {
   initialAmount: 55528,
   archived: true,
   shortName: 'open-source',
-  accountType: BankAccountType['STOCKPORTFOLIO'],
+  accountType: BankAccountType['REAL_ESTATE'],
 };
 
 export const sampleWithFullData: IBankAccount = {

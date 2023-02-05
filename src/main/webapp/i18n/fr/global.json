@@ -16,6 +16,7 @@
         "subCategory": "Sub Category",
         "stockPortfolioItem": "Stock Portfolio Item",
         "stockMarketData": "Stock Market Data",
+        "realEstateItem": "Real Estate Item",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

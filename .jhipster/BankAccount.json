@@ -35,7 +35,7 @@
       "fieldName": "accountType",
       "fieldType": "BankAccountType",
       "fieldValidateRules": ["required"],
-      "fieldValues": "CURRENTACCOUNT,SAVINGSACCOUNT,STOCKPORTFOLIO"
+      "fieldValues": "CURRENTACCOUNT,SAVINGSACCOUNT,STOCKPORTFOLIO, REAL_ESTATE"
     }
   ],
   "fluentMethods": true,
@@ -55,6 +55,12 @@
       "otherEntityName": "stockPortfolioItem",
       "otherEntityRelationshipName": "bankAccount",
       "relationshipName": "stockPortfolioItem",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "realEstateItem",
+      "otherEntityRelationshipName": "bankAccount",
+      "relationshipName": "realEstateItem",
       "relationshipType": "one-to-many"
     }
   ],

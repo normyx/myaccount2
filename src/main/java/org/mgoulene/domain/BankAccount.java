@@ -63,6 +63,12 @@ public class BankAccount implements Serializable {
     @JsonIgnoreProperties(value = { "bankAccount" }, allowSetters = true)
     private Set<StockPortfolioItem> stockPortfolioItems = new HashSet<>();
 
+    @OneToMany(mappedBy = "bankAccount")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @org.springframework.data.annotation.Transient
+    @JsonIgnoreProperties(value = { "bankAccount" }, allowSetters = true)
+    private Set<RealEstateItem> realEstateItems = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -197,6 +203,37 @@ public class BankAccount implements Serializable {
     public BankAccount removeStockPortfolioItem(StockPortfolioItem stockPortfolioItem) {
         this.stockPortfolioItems.remove(stockPortfolioItem);
         stockPortfolioItem.setBankAccount(null);
+        return this;
+    }
+
+    public Set<RealEstateItem> getRealEstateItems() {
+        return this.realEstateItems;
+    }
+
+    public void setRealEstateItems(Set<RealEstateItem> realEstateItems) {
+        if (this.realEstateItems != null) {
+            this.realEstateItems.forEach(i -> i.setBankAccount(null));
+        }
+        if (realEstateItems != null) {
+            realEstateItems.forEach(i -> i.setBankAccount(this));
+        }
+        this.realEstateItems = realEstateItems;
+    }
+
+    public BankAccount realEstateItems(Set<RealEstateItem> realEstateItems) {
+        this.setRealEstateItems(realEstateItems);
+        return this;
+    }
+
+    public BankAccount addRealEstateItem(RealEstateItem realEstateItem) {
+        this.realEstateItems.add(realEstateItem);
+        realEstateItem.setBankAccount(this);
+        return this;
+    }
+
+    public BankAccount removeRealEstateItem(RealEstateItem realEstateItem) {
+        this.realEstateItems.remove(realEstateItem);
+        realEstateItem.setBankAccount(null);
         return this;
     }
 

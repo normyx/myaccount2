@@ -129,4 +129,10 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+alphavantage:
+  update-scheduled-fixe-rate: 600000
+  update-stock-portfolio-item-fixe-rate: 600000
+  key: 'AFVQ4M4A8XB1IR6Q'
+  loop:
+    every: 60000
+    iteration: 5

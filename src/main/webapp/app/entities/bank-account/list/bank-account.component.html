@@ -144,6 +144,21 @@
               </button>
               <button
                 type="submit"
+                [routerLink]="['/real-estate-item']"
+                [queryParams]="{ 'filter[bankAccountId.in]': bankAccount.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('myaccount21App.bankAccount.realEstateItem' | translate) }"
+                  >Show Real Estate Item</span
+                >
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/bank-account', bankAccount.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"

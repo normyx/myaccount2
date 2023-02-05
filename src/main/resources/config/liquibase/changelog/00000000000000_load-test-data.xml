@@ -172,5 +172,23 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
-
+    <changeSet  id="20230103190218-2-delete-data" author="mathieu.goulene" context="test" >  
+            <delete  tableName="real_estate_item">  
+            </delete>  
+        </changeSet>
+    <changeSet id="20230103190218-2-data" author="jhipster" context="test">
+        <loadData
+                  file="config/liquibase/test-data/real_estate_item.csv"
+                  separator=";"
+                  tableName="real_estate_item"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="loan_value" type="numeric"/>
+            <column name="total_value" type="numeric"/>
+            <column name="percent_owned" type="numeric"/>
+            <column name="bank_account_id" type="numeric"/>
+            <column name="item_date" type="date"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
 </databaseChangeLog>

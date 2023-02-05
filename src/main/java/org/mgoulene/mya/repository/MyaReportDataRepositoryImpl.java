@@ -14,7 +14,6 @@ import org.mgoulene.mya.domain.MyaCategorySplit;
 import org.mgoulene.mya.domain.MyaReportAmountsByDates;
 import org.mgoulene.mya.domain.MyaReportDateEvolutionData;
 import org.mgoulene.mya.domain.MyaReportMonthlyData;
-import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
@@ -51,6 +50,7 @@ public class MyaReportDataRepositoryImpl implements MyaReportDataRepository {
     private String selectAmountsForSavingsBankAccountQuery;
 
     private String selectAmountsForBankAccountUserQuery;
+    private String selectRealEstateAmountsForBankAccountQuery;
 
     private String loadQuery(String queryName) {
         try {
@@ -148,6 +148,13 @@ public class MyaReportDataRepositoryImpl implements MyaReportDataRepository {
             selectAmountsForBankAccountQuery = loadQuery("select_amounts_for_bank_account");
         }
         return selectAmountsForBankAccountQuery;
+    }
+
+    private synchronized String getSelectRealEstateAmountsForBankAccountQuery() {
+        if (selectRealEstateAmountsForBankAccountQuery == null) {
+            selectRealEstateAmountsForBankAccountQuery = loadQuery("select_real_estate_amounts_for_bank_account");
+        }
+        return selectRealEstateAmountsForBankAccountQuery;
     }
 
     private MyaReportDateEvolutionData convertDailyResultsToReportDateEvolutionData(Object[] res) {
@@ -334,5 +341,19 @@ public class MyaReportDataRepositoryImpl implements MyaReportDataRepository {
             returns.add(new MyaReportAmountsByDates().date(res[0]).amount(res[1]).predictiveAmount(res[2]));
         }
         return returns;
+    }
+
+    public List<MyaReportAmountsByDates> findRealEstateBankAccountDateDataPoints(Long bankAccountId) {
+        {
+            Query querySelect = entityManager.createNativeQuery(getSelectRealEstateAmountsForBankAccountQuery());
+
+            querySelect.setParameter("bankAccountId", bankAccountId);
+            List<Object[]> results = querySelect.getResultList();
+            List<MyaReportAmountsByDates> returns = new ArrayList<>();
+            for (Object[] res : results) {
+                returns.add(new MyaReportAmountsByDates().date(res[0]).amount(res[1]).predictiveAmount(res[2]));
+            }
+            return returns;
+        }
     }
 }

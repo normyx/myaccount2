@@ -26,7 +26,8 @@
       "shortName": "Short Name",
       "accountType": "Account Type",
       "account": "Account",
-      "stockPortfolioItem": "Stock Portfolio Item"
+      "stockPortfolioItem": "Stock Portfolio Item",
+      "realEstateItem": "Real Estate Item"
     }
   }
 }
