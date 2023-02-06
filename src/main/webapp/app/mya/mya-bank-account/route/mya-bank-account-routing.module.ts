@@ -9,6 +9,7 @@ import { MyaBankAccountListComponent } from '../list/mya-bank-account-list.compo
 import { MyaCurrentBankAccountSummaryComponent } from '../summary/mya-current-bank-account-summary.component';
 import { MyaSavingsBankAccountSummaryComponent } from '../summary/mya-savings-bank-account-summary.component';
 import { MyaPortfolioBankAccountSummaryComponent } from '../summary/mya-portfolio-bank-account-summary.component';
+import { MyaRealEstateBankAccountSummaryComponent } from '../summary/mya-real-estate-bank-account-summary.component';
 
 const myaBankAccountRoute: Routes = [
   {
@@ -30,6 +31,17 @@ const myaBankAccountRoute: Routes = [
   {
     path: ':id/savings-detail',
     component: MyaSavingsBankAccountSummaryComponent,
+    resolve: {
+      bankAccount: BankAccountRoutingResolveService,
+    },
+    data: {
+      defaultSort: 'date,' + DESC,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/real-estate-detail',
+    component: MyaRealEstateBankAccountSummaryComponent,
     resolve: {
       bankAccount: BankAccountRoutingResolveService,
     },

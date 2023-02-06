@@ -185,6 +185,64 @@
       </div>
     </div>
   </div>
+
+  <div class="card border-primary mb-3">
+    <div class="card-header">
+      <h2
+        jhiTranslate="mya.entity.bankAccount.list.realEstateBankAccountHeader"
+        [translateValues]="{ amount: realEstateTotal | currency: 'EUR' }"
+      >
+        Budgets
+      </h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive table-entities" id="entities" *ngIf="realEstateBankAccounts && realEstateBankAccounts.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <div class="d-flex">
+                  <span jhiTranslate="mya.entity.bankAccount.list.table.accountName">Account Name</span>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                  <span jhiTranslate="mya.entity.bankAccount.list.table.accountBank">Account Bank</span>
+                </div>
+              </th>
+              <th scope="col">
+                <div class="d-flex">
+                  <span jhiTranslate="mya.entity.bankAccount.list.table.initialAmount">Initial Amount</span>
+                </div>
+              </th>
+
+              <th scope="col">
+                <div class="d-flex">
+                  <span jhiTranslate="mya.entity.bankAccount.list.table.operationTotal">Sum</span>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex">
+                  <span jhiTranslate="mya.entity.bankAccount.list.table.balance">Total</span>
+                </div>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              jhi-mya-bank-account-row
+              [bankAccount]="bankAccount"
+              [withArchived]="withArchived"
+              (totalEvent)="addToTotalEvent($event)"
+              *ngFor="let bankAccount of realEstateBankAccounts"
+              data-cy="entityTable"
+            ></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--<button class="btn btn-outline-primary btn-sm" (click)="changeDashboardType('all')">

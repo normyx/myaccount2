@@ -19,6 +19,7 @@ export class MyaBankAccountListComponent implements OnInit {
   currentAccountTotal = 0;
   savingsAccountTotal = 0;
   portfolioTotal = 0;
+  realEstateTotal = 0;
   total = 0;
   withArchived = false;
   dashboardType = 'all';
@@ -27,6 +28,7 @@ export class MyaBankAccountListComponent implements OnInit {
   currentBankAccounts: IBankAccount[] | null = null;
   savingsBankAccounts: IBankAccount[] | null = null;
   portfolioBankAccounts: IBankAccount[] | null = null;
+  realEstateBankAccounts: IBankAccount[] | null = null;
 
   eventSubscriber: Subscription | null = null;
 
@@ -42,6 +44,9 @@ export class MyaBankAccountListComponent implements OnInit {
         break;
       case BankAccountType.STOCKPORTFOLIO:
         this.portfolioTotal += total.total;
+        break;
+      case BankAccountType.REAL_ESTATE:
+        this.realEstateTotal += total.total;
         break;
     }
     this.total += total.total;
@@ -70,6 +75,7 @@ export class MyaBankAccountListComponent implements OnInit {
         this.portfolioBankAccounts = this.sortBankAccounts(
           this.bankAccounts.filter(ba => ba.accountType === BankAccountType.STOCKPORTFOLIO)
         );
+        this.realEstateBankAccounts = this.sortBankAccounts(this.bankAccounts.filter(ba => ba.accountType === BankAccountType.REAL_ESTATE));
       }
     });
   }

@@ -96,7 +96,7 @@ public class MyaDateDataPoints<V extends MyaDateDataPointsProperties, D extends 
             if (index == 0 && getPoints().get(0).isAfter(date)) {
                 current = new MyaDateDataPoint<>(date);
                 index++;
-            } else if (getPoints().get(index).isSameDate(date) || getPoints().get(index).isBefore(date)) {
+            } else if (index < getPoints().size() && (getPoints().get(index).isSameDate(date) || getPoints().get(index).isBefore(date))) {
                 current = getPoints().get(index);
                 if (index != getPoints().size() - 1) index++;
             }

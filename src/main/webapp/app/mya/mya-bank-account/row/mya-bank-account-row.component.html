@@ -12,6 +12,10 @@
       <span class="fw-bold">{{ bankAccount!.accountName }}</span>
       <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
     </a>
+    <a *ngIf="bankAccount!.accountType === 'REAL_ESTATE'" [routerLink]="['/mya/mya-bank-account', bankAccount!.id, 'real-estate-detail']">
+      <span class="fw-bold">{{ bankAccount!.accountName }}</span>
+      <span *ngIf="bankAccount!.shortName" class="fst-italic">({{ bankAccount!.shortName }})</span>
+    </a>
   </td>
 
   <td [class]="bankAccount!.archived ? 'text-decoration-line-through' : ''">

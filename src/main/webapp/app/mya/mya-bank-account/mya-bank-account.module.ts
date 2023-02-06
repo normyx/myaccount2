@@ -11,6 +11,7 @@ import { MyaBankAccountRowComponent } from './row/mya-bank-account-row.component
 import { MyaCurrentBankAccountSummaryComponent } from './summary/mya-current-bank-account-summary.component';
 import { MyaPortfolioBankAccountSummaryComponent } from './summary/mya-portfolio-bank-account-summary.component';
 import { MyaPortfolioBankAccountSymbolSummaryComponent } from './summary/mya-portfolio-bank-account-symbol-summary.component';
+import { MyaRealEstateBankAccountSummaryComponent } from './summary/mya-real-estate-bank-account-summary.component';
 import { MyaSavingsBankAccountSummaryComponent } from './summary/mya-savings-bank-account-summary.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MyaSavingsBankAccountSummaryComponent } from './summary/mya-savings-ban
   declarations: [
     MyaCurrentBankAccountSummaryComponent,
     MyaSavingsBankAccountSummaryComponent,
+    MyaRealEstateBankAccountSummaryComponent,
     MyaPortfolioBankAccountSummaryComponent,
     MyaPortfolioBankAccountSymbolSummaryComponent,
     MyaBankAccountListComponent,

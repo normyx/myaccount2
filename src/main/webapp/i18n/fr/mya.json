@@ -29,6 +29,7 @@
           "currentBankAccountHeader": "Comptes Courants : {{ amount }}",
           "savingsBankAccountHeader": "Comptes d'épargne : {{ amount }}",
           "portfolioBankAccountHeader": "Portfeuille : {{ amount }}",
+          "realEstateBankAccountHeader": "Immobilier : {{ amount }}",
           "total": "Total des avoirs : {{ amount }}",
           "archivedSwitch": "Achivés ?",
           "table": {
