@@ -6,3 +6,4 @@ from
 	real_estate_item
 where
 	bank_account_id = :bankAccountId
+order by item_date ASC
