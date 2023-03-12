@@ -26,7 +26,7 @@ public class RealEstateItemService {
 
     private final RealEstateItemRepository realEstateItemRepository;
 
-    private final RealEstateItemMapper realEstateItemMapper;
+    protected final RealEstateItemMapper realEstateItemMapper;
 
     private final RealEstateItemSearchRepository realEstateItemSearchRepository;
 

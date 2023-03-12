@@ -2,6 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
+import { IRealEstateItem } from 'app/entities/real-estate-item/real-estate-item.model';
 import { MyaOperationService } from 'app/mya/mya-operation/service/mya-operation.service';
 import 'chartjs-adapter-moment';
 import { IBankAccount } from '../../../entities/bank-account/bank-account.model';
@@ -19,6 +20,7 @@ export class MyaRealEstateBankAccountSummaryComponent implements OnInit {
   selectedBankAccount: IBankAccount | null = null;
   sumOfOperationAmount: number | null = null;
   totalAmount = 0;
+  realEstate: IRealEstateItem | null = null;
 
   constructor(
     protected bankAccountService: MyaBankAccountService,
@@ -50,12 +52,14 @@ export class MyaRealEstateBankAccountSummaryComponent implements OnInit {
     this.sumOfOperationAmount = 0;
     this.totalAmount = 0;
     if (this.selectedBankAccount) {
-      this.operationService.sumOfAmountForBankAccount(this.selectedBankAccount.id).subscribe((res: HttpResponse<number>) => {
-        this.sumOfOperationAmount = res.body;
-        if (this.selectedBankAccount && this.sumOfOperationAmount) {
-          this.totalAmount += this.selectedBankAccount.initialAmount! + this.sumOfOperationAmount;
-        }
-      });
+      this.bankAccountService
+        .lastRealEstateItemFromBankAccount(this.selectedBankAccount.id)
+        .subscribe((res: HttpResponse<IRealEstateItem>) => {
+          this.realEstate = res.body;
+          if (this.selectedBankAccount && this.realEstate?.totalValue && this.realEstate.loanValue && this.realEstate.percentOwned) {
+            this.totalAmount = ((this.realEstate.totalValue - this.realEstate.loanValue) * this.realEstate.percentOwned) / 100;
+          }
+        });
     }
   }
 }

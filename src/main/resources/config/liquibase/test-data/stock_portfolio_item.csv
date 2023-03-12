@@ -1,4 +1,7 @@
-id;stock_symbol;stock_currency;stock_acquisition_date;stock_shares_number;stock_type;stock_acquisition_price;stock_current_price;stock_price_at_acquisition_date;stock_current_date;stock_acquisition_currency_factor;stock_current_currency_factor;bank_account_id
-1;ACN;USD;2020-01-02;32;STOCK;140.34;0;0;2022-01-01;1;1;18
-2;ACN;USD;2020-01-02;29;STOCK;153.82;0;0;2022-01-01;1;1;18
-3;ACN;USD;2021-01-04;32;STOCK;140.34;0;0;2022-01-01;1;1;18
+"id";"stock_symbol";"stock_currency";"stock_acquisition_date";"stock_shares_number";"stock_acquisition_price";"stock_current_price";"stock_current_date";"stock_acquisition_currency_factor";"stock_current_currency_factor";"stock_price_at_acquisition_date";"stock_type";"last_stock_update";"last_currency_update";"bank_account_id"
+1;ACN;USD;"2020-01-02";32.0;140.32;266.53;"2023-02-24";0.8949;0.9473;201.538;STOCK;"2022-11-11 14:21:00";"2023-02-27 17:59:26";20
+2;ACN;USD;"2020-01-02";29.0;153.82;266.53;"2023-02-24";0.8949;0.9473;201.538;STOCK;"2022-11-11 14:23:00";"2023-02-27 17:59:26";20
+3;ACN;USD;"2021-01-04";32.0;140.34;266.53;"2023-02-24";0.8159;0.9473;249.927;STOCK;"2022-11-11 14:24:00";"2023-02-27 17:59:26";20
+4;ACN;USD;"2021-01-04";29.0;153.82;266.53;"2023-02-24";0.8159;0.9473;249.927;STOCK;"2022-11-11 14:25:00";"2023-02-27 17:59:26";20
+5;ACN;USD;"2022-01-03";32.0;140.34;266.53;"2023-02-24";0.8847;0.9473;401.722;STOCK;"2022-11-11 14:26:00";"2023-02-27 17:59:26";20
+6;ETH;EUR;"2021-08-03";2.153;2366.0;1551.93;"2023-02-27";1.0;1.0;2467.14;CRYPTO;"2022-11-11 14:27:00";"2023-02-27 17:59:26";20

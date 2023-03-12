@@ -161,7 +161,7 @@ public class MyaBankAccountResource {
     }
 
     @GetMapping("/mya-bank-accounts/real-estate-evolution-data-points")
-    public ResponseEntity<MyaDateDataSinglePoints> getRealEstateEvolutionDataPoints() {
+    public ResponseEntity<MyaDateDataSinglePoints> getAllRealEstateEvolutionDataPoints() {
         log.debug("REST request to getRealEstateEvolutionDataPoints");
         Optional<ApplicationUserDTO> applicationUserOptional = myaApplicationUserService.findSignedInApplicationUser();
         if (applicationUserOptional.isPresent()) {
@@ -177,6 +177,17 @@ public class MyaBankAccountResource {
                     bankDataPoints.merge(myaBankAccountService.findRealEstateBankAccountDateDataPoints(bankAccountDTO.getId()));
                 }
             }
+            return ResponseEntity.ok().body(bankDataPoints);
+        }
+        return null;
+    }
+
+    @GetMapping("/mya-bank-accounts/real-estate-evolution-data-points/{bankAccountId}")
+    public ResponseEntity<MyaDateDataSinglePoints> getRealEstateEvolutionDataPoints(@PathVariable Long bankAccountId) {
+        log.debug("REST request to getRealEstateEvolutionDataPoints");
+        Optional<ApplicationUserDTO> applicationUserOptional = myaApplicationUserService.findSignedInApplicationUser();
+        if (applicationUserOptional.isPresent() && bankAccountId != null) {
+            MyaDateDataSinglePoints bankDataPoints = myaBankAccountService.findRealEstateBankAccountDateDataPoints(bankAccountId);
             return ResponseEntity.ok().body(bankDataPoints);
         }
         return null;

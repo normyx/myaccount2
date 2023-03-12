@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IRealEstateItem } from 'app/entities/real-estate-item/real-estate-item.model';
 import { Observable } from 'rxjs';
 import { ApplicationConfigService } from '../../../core/config/application-config.service';
 import { createRequestOption } from '../../../core/request/request-util';
@@ -22,5 +23,12 @@ export class MyaBankAccountService extends BankAccountService {
   queryWithSignedInUser(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IBankAccount[]>(this.myaResourceFromSignedInUserUrl, { params: options, observe: 'response' });
+  }
+
+  lastRealEstateItemFromBankAccount(bankAccountId: number): Observable<HttpResponse<IRealEstateItem>> {
+    return this.http.get<IRealEstateItem>(
+      this.applicationConfigService.getEndpointFor('api/mya-real-estate-items/last-from-bank-account/' + bankAccountId.toString()),
+      { observe: 'response' }
+    );
   }
 }

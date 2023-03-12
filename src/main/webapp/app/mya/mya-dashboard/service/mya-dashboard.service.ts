@@ -101,6 +101,14 @@ export class MyaDashboardService {
       observe: 'response',
     });
   }
+
+  getRealEstateAccountEvolution(accountId: string): Observable<HttpResponse<any>> {
+    const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/real-estate-evolution-data-points');
+    return this.http.get<any>(`${resourceUrl}/${accountId}`, {
+      observe: 'response',
+    });
+  }
+
   getAllCurrentAndSavingsAccountEvolution(): Observable<HttpResponse<any>> {
     const resourceUrl = this.applicationConfigService.getEndpointFor('api/mya-bank-accounts/bank-account-evolution-data-points');
     return this.http.get<any>(`${resourceUrl}`, {

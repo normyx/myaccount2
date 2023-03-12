@@ -1,15 +1,10 @@
 package org.mgoulene.mya.web.rest;
 
-import java.util.Optional;
 import org.mgoulene.mya.service.MyaApplicationUserService;
 import org.mgoulene.mya.service.MyaStockPortfolioItemService;
-import org.mgoulene.mya.service.dto.MyaDateDataStockPoints;
-import org.mgoulene.service.dto.ApplicationUserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,51 +31,4 @@ public class MyaStockPortfolioItemResource {
         this.myaStockPortfolioItemService = myaStockPortfolioItemService;
         this.applicationUserService = applicationUserService;
     }
-    /**
-     * {@code GET  /stock-portfolio-items} : get all the stockPortfolioItems.
-     *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
-     *         of stockPortfolioItems in body.
-     */
-    /*
-     * @GetMapping(
-     * "/mya-stock-portfolio-items/evolution-data-points-for-symbol/{symbol}")
-     * public ResponseEntity<MyaMarketDataAggregator.MarketShareDataPoints>
-     * getSymbolStockPortfolioItemEvolutionDataPoints(
-     *
-     * @PathVariable String symbol) {
-     * log.debug("REST request to getAllStockPortfolioItemEvolutionDataPoints: {}",
-     * symbol);
-     * Optional<ApplicationUserDTO> applicationUserOptional =
-     * applicationUserService.findSignedInApplicationUser();
-     * if (applicationUserOptional.isPresent()) {
-     * MyaMarketDataAggregator.MarketShareDataPoints dataPoints =
-     * myaStockMarketDataService
-     * .findMarketDataPointsForSymbol(symbol,
-     * applicationUserOptional.get().getId());
-     *
-     * return ResponseEntity.ok().body(dataPoints);
-     * }
-     * return null;
-     * }
-     */
-
-    /*
-     * @GetMapping("/mya-stock-portfolio-items/evolution-data-points2")
-     * public ResponseEntity<MyaDateDataStockPoints> getDummy() {
-     * log.debug("REST request to getAllStockPortfolioItemEvolutionDataPoints: {}");
-     * Optional<ApplicationUserDTO> applicationUserOptional =
-     * applicationUserService.findSignedInApplicationUser();
-     * if (applicationUserOptional.isPresent()) {
-     * MyaDateDataStockPoints dataPoints = myaStockMarketDataService
-     * .findDateDataPoints(applicationUserOptional.get().getId());
-     *
-     * return ResponseEntity.ok().body(dataPoints);
-     * }
-     * return null;
-     * }
-     */
-
 }

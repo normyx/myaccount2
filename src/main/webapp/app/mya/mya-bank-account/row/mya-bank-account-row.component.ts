@@ -2,6 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BankAccountType } from 'app/entities/enumerations/bank-account-type.model';
+import { IRealEstateItem } from 'app/entities/real-estate-item/real-estate-item.model';
 import { StockPortfolioItemService } from 'app/entities/stock-portfolio-item/service/stock-portfolio-item.service';
 import { IStockPortfolioItem } from 'app/entities/stock-portfolio-item/stock-portfolio-item.model';
 import { MyaOperationService } from 'app/mya/mya-operation/service/mya-operation.service';
@@ -26,6 +27,7 @@ export class MyaBankAccountRowComponent implements OnInit {
   @Output() totalEvent = new EventEmitter<IBankAccountTotal>();
 
   stockPortfolioItems: IStockPortfolioItem[] | null = null;
+  realEstate: IRealEstateItem | null = null;
 
   constructor(
     protected bankAccountService: MyaBankAccountService,
@@ -39,30 +41,41 @@ export class MyaBankAccountRowComponent implements OnInit {
   }
 
   load(): void {
-    const filters: IFilterOptions = new FilterOptions();
-    filters.addFilter('bankAccountId.equals', this.bankAccount!.id.toString());
-    this.stockPortfolioItemService
-      .query(`{bankAccountId.equals: ${this.bankAccount!.id.toString()}}`)
-      .subscribe((response: HttpResponse<IStockPortfolioItem[]>) => {
-        this.stockPortfolioItems = response.body;
-        this.operationService.sumOfAmountForBankAccount(this.bankAccount!.id).subscribe((res: HttpResponse<number>) => {
-          this.sumOfOperationAmount = res.body;
-          if (!this.sumOfOperationAmount) {
-            this.sumOfOperationAmount = 0;
-          }
-          if (this.bankAccount) {
-            this.totalAmount = this.bankAccount.initialAmount! + this.sumOfOperationAmount;
-            if (this.bankAccount.accountType === BankAccountType.STOCKPORTFOLIO) {
-              if (this.stockPortfolioItems) {
-                this.stockPortfolioItems.forEach(spi => {
-                  this.totalAmount += spi.stockCurrentPrice! * spi.stockCurrentCurrencyFactor! * spi.stockSharesNumber!;
-                });
-              }
+    if (this.bankAccount && this.bankAccount.accountType !== BankAccountType.REAL_ESTATE) {
+      const filters: IFilterOptions = new FilterOptions();
+      filters.addFilter('bankAccountId.equals', this.bankAccount.id.toString());
+      this.stockPortfolioItemService
+        .query(`{bankAccountId.equals: ${this.bankAccount.id.toString()}}`)
+        .subscribe((response: HttpResponse<IStockPortfolioItem[]>) => {
+          this.stockPortfolioItems = response.body;
+          this.operationService.sumOfAmountForBankAccount(this.bankAccount!.id).subscribe((res: HttpResponse<number>) => {
+            this.sumOfOperationAmount = res.body;
+            if (!this.sumOfOperationAmount) {
+              this.sumOfOperationAmount = 0;
             }
-            this.totalEvent.emit({ bankAccount: this.bankAccount, total: this.totalAmount });
-          }
+            if (this.bankAccount) {
+              this.totalAmount = this.bankAccount.initialAmount! + this.sumOfOperationAmount;
+              if (this.bankAccount.accountType === BankAccountType.STOCKPORTFOLIO) {
+                if (this.stockPortfolioItems) {
+                  this.stockPortfolioItems.forEach(spi => {
+                    this.totalAmount += spi.stockCurrentPrice! * spi.stockCurrentCurrencyFactor! * spi.stockSharesNumber!;
+                  });
+                }
+              }
+              this.totalEvent.emit({ bankAccount: this.bankAccount, total: this.totalAmount });
+            }
+          });
         });
+    }
+    if (this.bankAccount && this.bankAccount.accountType === BankAccountType.REAL_ESTATE) {
+      this.bankAccountService.lastRealEstateItemFromBankAccount(this.bankAccount.id).subscribe((res: HttpResponse<IRealEstateItem>) => {
+        this.realEstate = res.body;
+        if (this.bankAccount && this.realEstate?.totalValue && this.realEstate.loanValue && this.realEstate.percentOwned) {
+          this.totalAmount = ((this.realEstate.totalValue - this.realEstate.loanValue) * this.realEstate.percentOwned) / 100;
+          this.totalEvent.emit({ bankAccount: this.bankAccount, total: this.totalAmount });
+        }
       });
+    }
   }
 
   balanceupdate(): void {

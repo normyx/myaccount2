@@ -1,37 +1,27 @@
-"id";"account_name";account_type;"account_bank";"initial_amount";"archived";"short_name";"account_id"
-"2";"CARTE CORPORATE GOLD AMERICAN EXPRESS - MATHIEU GOULENE (x31004)";CURRENTACCOUNT;"American Express (France)
-";"-517.65";"1";"AMEX";"5"
-"4";"Carte Corporate Gold American Express - MATHIEU GOULENE (x31004)";CURRENTACCOUNT;"American Express (France)
-";"0.0";"1";"NULL";"5"
-"5";"MATHIEU GOULENE - 31004";CURRENTACCOUNT;"American Express (France)
-";"0.0";"1";"NULL";"5"
-"11";"COMPTE M. GOULENE MATHIEU (x2516)";CURRENTACCOUNT;"HSBC France (sans Secure Key)
-";"0.0";"0";"HSBC - Mathieu GOULENE - Courant";"5"
-"12";"LDDS (x2946)";SAVINGSACCOUNT;"HSBC France (sans Secure Key)
-";"0.0";"0";"HSBC - Mathieu GOULENE - LDD";"5"
-"14";"COMPTE M. M. GOULENE OU MME DIEZ - DIEZ (x2529)";CURRENTACCOUNT;"HSBC France (sans Secure Key)
-";"0.0";"0";"HSBC - DIEZ & GOULENE - Joint";"5"
-"15";"LIVRET HSBC EPARGNE (x6238)";SAVINGSACCOUNT;"HSBC France (sans Secure Key)
-";"0.0";"0";"HSBC - Mathieu GOULENE- Livret HSBC";"5"
-"16";"HSBC EVOL PAT VIE 2 (x1291)";SAVINGSACCOUNT;"HSBC France (sans Secure Key)
-";"0.0";"0";"NULL";"5"
-"6";"Compte de dépôts (07443 039255D)";CURRENTACCOUNT;"LCL (Particuliers)
-";"0.0";"1";"NULL";"5"
-"7";"Livret A (07443 225040Z)";SAVINGSACCOUNT;"LCL (Particuliers)
-";"0.0";"1";"NULL";"5"
-"8";"Livret de Développement Durable (07443 968359B)";SAVINGSACCOUNT;"LCL (Particuliers)
-";"0.0";"1";"NULL";"5"
-"9";"Livret Cerise (07443 083697N)";SAVINGSACCOUNT;"LCL (Particuliers)
-";"0.0";"1";"NULL";"5"
-"17";"Mon Petit Placement";SAVINGSACCOUNT;"Mon Petit Placement
-";"0.0";"0";"NULL";"5"
-"1";"Compte Bancaire (X5991)";CURRENTACCOUNT;"Société Générale (Particuliers)
-";"0.0";"1";"SG - Compte Courant";"5"
-"3";"Livret Dévelop. Durable (X1908)";SAVINGSACCOUNT;"Société Générale (Particuliers)
-";"0.0";"1";"SG - LDD";"5"
-"10";"Livret A (x4006)";SAVINGSACCOUNT;"Société Générale (Particuliers)
-";"0.0";"1";"NULL";"5"
-"13";"Erable Ess Assurance vie (x7107)";SAVINGSACCOUNT;"Société Générale (Particuliers)
-";"0.0";"1";"NULL";"5"
-"18";"Porfolio";STOCKPORTFOLIO;"Portfolio";"0.0";"0";"Test";"5"
-"19";"Maison";REAL_ESTATE;"Maison";"0.0";"0";"Maison";"5"
+id;account_name;account_bank;initial_amount;archived;short_name;account_id;account_type
+1;Compte Bancaire (X5991);"Société Générale (Particuliers)";-0.52;1;SG - Compte Courant;5;CURRENTACCOUNT
+2;CARTE CORPORATE GOLD AMERICAN EXPRESS - MATHIEU GOULENE (x31004);"American Express (France)";-1582.42;1;AMEX;5;CURRENTACCOUNT
+3;Livret Dévelop. Durable (X1908);"Société Générale (Particuliers)";0.0;1;SG - LDD;5;SAVINGSACCOUNT
+4;Carte Corporate Gold American Express - MATHIEU GOULENE (x31004);"American Express (France)";240.33;1;NULL;5;CURRENTACCOUNT
+5;MATHIEU GOULENE - 31004;"American Express (France)";0.0;1;NULL;5;CURRENTACCOUNT
+6;Compte de dépôts (07443 039255D);"LCL (Particuliers)";1370.3;1;NULL;5;CURRENTACCOUNT
+7;Livret A (07443 225040Z);"LCL (Particuliers)";-32.26;1;NULL;5;SAVINGSACCOUNT
+8;Livret de Développement Durable (07443 968359B);"LCL (Particuliers)";-31.43;1;NULL;5;SAVINGSACCOUNT
+9;Livret Cerise (07443 083697N);"LCL (Particuliers)";-10.0;1;NULL;5;CURRENTACCOUNT
+10;Livret A (x4006);"Société Générale (Particuliers)";0.0;1;NULL;5;SAVINGSACCOUNT
+11;COMPTE M. GOULENE MATHIEU (x2516);"HSBC France (sans Secure Key)";0.0;0;HSBC - Mathieu GOULENE - Courant;5;CURRENTACCOUNT
+12;LDDS (x2946);"HSBC France (sans Secure Key)";0.0;0;HSBC - Mathieu GOULENE - LDD;5;SAVINGSACCOUNT
+13;Erable Ess Assurance vie (x7107);"Société Générale (Particuliers)";-500.0;1;NULL;5;SAVINGSACCOUNT
+14;COMPTE M. M. GOULENE OU MME DIEZ - DIEZ (x2529);"HSBC France (sans Secure Key)";0.0;0;HSBC - DIEZ & GOULENE - Joint;5;CURRENTACCOUNT
+15;LIVRET HSBC EPARGNE (x6238);"HSBC France (sans Secure Key)";0.0;0;HSBC - Mathieu GOULENE- Livret HSBC;5;SAVINGSACCOUNT
+16;HSBC EVOL PAT VIE 2 (x1291);"HSBC France (sans Secure Key)";10000.0;1;NULL;5;SAVINGSACCOUNT
+17;Mon Petit Placement;"Mon Petit Placement";0.0;0;NULL;5;SAVINGSACCOUNT
+18;M GOULENE MATHIEU;"Boursorama Banque";0.0;0;NULL;5;CURRENTACCOUNT
+19;HSBC ESSENTIEL 2 (x3636);HSBC France (sans Secure Key);1702.08;0;HSBC Assurance Vie Selma ;5;SAVINGSACCOUNT
+20;Portefeuille Action;Perso;0.0;0;Portefeuille Action;5;STOCKPORTFOLIO
+21;JOINT DIEZ GOULENE;"Boursorama Banque";0.0;0;NULL;5;CURRENTACCOUNT
+22;LIVRET DEVELOPPEMENT DURABLE SOLIDAIRE (x5373);"Boursorama Banque";0.0;0;NULL;5;SAVINGSACCOUNT
+23;Contrat N° 51964469 (x4469);"Boursorama Banque";0.0;0;Boursorama Ass. Vie.;5;SAVINGSACCOUNT
+24;8 rue de la petite Mitrie;Maison;0.0;0;8 rue de la petite Mitrie;5;REAL_ESTATE
+25;12 rue des artisans;Maison;0.0;0;12 rue des artisans;5;REAL_ESTATE
+26;LIVRET A (x1173);"Boursorama Banque";0.0;0;NULL;5;SAVINGSACCOUNT

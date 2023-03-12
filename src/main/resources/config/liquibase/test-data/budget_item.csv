@@ -1,14 +1,14 @@
 "id";"name";"jhi_order";"category_id";"account_id"
 1;Eau;13;1;5
-2;Impots Revenu;106;3;5
+2;Impots Revenu;107;3;5
 3;Taxe Foncière;20;3;5
 4;Taxe Habitation;19;3;5
 5;Pension Alim Manolo-Trystan;4;4;5
 6;Pension Alim Selma;3;4;5
-7;Crédit Immobilier;104;1;5
-8;CrÃ©dit Immo 2;105;1;5
-9;CrÃ©dit Immo 3;103;1;5
-10;Remb. Immo Geraldine;102;1;5
+7;Crédit Immobilier;105;1;5
+8;CrÃ©dit Immo 2;106;1;5
+9;CrÃ©dit Immo 3;104;1;5
+10;Remb. Immo Geraldine;103;1;5
 11;Crèche / Peisco;100;4;5
 12;Vie courante;22;2;5
 13;Vie courante autre;99;2;5
@@ -27,7 +27,7 @@
 26;Sorties;99;7;5
 27;Frais Voiture Divers;99;8;5
 28;Frais bancaire;99;9;5
-29;Loisirs;99;5;5
+29;Loisirs;101;5;5
 30;Amenagements ;14;1;5
 31;Cantine + Périscolaire Selma;99;4;5
 32;Forfait Mobile Manolo;99;2;5
@@ -39,7 +39,7 @@
 38;Loc Chambre;99;1;5
 39;Permis;99;8;5
 40;Loc Chambre-complément;99;1;5
-41;Spotify;101;5;5
+41;Spotify;102;5;5
 42;Moto;99;8;5
 43;Cadeaux;99;2;5
 44;Prime / Interessement;99;11;5
@@ -47,7 +47,7 @@
 46;Meubles;99;1;5
 47;Assuance Crédit Immobilier;12;1;5
 48;AP / PA Trystan;7;4;5
-49;Santé;29;10;5
+49;Santé;99;10;5
 50;Hors Budget;99;12;5
 51;Achat Vente Maison;99;1;5
 52;Crédit Immo - rue des artisans-1;10;1;5
@@ -65,5 +65,11 @@
 65;Cours Guitare Selma - CESU;9;4;5
 66;Assurances;27;9;5
 67;Provisions Assurances;28;9;5
-68;Google Play;107;5;5
-69;Abo VPN;108;5;5
+68;Google Play;108;5;5
+69;Abo VPN;109;5;5
+70;OneDrive;110;5;5
+72;Avocats;111;9;5
+73;Chomage;112;11;5
+74;Frais Scol Trystan;113;4;5
+75;Selma : Ass Vie;114;4;5
+76;Selma : Garde & Vacances;115;4;5

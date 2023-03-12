@@ -44,7 +44,12 @@
     {{ totalAmount | currency: 'EUR' }}
   </td>
   <td>
-    <button *ngIf="bankAccount!.accountType !== 'STOCKPORTFOLIO'" type="submit" (click)="balanceupdate()" class="btn btn-info btn-sm">
+    <button
+      *ngIf="bankAccount!.accountType !== 'STOCKPORTFOLIO' && bankAccount!.accountType !== 'REAL_ESTATE'"
+      type="submit"
+      (click)="balanceupdate()"
+      class="btn btn-info btn-sm"
+    >
       <fa-icon icon="scale-unbalanced-flip"></fa-icon>
     </button>
   </td>

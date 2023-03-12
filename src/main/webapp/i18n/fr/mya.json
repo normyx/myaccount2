@@ -37,7 +37,10 @@
             "accountBank": "Banque",
             "initialAmount": "Valeur Initiale",
             "operationTotal": "Total des opération",
-            "balance": "Solde"
+            "balance": "Solde",
+            "value": "Valeur",
+            "loan": "Crédit Restant",
+            "percentOwned": "Pourcent détenu"
           }
         },
         "balanceUpdate": {

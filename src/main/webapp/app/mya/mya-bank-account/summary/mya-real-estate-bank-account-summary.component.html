@@ -37,13 +37,18 @@
             </th>
             <th scope="col">
               <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.list.table.initialAmount">Initial Amount</span>
+                <span jhiTranslate="mya.entity.bankAccount.list.table.value">Value</span>
               </div>
             </th>
 
             <th scope="col">
               <div class="d-flex">
-                <span jhiTranslate="mya.entity.bankAccount.list.table.operationTotal">Sum</span>
+                <span jhiTranslate="mya.entity.bankAccount.list.table.loan">Loan</span>
+              </div>
+            </th>
+            <th scope="col">
+              <div class="d-flex">
+                <span jhiTranslate="mya.entity.bankAccount.list.table.percentOwned">percentOwned</span>
               </div>
             </th>
             <th>
@@ -63,15 +68,18 @@
               <span class="fw-bold">{{ selectedBankAccount.accountName }}</span>
             </td>
             <td [class]="selectedBankAccount!.archived ? 'text-decoration-line-through' : ''">
-              {{ selectedBankAccount.accountBank }} ({{ selectedBankAccount.archived }})
+              {{ selectedBankAccount.accountBank }}
             </td>
 
             <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
-              {{ selectedBankAccount.initialAmount | currency: 'EUR' }}
+              {{ realEstate?.totalValue | currency: 'EUR' }}
             </td>
 
             <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
-              {{ sumOfOperationAmount | currency: 'EUR' }}
+              {{ realEstate?.loanValue | currency: 'EUR' }}
+            </td>
+            <td class="text-end" [class]="selectedBankAccount.archived ? 'text-decoration-line-through' : ''">
+              {{ realEstate?.percentOwned! * 0.01 | percent: '2.0-2' }}
             </td>
             <td
               class="text-end"
@@ -86,13 +94,7 @@
     </div>
     <div>
       <!--<jhi-mya-account-evolution type="bankaccount" [data]="selectedBankAccount!.id.toString()"></jhi-mya-account-evolution>-->
-      <jhi-mya-evolution-between-dates
-        [dateFrom]="dateFrom"
-        [dateTo]="dateTo"
-        height="100"
-        [bankAccountId]="selectedBankAccount ? selectedBankAccount.id : null"
-      >
-      </jhi-mya-evolution-between-dates>
+      <jhi-mya-account-evolution type="realestate" [data]="selectedBankAccount!.id.toString()"></jhi-mya-account-evolution>
       <h2
         jhiTranslate="mya.entity.bankAccount.summary.operationListTitle"
         [translateValues]="{ accountName: selectedBankAccount?.accountName + ' / ' + selectedBankAccount?.accountBank }"
