@@ -88,7 +88,7 @@ export class MyaBudgetItemService extends BudgetItemService {
     monthFrom = dayjs(monthFrom);
     const monthStr: string = monthFrom.format(DATE_FORMAT);
     return this.http.post<IBudgetItem>(
-      `${this.myaResourceUrl}/${MyaBudgetItemService.MYA_WITH_PERIODS_SUFFIX}/${String(isSmoothed)}/${monthStr}/${amount}/${dayOfMonth}`,
+      `${this.myaResourceUrl}${MyaBudgetItemService.MYA_WITH_PERIODS_SUFFIX}/${String(isSmoothed)}/${monthStr}/${amount}/${dayOfMonth}`,
       budgetItem,
       { observe: 'response' }
     );
