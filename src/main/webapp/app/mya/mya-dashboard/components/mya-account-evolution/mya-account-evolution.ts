@@ -140,6 +140,14 @@ export class MyaAccountEvolutionComponent implements OnChanges, OnDestroy {
                 title(context: any): string[] {
                   return [dayjs(context[0].label).format('D-MMM-YY')];
                 },
+                label(context: any): string {
+                  let label: string = context.dataset.label || '';
+                  if (label) {
+                    label += ' : ';
+                  }
+                  label += context.parsed.y.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+                  return label;
+                },
               },
             },
           },

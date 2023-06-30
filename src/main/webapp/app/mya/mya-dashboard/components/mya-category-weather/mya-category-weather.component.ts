@@ -68,8 +68,7 @@ export class MyaCategoryWeatherComponent implements OnChanges {
                   if (label) {
                     label += ' : ';
                   }
-                  label += Math.round(context.parsed.x * 100) / 100;
-                  label += ' €';
+                  label += context.parsed.x.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
                   return label;
                 },
               },

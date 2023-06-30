@@ -73,6 +73,37 @@ export class MyaAllAccountEvolutionComponent implements OnChanges, OnDestroy {
       this.chart.destroy();
     }
     if (this.type) {
+      const plugins = {
+        legend: {
+          display: true,
+          position: 'top',
+        },
+
+        tooltip: {
+          position: 'average',
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            title(context: any): string {
+              let sum = 0;
+              context.forEach((item: any) => {
+                sum += item.parsed.y;
+              });
+              let title = dayjs(context[0].label).format('D-MMM-YY') + ' : ';
+              title += sum.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+              return title;
+            },
+            label(context: any): string {
+              let label: string = context.dataset.label || '';
+              if (label) {
+                label += ' : ';
+              }
+              label += context.parsed.y.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+              return label;
+            },
+          },
+        },
+      };
       this.chart = new Chart('myaAmountEvolution', {
         type: 'line',
 
@@ -138,18 +169,34 @@ export class MyaAllAccountEvolutionComponent implements OnChanges, OnDestroy {
           interaction: {
             intersect: false,
           },
+
           plugins: {
             legend: {
               display: true,
               position: 'top',
             },
+
             tooltip: {
               position: 'average',
               mode: 'index',
               intersect: false,
               callbacks: {
-                title(context: any): string[] {
-                  return [dayjs(context[0].label).format('D-MMM-YY')];
+                title(context: any): string {
+                  let sum = 0;
+                  context.forEach((item: any) => {
+                    sum += item.parsed.y;
+                  });
+                  let title = dayjs(context[0].label).format('D-MMM-YY') + ' : ';
+                  title += sum.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+                  return title;
+                },
+                label(context: any): string {
+                  let label: string = context.dataset.label || '';
+                  if (label) {
+                    label += ' : ';
+                  }
+                  label += context.parsed.y.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+                  return label;
                 },
               },
             },
@@ -184,6 +231,48 @@ export class MyaAllAccountEvolutionComponent implements OnChanges, OnDestroy {
             },
           },
         },
+
+        plugins: [
+          {
+            id: 'try',
+            afterDatasetsDraw(chart): void {
+              if (chart.tooltip?.getActiveElements()?.length) {
+                let squaredDistance: number | null = null;
+                let xVal: number | null = null;
+                let yVal: number | null = null;
+                const cursorX = chart.tooltip.x;
+                const cursorY = chart.tooltip.y;
+                chart.tooltip.getActiveElements().forEach(element => {
+                  if (element.element.active) {
+                    const pointX = element.element.x;
+                    const pointY = element.element.y;
+                    const pointSquareDistance = (pointX - cursorX) * (pointX - cursorX) + (pointY - cursorY) * (pointY - cursorY);
+                    if (squaredDistance === null || pointSquareDistance < squaredDistance) {
+                      squaredDistance = pointSquareDistance;
+                      xVal = pointX;
+                      yVal = pointY;
+                    }
+                  }
+                });
+
+                const yAxis = chart.scales.y;
+                const xAxis = chart.scales.x;
+                const ctx = chart.ctx;
+
+                ctx.save();
+                ctx.beginPath();
+
+                ctx.moveTo(xAxis.left, yVal!);
+                ctx.lineTo(xAxis.right, yVal!);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#ff0000';
+                ctx.setLineDash([2, 2]);
+                ctx.stroke();
+                ctx.restore();
+              }
+            },
+          },
+        ],
       });
     }
   }

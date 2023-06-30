@@ -63,8 +63,7 @@ export class MyaCategorySplitComponent implements OnChanges {
                     if (l) {
                       l += ' : ';
                     }
-                    l += Math.round(context.parsed * 100) / 100;
-                    l += ' €';
+                    l += context.parsed.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
                     return l;
                   },
                 },

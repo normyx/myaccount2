@@ -84,8 +84,7 @@ export class MyaEvolutionBetweenDatesComponent implements OnChanges {
               if (label) {
                 label += ' : ';
               }
-              label += Math.round(context.parsed.y * 100) / 100;
-              label += ' €';
+              label += context.parsed.y.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
               return label;
             },
           },

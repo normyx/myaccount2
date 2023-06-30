@@ -21,12 +21,22 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
   constructor(private dashboardService: MyaDashboardService) {}
 
   feedReportData(res: HttpResponse<any>): void {
+    const dates = res.body.dates;
+    const operationAmounts = res.body.operationAmounts;
+    const budgetAmounts = res.body.budgetAmounts;
+    const predictiveBudgetAmounts = res.body.predictiveBudgetAmounts;
+    const deltaAmount = new Array<number>();
+    for (let _i = 0; _i < operationAmounts.length; _i++) {
+      if (operationAmounts[_i]) {
+        deltaAmount.push(operationAmounts[_i] - budgetAmounts[_i]);
+      }
+    }
     this.data = {
-      labels: res.body.dates,
+      labels: dates,
       datasets: [
         {
           label: 'Operation',
-          data: res.body.operationAmounts,
+          data: operationAmounts,
           borderColor: '#0099ff',
           backgroundColor: '#0099ff',
           pointBorderColor: '#0099ff',
@@ -36,10 +46,11 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           cubicInterpolationMode: 'monotone',
           tension: 0.4,
           borderWidth: 2,
+          yAxisID: 'y',
         },
         {
           label: 'Budget',
-          data: res.body.budgetAmounts,
+          data: budgetAmounts,
           borderColor: '#565656',
           backgroundColor: '#565656',
           pointBorderColor: '#565656',
@@ -49,10 +60,11 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           pointRadius: 0,
           cubicInterpolationMode: 'monotone',
           tension: 0.4,
+          yAxisID: 'y',
         },
         {
           label: 'Evolution prévue',
-          data: res.body.predictiveBudgetAmounts,
+          data: predictiveBudgetAmounts,
           borderColor: '#ff0000',
           backgroundColor: '#ff0000',
           pointBorderColor: '#ff0000',
@@ -62,6 +74,22 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
           cubicInterpolationMode: 'monotone',
           tension: 0.4,
           borderWidth: 2,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Delta',
+          data: deltaAmount,
+          borderColor: '#2222222',
+          backgroundColor: '#2222222',
+          pointBorderColor: '#2222222',
+          pointBackgroundColor: '#2222222',
+          fill: false,
+          pointRadius: 0,
+          cubicInterpolationMode: 'monotone',
+          tension: 0.4,
+          borderWidth: 1,
+          borderDash: [2, 2],
+          yAxisID: 'y1',
         },
       ],
     };
@@ -85,8 +113,7 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
               if (label) {
                 label += ' : ';
               }
-              label += Math.round(context.parsed.y * 100) / 100;
-              label += ' €';
+              label += context.parsed.y.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
               return label;
             },
           },
@@ -95,14 +122,36 @@ export class MyaEvolutionInMonthReportComponent implements OnChanges {
       scales: {
         y: {
           title: {
-            display: false,
+            display: true,
             text: 'Montants',
-            //labelString: 'Montants',
           },
           ticks: {
-            //suggestedMax: 0,
             callback(value: string | number, index: number, ticks: Tick[]): string {
               return String(value) + ' €';
+            },
+          },
+        },
+        y1: {
+          title: {
+            display: true,
+            text: 'Delta',
+          },
+          ticks: {
+            callback(value: string | number, index: number, ticks: Tick[]): string {
+              return String(value) + ' €';
+            },
+          },
+          position: 'right',
+          grid: {
+            drawOnChartArea: true, // only want the grid lines for one axis to show up
+            drawTicks: false,
+
+            color(context) {
+              if (context.tick.value === 0) {
+                return 'red';
+              } else {
+                return 'transparent';
+              }
             },
           },
         },
